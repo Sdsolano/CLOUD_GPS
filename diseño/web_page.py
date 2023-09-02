@@ -9,7 +9,7 @@ app = Flask(__name__)
 def database_connect():
     try:
         connection = mysql.connector.connect(
-            host = "gps-data.cfum7svn09as.us-east-2.rds.amazonaws.com",
+            host="gps-data.cfum7svn09as.us-east-2.rds.amazonaws.com",
             user="admin",
             password="TioRico2209-",
             database="proyecto1_diseño"
