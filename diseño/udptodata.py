@@ -5,7 +5,7 @@ import re
 # Configuración de la base de datos
 db_config = {
     "host": "localhost",
-    "user": "root",
+    "user": "database",
     "password": "un1n0rt3",
     "database": "proyecto1_diseño"
 }
