@@ -4,7 +4,7 @@ import re
 
 # Configuración de la base de datos
 db_config = {
-   host = "rds-gps.c3uuyu8zhwxj.us-east-2.rds.amazonaws.com",
+   host = "gps-data.cfum7svn09as.us-east-2.rds.amazonaws.com",
    user="admin",
    password="TioRico2209-",
    database="proyecto1_diseño"
