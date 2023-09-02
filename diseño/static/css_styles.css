@@ -1,0 +1,36 @@
+h1{
+    padding: 10px auto;
+    text-align: center;
+    margin: 10px 10px;
+}
+
+#tabla-contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    width: 100%;
+    
+   
+}
+#tabla-contenido table td,
+#tabla-contenido table th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+
+
+
+div{
+    text-align: center;
+    justify-content: center;
+    margin: 30px 30px;
+}
+
+
+h6{
+    margin: 10px auto;
+    text-align: center;
+}
