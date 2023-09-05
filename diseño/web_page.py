@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import mysql.connector
 from mysql.connector import Error
 import datetime
-import pytz  # Importa la biblioteca pytz
+import pytz
 
 app = Flask(__name__)
 
@@ -35,11 +35,12 @@ def data():
             cursor.close()
             connect.close()
 
-            # Decodifica el timestamp Unix Epoch a la zona horaria de Bogotá
+            # Decodifica el timestamp Unix Epoch en milisegundos a la zona horaria de Bogotá
             for row in result:
-                timestamp = row['Time_stamp']
-                if timestamp is not None:
-                    timestamp = datetime.datetime.fromtimestamp(timestamp, pytz.utc)
+                timestamp_ms = row['Time_stamp']
+                if timestamp_ms is not None:
+                    timestamp_s = timestamp_ms / 1000.0  # Convierte milisegundos a segundos
+                    timestamp = datetime.datetime.fromtimestamp(timestamp_s, pytz.utc)
                     timestamp = timestamp.astimezone(bogota_timezone)
                     row['Time_stamp'] = timestamp.strftime('%Y-%m-%d %H:%M:%S %Z')
 
