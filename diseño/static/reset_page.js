@@ -7,9 +7,11 @@ function initializeMap(latitude, longitude) {
         maxZoom: 19,
     }).addTo(map);
 
-    marker = L.marker([latitude, longitude]).addTo(map)
+    // Utiliza la extensión leaflet-rotatedmarker para crear un marcador rotado
+    marker = L.marker([latitude, longitude], { rotationAngle: 0 }).addTo(map)
         .bindPopup('Last Location!')
         .openPopup();
+    marker.setRotationAngle(0); // Ajusta el ángulo de rotación inicial
 }
 
 function reloadTable() {
@@ -32,6 +34,8 @@ function reloadTable() {
                     initializeMap(lastLocation.Latitude, lastLocation.Longitude);
                 } else {
                     marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
+                    var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
+                    marker.setRotationAngle(rotationAngle);
                     map.setView([lastLocation.Latitude, lastLocation.Longitude]); // Centra el mapa en las coordenadas
                 }
             }
