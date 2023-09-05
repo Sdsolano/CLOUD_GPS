@@ -18,7 +18,7 @@ function reloadTable() {
         url: "/components",
         method: "GET",
        success: function(response) {
-   success: function(response) {
+success: function(response) {
     if (response && Array.isArray(response)) {
         var tablaHTML = "<table>";
         tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
