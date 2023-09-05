@@ -19,10 +19,11 @@ def database_connect():
     except Error as e:
         print("Database unreachable, " +e)
         return None
-    
+
+
 @app.route('/components', methods=['GET'])
 def data():
-    try: 
+    try:
         connect = database_connect()
         if connect:
             cursor = connect.cursor(dictionary=True)
@@ -32,11 +33,16 @@ def data():
             cursor.close()
             connect.close()
 
+            # Convierte el valor de Time_stamp a formato de fecha y hora de Colombia
+            for row in result:
+                row['Time_stamp'] = row['Time_stamp'].strftime('%Y-%m-%d %H:%M:%S')
+
             return jsonify(result)
         else:
             return "Database unreachable"
     except Exception as e:
         return "Error " + str(e)
+
     
 
 
