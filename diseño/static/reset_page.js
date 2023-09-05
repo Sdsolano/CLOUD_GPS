@@ -17,15 +17,17 @@ function reloadTable() {
     $.ajax({
         url: "/components",
         method: "GET",
-        success: function(response) {
-            var tablaHTML = "<table>";
-            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-            tablaHTML += "<tbody>";
-            response.forEach(function(row) {
-                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-            });
-            tablaHTML += "</tbody></table>";
-            $("#tabla-contenido").html(tablaHTML);
+       success: function(response) {
+    var data = response.data; // Asumiendo que la respuesta es un objeto con una propiedad "data"
+    
+    var tablaHTML = "<table>";
+    tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+    tablaHTML += "<tbody>";
+    data.forEach(function(row) {
+        tablaHTML += "<tr><td>" + row + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
+    });
+    tablaHTML += "</tbody></table>";
+    $("#tabla-contenido").html(tablaHTML);
 
             if (response.length > 0) {
                 var lastLocation = response[0];
