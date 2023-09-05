@@ -1,4 +1,3 @@
-
 var map;
 var marker;
 
@@ -7,7 +6,7 @@ function initializeMap(latitude, longitude) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
-    
+
     marker = L.marker([latitude, longitude], { rotationAngle: 0 }).addTo(map)
         .bindPopup('Last Location!')
         .openPopup();
@@ -50,4 +49,3 @@ $(document).ready(function() {
     reloadTable();
     setInterval(reloadTable, 7000);
 });
-</script>
