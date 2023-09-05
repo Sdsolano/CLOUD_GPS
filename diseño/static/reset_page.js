@@ -24,6 +24,16 @@ function reloadTable() {
         url: "/components",
         method: "GET",
         success: function(response) {
+            // Actualiza la tabla como lo hacías antes
+            var tablaHTML = "<table>";
+            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+            tablaHTML += "<tbody>";
+            response.forEach(function(row) {
+                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
+            });
+            tablaHTML += "</tbody></table>";
+            $("#tabla-contenido").html(tablaHTML);
+
             if (response.length > 0) {
                 var lastLocation = response[0];
                 // Si el mapa no se ha inicializado, inicialízalo
@@ -33,7 +43,7 @@ function reloadTable() {
                     // Actualiza la posición del marcador
                     marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
 
-                 
+
                     var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
                     marker.setRotationAngle(rotationAngle);
                 }
