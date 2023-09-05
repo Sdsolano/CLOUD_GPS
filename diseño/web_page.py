@@ -42,7 +42,8 @@ def data():
                     timestamp_s = timestamp_ms / 1000.0  # Convierte milisegundos a segundos
                     timestamp = datetime.datetime.fromtimestamp(timestamp_s, pytz.utc)
                     timestamp = timestamp.astimezone(bogota_timezone)
-                    row['Time_stamp'] = timestamp.strftime('%Y-%m-%d %H:%M:%S %Z')
+                    # Elimina la diferencia horaria en el formato de cadena
+                    row['Time_stamp'] = timestamp.strftime('%Y-%m-%d %H:%M:%S')
 
             return jsonify(result)
         else:
