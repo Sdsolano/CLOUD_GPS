@@ -3,20 +3,18 @@ var marker; // Declara una variable global para el marcador
 
 function initializeMap(latitude, longitude) {
     // Crea el mapa y centra en las coordenadas
-    map = L.map('map').setView([latitude, longitude], 16);
-    
-    // Agrega una capa de azulejos de OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map);
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: latitude, lng: longitude },
+        zoom: 16 // Puedes ajustar el nivel de zoom según tus necesidades
+    });
 
     // Agrega un marcador en las coordenadas
-    marker = L.marker([latitude, longitude], { draggable: true, rotationAngle: 0 }).addTo(map)
-        .bindPopup('Last Location!')
-        .openPopup();
-
-    // Establece la rotación del marcador en 0 grados (norte)
-    marker.setRotationAngle(0);
+    marker = new google.maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map: map,
+        draggable: true, // Permite que el marcador se pueda arrastrar
+        title: 'Last Location!'
+    });
 }
 
 function reloadTable() {
@@ -41,11 +39,9 @@ function reloadTable() {
                     initializeMap(lastLocation.Latitude, lastLocation.Longitude);
                 } else {
                     // Actualiza la posición del marcador
-                    marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
-
-
-                    var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
-                    marker.setRotationAngle(rotationAngle);
+                    var newLatLng = new google.maps.LatLng(lastLocation.Latitude, lastLocation.Longitude);
+                    marker.setPosition(newLatLng);
+                    map.setCenter(newLatLng);
                 }
             }
         },
