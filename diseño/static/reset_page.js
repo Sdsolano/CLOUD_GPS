@@ -10,6 +10,12 @@ function initializeMap(latitude, longitude) {
     marker = L.marker([latitude, longitude], { rotationAngle: 0 }).addTo(map)
         .bindPopup('Last Location!')
         .openPopup();
+    marker.setRotationAngle(0);
+
+    // Fija la posición del marcador en las coordenadas deseadas
+    map.on('move', function() {
+        marker.setLatLng([latitude, longitude]);
+    });
 }
 
 function reloadTable() {
@@ -31,12 +37,9 @@ function reloadTable() {
                 if (!map) {
                     initializeMap(lastLocation.Latitude, lastLocation.Longitude);
                 } else {
-                    marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
-                    var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
-                    marker.setRotationAngle(rotationAngle);
-
-                    // Centra el mapa en las coordenadas del marcador
-                    map.setView([lastLocation.Latitude, lastLocation.Longitude]);
+                    latitude = lastLocation.Latitude;
+                    longitude = lastLocation.Longitude;
+                    marker.setLatLng([latitude, longitude]);
                 }
             }
         },
