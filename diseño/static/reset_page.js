@@ -1,4 +1,4 @@
-<script>
+
 var map;
 var marker;
 
