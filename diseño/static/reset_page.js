@@ -7,36 +7,31 @@ function initializeMap(latitude, longitude) {
         maxZoom: 19,
     }).addTo(map);
 
-    marker = L.marker([latitude, longitude], { rotationAngle: 0 }).addTo(map)
+    marker = L.marker([latitude, longitude]).addTo(map)
         .bindPopup('Last Location!')
         .openPopup();
-    marker.setRotationAngle(0);
 }
 
 function reloadTable() {
     $.ajax({
         url: "/components",
         method: "GET",
-       success: function(response) {
-success: function(response) {
-    if (response && Array.isArray(response)) {
-        var tablaHTML = "<table>";
-        tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-        tablaHTML += "<tbody>";
-        response.forEach(function(row) {
-            tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-        });
-        tablaHTML += "</tbody></table>";
-        $("#tabla-contenido").html(tablaHTML);
-    }
+        success: function(response) {
+            var tablaHTML = "<table>";
+            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+            tablaHTML += "<tbody>";
+            response.forEach(function(row) {
+                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
+            });
+            tablaHTML += "</tbody></table>";
+            $("#tabla-contenido").html(tablaHTML);
+
             if (response.length > 0) {
                 var lastLocation = response[0];
                 if (!map) {
                     initializeMap(lastLocation.Latitude, lastLocation.Longitude);
                 } else {
                     marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
-                    var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
-                    marker.setRotationAngle(rotationAngle);
                     map.setView([lastLocation.Latitude, lastLocation.Longitude]); // Centra el mapa en las coordenadas
                 }
             }
