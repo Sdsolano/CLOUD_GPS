@@ -10,8 +10,8 @@ function initializeMap(latitude, longitude) {
         maxZoom: 19,
     }).addTo(map);
 
-    // Agrega un marcador en las coordenadas y deshabilita el arrastre
-    marker = L.marker([latitude, longitude], { draggable: false }).addTo(map)
+    // Agrega un marcador en las coordenadas y no permite arrastrarlo ni moverlo
+    marker = L.marker([latitude, longitude], { draggable: false, autoPan: false }).addTo(map)
         .bindPopup('Last Location!')
         .openPopup();
 }
