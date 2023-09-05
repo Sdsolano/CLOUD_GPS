@@ -3,17 +3,25 @@ var marker; // Declara una variable global para el marcador
 
 function initializeMap(latitude, longitude) {
     // Crea el mapa y centra en las coordenadas
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: latitude, lng: longitude },
-        zoom: 16 // Puedes ajustar el nivel de zoom según tus necesidades
-    });
+    map = L.map('map').setView([latitude, longitude], 16);
+    
+    // Agrega una capa de azulejos de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
     // Agrega un marcador en las coordenadas
-    marker = new google.maps.Marker({
-        position: { lat: latitude, lng: longitude },
-        map: map,
-        draggable: true, // Permite que el marcador se pueda arrastrar
-        title: 'Last Location!'
+    marker = L.marker([latitude, longitude], { draggable: true, rotationAngle: 0 }).addTo(map)
+        .bindPopup('Last Location!')
+        .openPopup();
+
+    // Establece la rotación del marcador en 0 grados (norte)
+    marker.setRotationAngle(0);
+
+    // Desactiva el seguimiento automático de la vista del mapa
+    map.setMaxBounds(map.getBounds());
+    map.on('drag', function () {
+        map.panInsideBounds(map.getBounds(), { animate: false });
     });
 }
 
@@ -22,16 +30,6 @@ function reloadTable() {
         url: "/components",
         method: "GET",
         success: function(response) {
-            // Actualiza la tabla como lo hacías antes
-            var tablaHTML = "<table>";
-            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-            tablaHTML += "<tbody>";
-            response.forEach(function(row) {
-                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-            });
-            tablaHTML += "</tbody></table>";
-            $("#tabla-contenido").html(tablaHTML);
-
             if (response.length > 0) {
                 var lastLocation = response[0];
                 // Si el mapa no se ha inicializado, inicialízalo
@@ -39,9 +37,14 @@ function reloadTable() {
                     initializeMap(lastLocation.Latitude, lastLocation.Longitude);
                 } else {
                     // Actualiza la posición del marcador
-                    var newLatLng = new google.maps.LatLng(lastLocation.Latitude, lastLocation.Longitude);
-                    marker.setPosition(newLatLng);
-                    map.setCenter(newLatLng);
+                    marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
+
+                    // Calcula el ángulo de rotación del marcador (si es necesario)
+                    // Esto depende de la dirección en la que deseas que apunte el marcador
+                    // Por ejemplo, si quieres que apunte hacia el norte, usa 0 grados
+                    // Si quieres que apunte hacia el este, usa 90 grados, etc.
+                    var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
+                    marker.setRotationAngle(rotationAngle);
                 }
             }
         },
