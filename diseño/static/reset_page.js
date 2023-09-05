@@ -1,17 +1,17 @@
 var map;
 var marker;
 
+// Inicializa el mapa una vez al cargar la página
 function initializeMap(latitude, longitude) {
     map = L.map('map').setView([latitude, longitude], 16);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
 
-    // Utiliza la extensión leaflet-rotatedmarker para crear un marcador rotado
-    marker = L.marker([latitude, longitude], { rotationAngle: 0 }).addTo(map)
+    // Crea el marcador inicialmente
+    marker = L.marker([latitude, longitude]).addTo(map)
         .bindPopup('Last Location!')
         .openPopup();
-    marker.setRotationAngle(0); // Ajusta el ángulo de rotación inicial
 }
 
 function reloadTable() {
@@ -34,8 +34,6 @@ function reloadTable() {
                     initializeMap(lastLocation.Latitude, lastLocation.Longitude);
                 } else {
                     marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
-                    var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
-                    marker.setRotationAngle(rotationAngle);
                     map.setView([lastLocation.Latitude, lastLocation.Longitude]); // Centra el mapa en las coordenadas
                 }
             }
@@ -47,6 +45,9 @@ function reloadTable() {
 }
 
 $(document).ready(function() {
+    // Inicializa el mapa con valores predeterminados
+    initializeMap(0, 0);
+
     reloadTable();
     setInterval(reloadTable, 7000);
 });
