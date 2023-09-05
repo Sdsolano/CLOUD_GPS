@@ -5,7 +5,6 @@ import datetime
 
 app = Flask(__name__)
 
-
 def database_connect():
     try:
         connection = mysql.connector.connect(
@@ -14,12 +13,10 @@ def database_connect():
             password="TioRico2209-",
             database="proyecto1_diseño"
         )
-       
         return connection
     except Error as e:
-        print("Database unreachable, " +e)
+        print("Database unreachable, " + e)
         return None
-
 
 @app.route('/components', methods=['GET'])
 def data():
@@ -27,7 +24,7 @@ def data():
         connect = database_connect()
         if connect:
             cursor = connect.cursor(dictionary=True)
-            sql = "SELECT ID, Latitude, Longitude, Time_stamp FROM datos ORDER BY id DESC LIMIT 3" 
+            sql = "SELECT ID, Latitude, Longitude, Time_stamp FROM datos ORDER BY id DESC LIMIT 3"
             cursor.execute(sql)
             result = cursor.fetchall()
             cursor.close()
@@ -43,13 +40,9 @@ def data():
     except Exception as e:
         return "Error " + str(e)
 
-    
-
-
 @app.route('/')
 def index():
     return render_template("index.html")
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
