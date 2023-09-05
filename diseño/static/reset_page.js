@@ -1,21 +1,33 @@
+var map; 
+var marker; 
+
+function initializeMap(latitude, longitude) {
+    // Crea el mapa y el marcador en la primera llamada
+    map = L.map('map').setView([latitude, longitude], 16);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    marker = L.marker([latitude, longitude]).addTo(map);
+}
+
+
+
 function reloadTable() {
     $.ajax({
         url: "/components",
         method: "GET",
         success: function(response) {
-            
-            var tablaHTML = "<table>";
-            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-            tablaHTML += "<tbody>";
-            response.forEach(function(row) {
-                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-            });
-            tablaHTML += "</tbody></table>";
-
-            
-            $("#tabla-contenido").html(tablaHTML);
+            if (response.length > 0) {
+                var lastLocation = response[0];
+                // initialize map
+                if (!map) {
+                    // last location
+                    initializeMap(lastLocation.Latitude, lastLocation.Longitude);
+                } else {
+                 
+                    marker.setLatLng([lastLocation.Latitude, lastLocation.Longitude]);
+                }
+            }
         },
-        error: function(xhr, status, error){
+        error: function(xhr, status, error) {
             console.error("AJAX request failed", error);
         }
     });
@@ -23,10 +35,10 @@ function reloadTable() {
 
 
 
-$(document).ready( function(){
-        reloadTable()
 
-        setInterval(reloadTable, 7000);
+$(document).ready(function() {
+    reloadTable();
+
+    setInterval(reloadTable, 7000);
 });
-
 
