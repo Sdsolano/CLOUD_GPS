@@ -35,10 +35,8 @@ function reloadTable() {
                     var rotationAngle = 0; // Ajusta el ángulo según tus necesidades
                     marker.setRotationAngle(rotationAngle);
 
-                    // Solo cambia el centro del mapa si el marcador está fuera de la vista
-                    if (!map.getBounds().contains([lastLocation.Latitude, lastLocation.Longitude])) {
-                        map.panTo([lastLocation.Latitude, lastLocation.Longitude]);
-                    }
+                    // Centra el mapa en las coordenadas del marcador
+                    map.setView([lastLocation.Latitude, lastLocation.Longitude]);
                 }
             }
         },
