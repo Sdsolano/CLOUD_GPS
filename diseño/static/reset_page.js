@@ -86,3 +86,4 @@ $(document).ready(function () {
 
     // Establece un intervalo para actualizar el mapa y el marcador cada 67 segundos
     setInterval(reloadTable, 7000);
+}
