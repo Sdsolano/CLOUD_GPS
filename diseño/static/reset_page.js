@@ -46,8 +46,7 @@ function updateMapAndTable(response) {
             infoWindow.setContent(contenidoMarcador);
             infoWindow.open(map, marker);
 
-            console.log("Last Latitude:", lastLatitude);
-            console.log("Last Longitude:", lastLongitude);
+            
         } else {
             console.error("Las coordenadas no son números válidos.");
         }
