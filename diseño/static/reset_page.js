@@ -1,6 +1,7 @@
 let map;
 let marker;
 
+// Función para cargar y mostrar la tabla
 function reloadTable() {
     // Define la función initMap dentro de reloadTable
     function initMap() {
@@ -8,7 +9,7 @@ function reloadTable() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
             zoom: 13,
-minZoom: 12,
+            minZoom: 12,
         });
 
         // Crea el marcador en el mapa
@@ -19,6 +20,7 @@ minZoom: 12,
         });
     }
 
+    // Realiza una solicitud AJAX para obtener los datos desde Flask
     $.ajax({
         url: "/components",
         method: "GET",
@@ -31,35 +33,40 @@ minZoom: 12,
                     initMap();
                 }
 
-                // Actualiza el mapa y el marcador aquí
+                // Actualiza la tabla con los datos obtenidos de Flask
                 if (response.length > 0) {
                     var lastRow = response[response.length - 1];
                     var lastLatitude = parseFloat(lastRow.Latitude);
                     var lastLongitude = parseFloat(lastRow.Longitude);
-                        var lastTime= parseFloat(lastRow.Time_stamp);
-var tablaHTML = "<table>";
-            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-            tablaHTML += "<tbody>";
-            response.forEach(function(row) {
-                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";          });
-            tablaHTML += "</tbody></table>";
+                    var lastTime = parseFloat(lastRow.Time_stamp);
 
+                    // Crea la estructura HTML de la tabla
+                    var tablaHTML = "<table>";
+                    tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+                    tablaHTML += "<tbody>";
+                    response.forEach(function (row) {
+                        tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
+                    });
+                    tablaHTML += "</tbody></table>";
 
-            $("#tabla-contenido").html(tablaHTML);
+                    // Actualiza el contenido del contenedor HTML con la tabla
+                    $("#tabla-contenido").html(tablaHTML);
 
-
+                    // Resto del código para actualizar el marcador y el mapa
                     if (!isNaN(lastLatitude) && !isNaN(lastLongitude)) {
                         // Actualiza la posición del marcador
                         marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
-let contenidoMarcador ="Latitude:"+ lastLatitude + "<br> Longitude:" + lastLongitude + "<br> Timestamp"+ lastTime ;
-let infoWindow = new google.maps.InfoWindow({
-        content: contenidoMarcador
-    });
 
-    // Abre el InfoWindow cuando se hace clic en el marcador
-    marker.addListener('click', function() {
-        infoWindow.open(map, marker);
-    });
+                        let contenidoMarcador = "Latitude:" + lastLatitude + "<br> Longitude:" + lastLongitude + "<br> Timestamp" + lastTime;
+                        let infoWindow = new google.maps.InfoWindow({
+                            content: contenidoMarcador
+                        });
+
+                        // Abre el InfoWindow cuando se hace clic en el marcador
+                        marker.addListener('click', function () {
+                            infoWindow.open(map, marker);
+                        });
+
                         // Centra el mapa en la nueva ubicación
                         map.setCenter(new google.maps.LatLng(lastLatitude, lastLongitude));
 
@@ -76,7 +83,6 @@ let infoWindow = new google.maps.InfoWindow({
         error: function (xhr, status, error) {
             console.error("AJAX request failed", error);
         }
-
     });
 }
 
@@ -85,4 +91,5 @@ $(document).ready(function () {
     reloadTable();
 
     // Establece un intervalo para actualizar el mapa y el marcador cada 67 segundos
-    setInterval(reloadTable, 7000); }
+    setInterval(reloadTable, 7000);
+});
