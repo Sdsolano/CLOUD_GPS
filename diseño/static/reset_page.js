@@ -8,7 +8,7 @@ function reloadTable() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
             zoom: 13,
-            minZoom: 12,
+minZoom: 12,
         });
 
         // Crea el marcador en el mapa
@@ -36,30 +36,30 @@ function reloadTable() {
                     var lastRow = response[response.length - 1];
                     var lastLatitude = parseFloat(lastRow.Latitude);
                     var lastLongitude = parseFloat(lastRow.Longitude);
-                    var lastTime = parseFloat(lastRow.Time_stamp);
-                    var tablaHTML = "<table>";
-                    tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-                    tablaHTML += "<tbody>";
-                    response.forEach(function(row) {
-                        tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                    });
-                    tablaHTML += "</tbody></table>";
+                        var lastTime= parseFloat(lastRow.Time_stamp);
+var tablaHTML = "<table>";
+            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+            tablaHTML += "<tbody>";
+            response.forEach(function(row) {
+                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";          });
+            tablaHTML += "</tbody></table>";
 
-                    $("#tabla-contenido").html(tablaHTML);
+
+            $("#tabla-contenido").html(tablaHTML);
+
 
                     if (!isNaN(lastLatitude) && !isNaN(lastLongitude)) {
                         // Actualiza la posición del marcador
                         marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
-                        let contenidoMarcador = "Latitude:" + lastLatitude + "<br> Longitude:" + lastLongitude + "<br> Timestamp" + lastTime;
-                        let infoWindow = new google.maps.InfoWindow({
-                            content: contenidoMarcador
-                        });
+let contenidoMarcador ="Latitude:"+ lastLatitude + "<br> Longitude:" + lastLongitude + "<br> Timestamp"+ lastTime ;
+let infoWindow = new google.maps.InfoWindow({
+        content: contenidoMarcador
+    });
 
-                        // Abre el InfoWindow cuando se hace clic en el marcador
-                        marker.addListener('click', function() {
-                            infoWindow.open(map, marker);
-                        });
-
+    // Abre el InfoWindow cuando se hace clic en el marcador
+    marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+    });
                         // Centra el mapa en la nueva ubicación
                         map.setCenter(new google.maps.LatLng(lastLatitude, lastLongitude));
 
@@ -76,6 +76,7 @@ function reloadTable() {
         error: function (xhr, status, error) {
             console.error("AJAX request failed", error);
         }
+
     });
 }
 
@@ -85,4 +86,3 @@ $(document).ready(function () {
 
     // Establece un intervalo para actualizar el mapa y el marcador cada 67 segundos
     setInterval(reloadTable, 7000);
-});
