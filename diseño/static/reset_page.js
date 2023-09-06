@@ -19,6 +19,11 @@ function reloadTable() {
         });
     }
 
+    // Verifica si el mapa aún no se ha inicializado, llama a initMap
+    if (!map) {
+        initMap();
+    }
+
     $.ajax({
         url: "/components",
         method: "GET",
@@ -26,47 +31,30 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
-                if (!map) {
-                    // Si el mapa aún no se ha inicializado, llama a initMap
-                    initMap();
-                }
+                // Actualiza la tabla
+                var tablaHTML = "<table>";
+                tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+                tablaHTML += "<tbody>";
+                response.forEach(function(row) {
+                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                });
+                tablaHTML += "</tbody></table>";
 
-                // Actualiza el mapa y el marcador aquí
+                $("#tabla-contenido").html(tablaHTML);
+
                 if (response.length > 0) {
-                    var lastRow = response[response.length - 1];
-                    var lastLatitude = parseFloat(lastRow.Latitude);
-                    var lastLongitude = parseFloat(lastRow.Longitude);
-                    var lastTime = parseFloat(lastRow.Time_stamp);
-                    var tablaHTML = "<table>";
-                    tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-                    tablaHTML += "<tbody>";
-                    response.forEach(function(row) {
-                        tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                    });
-                    tablaHTML += "</tbody></table>";
+                    var firstRow = response[0];
+                    var firstLatitude = parseFloat(firstRow.Latitude);
+                    var firstLongitude = parseFloat(firstRow.Longitude);
 
-                    $("#tabla-contenido").html(tablaHTML);
+                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
+                        // Actualiza la posición del marcador con las coordenadas de la primera fila
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                    if (!isNaN(lastLatitude) && !isNaN(lastLongitude)) {
-                        // Actualiza la posición del marcador
-                        marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
-                        let contenidoMarcador = "Latitude:" + lastLatitude + "<br> Longitude:" + lastLongitude + "<br> Timestamp" + lastTime;
-                        let infoWindow = new google.maps.InfoWindow({
-                            content: contenidoMarcador
-                        });
-
-                        // Abre el InfoWindow cuando se hace clic en el marcador
-                        marker.addListener('click', function() {
-                            infoWindow.open(map, marker);
-                        });
-
-                        // Centra el mapa en la nueva ubicación
-                        map.setCenter(new google.maps.LatLng(lastLatitude, lastLongitude));
-
-                        console.log("Last Latitude:", lastLatitude);
-                        console.log("Last Longitude:", lastLongitude);
+                        // Centra el mapa en la ubicación de la primera fila
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
                     } else {
-                        console.error("Las coordenadas no son números válidos.");
+                        console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
                 }
             } else {
