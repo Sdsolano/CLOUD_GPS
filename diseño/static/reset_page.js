@@ -25,31 +25,33 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado correctamente
 
+                if (!map) {
+                    // Si el mapa aún no se ha inicializado, llama a initMap
+                    initMap();
+                }
+
                 // Actualiza la tabla
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
                 tablaHTML += "<tbody>";
-                response.forEach(function(row) {
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                });
-                tablaHTML += "</tbody></table>";
-
-                $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
                     var lastRow = response[response.length - 1];
                     var lastLatitude = parseFloat(lastRow.Latitude);
                     var lastLongitude = parseFloat(lastRow.Longitude);
-                    
+
+                    response.forEach(function(row) {
+                        tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    });
+
+                    tablaHTML += "</tbody></table>";
+
+                    $("#tabla-contenido").html(tablaHTML);
+
                     if (!isNaN(lastLatitude) && !isNaN(lastLongitude)) {
                         // Actualiza la posición del marcador
                         marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
-
-                        // Centra el mapa en la nueva ubicación
                         map.setCenter(new google.maps.LatLng(lastLatitude, lastLongitude));
-
-                        console.log("Last Latitude:", lastLatitude);
-                        console.log("Last Longitude:", lastLongitude);
                     } else {
                         console.error("Las coordenadas no son números válidos.");
                     }
@@ -65,9 +67,6 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    // Llama a initMap para inicializar el mapa al cargar la página
-    initMap();
-
     // Llama a reloadTable al cargar la página
     reloadTable();
 
