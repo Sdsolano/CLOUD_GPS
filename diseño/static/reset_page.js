@@ -68,7 +68,7 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    // Llama a reloadTable al cargar la página
+    initMap();
     reloadTable();
 
     // Establece un intervalo para actualizar el mapa y el marcador cada 67 segundos
