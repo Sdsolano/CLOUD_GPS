@@ -1,32 +1,35 @@
 let map;
 let marker;
 
-function initMap() {
-    // Inicializa el mapa dentro de esta función
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        zoom: 13,
-        minZoom: 12,
-    });
-
-    // Crea el marcador en el mapa
-    marker = new google.maps.Marker({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        map: map,
-        title: "Mi Marcador"
-    });
-}
-
 function reloadTable() {
-    // Llama a la función initMap para inicializar el mapa
-    initMap();
+    // Define la función initMap dentro de reloadTable
+    function initMap() {
+        // Inicializa el mapa dentro de esta función
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+            zoom: 13,
+            minZoom: 12,
+        });
+
+        // Crea el marcador en el mapa
+        marker = new google.maps.Marker({
+            position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+            map: map,
+            title: "Mi Marcador"
+        });
+    }
 
     $.ajax({
         url: "/components",
         method: "GET",
         success: function (response) {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-                // Verifica si la API de Google Maps se ha cargado correctamente
+                // Verifica si la API de Google Maps se ha cargado
+
+                if (!map) {
+                    // Si el mapa aún no se ha inicializado, llama a initMap
+                    initMap();
+                }
 
                 // Actualiza el mapa y el marcador aquí
                 if (response.length > 0) {
