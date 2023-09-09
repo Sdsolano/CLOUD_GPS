@@ -7,6 +7,7 @@ import sys
 sys.path.append('/home/ubuntu/CLOUD_GPS')
 
 from config import db_config
+from config import GOOGLE_MAPS_API_KEY
 
 app = Flask(__name__)
 
@@ -51,7 +52,7 @@ def data():
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", google_maps_api_key=GOOGLE_MAPS_API_KEY)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
