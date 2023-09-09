@@ -12,11 +12,12 @@ bogota_timezone = pytz.timezone('America/Bogota')
 def database_connect():
     try:
         connection = mysql.connector.connect(
-        'host': 'gps-data.cfum7svn09as.us-east-2.rds.amazonaws.com',
-        'user': 'admin',
-        'password': 'TioRico2209-',
-        'database': 'proyecto1_diseño'
+            host='gps-data.cfum7svn09as.us-east-2.rds.amazonaws.com',
+            user='admin',
+            password='TioRico2209-',
+            database='proyecto1_diseño'
         )
+
        
         return connection
     except Error as e:
