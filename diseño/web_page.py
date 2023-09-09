@@ -3,6 +3,9 @@ import mysql.connector
 from mysql.connector import Error
 import datetime
 import pytz
+import sys
+sys.path.append('/home/ubuntu/CLOUD_GPS')
+
 from config import DB_CONFIG
 
 app = Flask(__name__)
@@ -12,7 +15,7 @@ bogota_timezone = pytz.timezone('America/Bogota')
 
 def database_connect():
     try:
-        connection = mysql.connector.connect(**DB_CONFIG)
+        connection = mysql.connector.connect(**db_config)
         return connection
     except Error as e:
         print("Database unreachable, " +e)
