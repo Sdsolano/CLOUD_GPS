@@ -1,3 +1,4 @@
+<
     let map;
     let marker;
 
@@ -53,17 +54,9 @@
         });
     }
 
-$(document).ready(function () {
-    initMap(); 
-    updateTableAndMap(); 
-
-  
-    setTimeout(function() {
-        updateTableAndMap();
-    }, 1000);
-
- 
-    setInterval(updateTableAndMap, 7000);
-});
-
+    $(document).ready(function () {
+        initMap(); 
+        updateTableAndMap(); 
+        setInterval(updateTableAndMap, 7000);
+    });
 
