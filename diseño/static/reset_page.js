@@ -25,23 +25,26 @@
                     tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
                     tablaHTML += "<tbody>";
 
-                    response.forEach(function (row) {
+                    // Mostrar los últimos tres datos
+                    var lastIndex = Math.max(0, response.length - 3);
+                    for (var i = lastIndex; i < response.length; i++) {
+                        var row = response[i];
                         tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-                    });
+                    }
 
                     tablaHTML += "</tbody></table>";
                     $("#tabla-contenido").html(tablaHTML);
 
                     if (response.length > 0) {
-                        var firstRow = response[0];
-                        var firstLatitude = parseFloat(firstRow.Latitude);
-                        var firstLongitude = parseFloat(firstRow.Longitude);
+                        var lastRow = response[response.length - 1];
+                        var lastLatitude = parseFloat(lastRow.Latitude);
+                        var lastLongitude = parseFloat(lastRow.Longitude);
 
-                        if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
-                            marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                            map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        if (!isNaN(lastLatitude) && !isNaN(lastLongitude)) {
+                            marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
+                            map.setCenter(new google.maps.LatLng(lastLatitude, lastLongitude));
                         } else {
-                            console.error("Las coordenadas de la primera fila no son números válidos.");
+                            console.error("Las coordenadas del último registro no son números válidos.");
                         }
                     }
                 } else {
@@ -64,3 +67,4 @@
     setInterval(function() {
         updateTableAndMap();
     }, 7000);
+
