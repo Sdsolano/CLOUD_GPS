@@ -1,4 +1,3 @@
-
     let map;
     let marker;
 
@@ -58,7 +57,7 @@
         initMap(); // Inicializa el mapa una vez que se carga el documento
         updateTableAndMap(); // Llama a la función para cargar datos
 
-        // Establece un intervalo para actualizar el mapa y la tabla cada 67 segundos
+        // Establece un intervalo para actualizar el mapa y la tabla cada 7 segundos (7000 ms)
         setInterval(updateTableAndMap, 7000);
     });
 
