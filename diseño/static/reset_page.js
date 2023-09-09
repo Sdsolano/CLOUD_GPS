@@ -54,9 +54,13 @@
         });
     }
 
+    // Llama a initMap y updateTableAndMap cuando se carga la página
     $(document).ready(function () {
         initMap(); 
         updateTableAndMap(); 
-        setInterval(updateTableAndMap, 7000);
     });
 
+    // Actualiza ambos al mismo tiempo con un intervalo de 7 segundos
+    setInterval(function() {
+        updateTableAndMap();
+    }, 7000);
