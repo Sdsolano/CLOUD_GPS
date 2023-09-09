@@ -6,7 +6,7 @@ import pytz
 import sys
 sys.path.append('/home/ubuntu/CLOUD_GPS')
 
-from config import DB_CONFIG
+from config import db_config
 
 app = Flask(__name__)
 
