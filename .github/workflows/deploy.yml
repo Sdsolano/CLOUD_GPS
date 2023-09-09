@@ -16,7 +16,5 @@ jobs:
       - name: Actualizar repositorio local con rebase
         run: git pull --rebase origin main
 
-      - name: Copiar archivos actualizados a tu aplicación
-        run: |
-          # Copia los archivos actualizados desde el repositorio a la misma ubicación del repositorio
-          cp -r /home/ubuntu/CLOUD_GPS/* /home/ubuntu/CLOUD_GPS/
+      - name: Copia los archivos actualizados desde el repositorio a la misma ubicación del repositorio
+        run: cp -r /home/ubuntu/CLOUD_GPS/* 
