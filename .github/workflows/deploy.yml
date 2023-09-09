@@ -17,4 +17,4 @@ jobs:
         run: git pull --rebase origin main
 
       - name: Copia los archivos actualizados desde el repositorio a la misma ubicación del repositorio
-        run: cp -r /home/ubuntu/CLOUD_GPS/* 
+        run: cp -r /home/ubuntu/CLOUD_GPS/* /home/ubuntu/CLOUD_GPS/
