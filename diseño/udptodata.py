@@ -1,15 +1,10 @@
 import socket
 import mysql.connector
 import re
-import os
+import sys
+sys.path.append('/home/ubuntu/CLOUD_GPS')
 
-# Configuración de la base de datos
-db_config = {
-    'host': 'gps-data.cfum7svn09as.us-east-2.rds.amazonaws.com',
-    'user': 'admin',
-    'password': 'TioRico2209-',
-    'database': 'proyecto1_diseño'
-}
+from config import db_config
 
 # Crear conexión a la base de datos
 db_connection = mysql.connector.connect(**db_config)
