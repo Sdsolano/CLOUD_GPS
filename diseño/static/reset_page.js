@@ -53,11 +53,17 @@
         });
     }
 
-    $(document).ready(function () {
-        initMap(); // Inicializa el mapa una vez que se carga el documento
-        updateTableAndMap(); // Llama a la función para cargar datos
+$(document).ready(function () {
+    initMap(); 
+    updateTableAndMap(); 
 
-        // Establece un intervalo para actualizar el mapa y la tabla cada 7 segundos (7000 ms)
-        setInterval(updateTableAndMap, 7000);
-    });
+  
+    setTimeout(function() {
+        updateTableAndMap();
+    }, 1000);
+
+ 
+    setInterval(updateTableAndMap, 7000);
+});
+
 
