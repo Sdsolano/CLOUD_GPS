@@ -15,17 +15,14 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
-        fixed: true
     });
 
     // Crea la polilínea en el mapa
     polyline = new google.maps.Polyline({
-        map: map, // Solo se llama una vez
-        fixed: true,
+        map: map, // Asocia la polilínea directamente al mapa
         strokeOpacity: 0.8,
         strokeWeight: 5,
         strokeColor: '#0000FF',
-        smoothFactor: 0.9
     });
 
     // Carga la tabla y actualiza el mapa
@@ -53,22 +50,18 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var firstRow = response[0];
-                    var firstLatitude = parseFloat(firstRow.Latitude);
-                    var firstLongitude = parseFloat(firstRow.Longitude);
+                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
-                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
-                        // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    marker.setPosition(path[0]);
 
-                        // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                    // Centra el mapa en la ubicación de la primera fila
+                    map.setCenter(path[0]);
 
-                        // Agrega las coordenadas de cada punto al final de la polilínea
-                        polyline.setPath(response.map(row => new google.maps.LatLng(row.Latitude, row.Longitude)));
-                    } else {
-                        console.error("Las coordenadas de la primera fila no son números válidos.");
-                    }
+                    // Establece el camino de la polilínea
+                    polyline.setPath(path);
+                } else {
+                    console.error("No se encontraron datos para mostrar en el mapa.");
                 }
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
@@ -81,8 +74,10 @@ function reloadTable() {
 }
 
 $(document).ready(function () {   
+    initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
+
 
 
 
