@@ -10,6 +10,7 @@ function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        position: { lat: -0.5, lng: 0.5 },
         zoom: 15,
         minZoom: 12,
     });
@@ -17,12 +18,15 @@ function initMap() {
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+       position: { lat: -0.5, lng: 0.5 },
         map: map,
         title: "Mi Marcador"
     });
 
     // Crea una polilínea suave con MVCArray
     polyline = new google.maps.Polyline({
+        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        position: { lat: -0.5, lng: 0.5 },
         path: smoothedPath,
         geodesic: true,
         strokeColor: '#FF0000',
@@ -33,6 +37,8 @@ function initMap() {
 
     markerAtTip = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+
         map: map,
         icon: {
             path: google.maps.SymbolPath.CIRCLE, // Usa un símbolo circular como marcador
