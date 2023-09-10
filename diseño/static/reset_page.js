@@ -43,8 +43,9 @@ function initMap() {
     });
 
     // Carga la tabla y actualiza el mapa
-    loadCoordinatesFromDatabase();
     reloadTable();
+    loadCoordinatesFromDatabase();
+    
 }
 
 function loadCoordinatesFromDatabase() {
