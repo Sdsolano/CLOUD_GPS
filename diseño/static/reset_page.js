@@ -1,5 +1,6 @@
 let map;
 let marker;
+let polyline;
 
 function initMap() {
     // Inicializa el mapa
@@ -16,6 +17,16 @@ function initMap() {
         title: "Mi Marcador"
     });
 
+    //create an empty path for the polyline
+    polyline = new google.maps.polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: '#FF0000', 
+        strokeOpacity: 1.0,  //line opacity
+        strokeWeight: 2, //line width
+        map: map,
+    })
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
@@ -28,6 +39,9 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
+                // Clear the previous path from the polyline
+                polyline.setPath([]);
+
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
@@ -35,6 +49,12 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    var latitude = parseFloat(row.Latitude);
+                    var longitud = parseFloat(row.Longitude);
+                    // Add coordinates to the polyline's path
+                    if (!isNaN(latitude) && !isNaN(longitude)) {
+                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
+                    }
                 }
                 tablaHTML += "</tbody></table>";
 
