@@ -72,18 +72,6 @@ function reloadTable() {
                          // Centra el mapa en la ubicación de la primera fila
                          map.setCenter(new google.maps.LatLng(firsttLatitude, firstLongitude));
                         
-                        
-                        if (previousMarkerPosition !== null) {
-                            var lineHeading = google.maps.geometry.spherical.computeHeading(previousMarkerPosition, smoothedPath[0]);
-                            var numInterpolatedPoints = 100; // Ajusta este valor según sea necesario
-
-                            // Interpola puntos a lo largo del camino entre la posición anterior y la nueva
-                            for (var j = 0; j < numInterpolatedPoints; j++) {
-                                var fraction = j / numInterpolatedPoints;
-                                var interpolatedPoint = google.maps.geometry.spherical.interpolate(previousMarkerPosition, smoothedPath[0], fraction);
-                                smoothedPath.unshift(interpolatedPoint);
-                            }
-                        }
                         polyline.setPath(smoothedPath)
                         previousMarkerPosition = new google.maps.LatLng(firstLatitude, firstLongitude) ;
                        
