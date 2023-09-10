@@ -61,6 +61,10 @@ function reloadTable() {
                     var lastLatitude = parseFloat(lastRow.Latitude);
                     var lastLongitude = parseFloat(lastRow.Longitude);
 
+                    var firstLatitude = parseFloat(firstRow.Latitude);
+                    var firstLongitude = parseFloat(firstRow.Longitude);
+
+
                     if (!isNaN(lastLatitude) && !isNaN(lasttLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
