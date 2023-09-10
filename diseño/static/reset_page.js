@@ -15,7 +15,7 @@ function initMap() {
 
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+       // position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador"
     });
@@ -53,6 +53,7 @@ function reloadTable() {
         success: function (response) {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
+                smoothedPath.clear();
 
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
@@ -74,14 +75,17 @@ function reloadTable() {
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
 
                         // Agrega la nueva posición a la polilínea suave
-                        smoothedPath.clear();
-                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        var newPosition = new google.maps.LatLng(firstLatitude,firstLongitude)
+
+                        marker.setPosition(newPosition)
+
+                        smoothedPath.push(newPosition)
+                        markerAtTip.setPosition(newPosition);
 
 
 
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                       // marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
                        
                         
                         
