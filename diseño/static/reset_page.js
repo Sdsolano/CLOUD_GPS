@@ -73,21 +73,19 @@ function reloadTable() {
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
 
-                        // Agrega la nueva posición a la polilínea suave
-                        
-                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        // Centra el mapa en la ubicación de la primera fila
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
 
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                       
+
+                        // Agrega la nueva posición a la polilínea suave
                         
+                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        markerAtTip.setPosition(smoothedPath.getAt(smoothedPath.getLength() - 1));
+
+
                         
-                        // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        setTimeout(function() {
-                            smoothedPath.push(newPosition);
-                        }, 1000);
 
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
