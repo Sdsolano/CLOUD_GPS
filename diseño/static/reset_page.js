@@ -17,7 +17,7 @@ function initMap() {
         title: "Mi Marcador",
     });
 
-    // Crea la polilínea en el mapa
+    // Crea la polilínea en el mapa solo una vez
     polyline = new google.maps.Polyline({
         map: map, // Asocia la polilínea directamente al mapa
         strokeOpacity: 0.8,
@@ -59,7 +59,7 @@ function reloadTable() {
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(path[0]);
 
-                    // Establece el camino de la polilínea
+                    // Establece el camino de la polilínea sin volver a crearla
                     polyline.setPath(path);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
@@ -78,6 +78,7 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
+
 
 
 
