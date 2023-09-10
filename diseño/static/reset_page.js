@@ -66,6 +66,9 @@ function reloadTable() {
 
                         // Actualiza la posición de la polilínea con la posición del marcador
                         polyline.setPath(response.map(row => new google.maps.LatLng(row.Latitude, row.Longitude)));
+                        
+                         // Fija la polilínea al marcador
+                        polyline.setMap(marker.getMap());
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
