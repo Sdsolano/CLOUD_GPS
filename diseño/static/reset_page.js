@@ -43,7 +43,36 @@ function initMap() {
     });
 
     // Carga la tabla y actualiza el mapa
+    loadCoordinatesFromDatabase();
     reloadTable();
+}
+
+function loadCoordinatesFromDatabase() {
+    $.ajax({
+        url: "/components", // Reemplaza esto con la URL correcta de tu servidor
+        method: "GET",
+        success: function (response) {
+            if (Array.isArray(response) && response.length > 0) {
+                // Limpia la polilínea existente antes de cargar nuevas coordenadas
+                smoothedPath.clear();
+
+                // Recorre las coordenadas y agrégalas a la polilínea
+                response.forEach(function (coord) {
+                    smoothedPath.push(new google.maps.LatLng(coord.lat, coord.lng));
+                });
+
+                // Mueve el marcador al último punto de la polilínea
+                if (smoothedPath.getLength() > 0) {
+                    markerAtTip.setPosition(smoothedPath.getAt(smoothedPath.getLength() - 1));
+                }
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al cargar coordenadas desde la base de datos", error);
+        }
+    });
+
+
 }
 
 function reloadTable() {
@@ -84,8 +113,6 @@ function reloadTable() {
                         smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
                         markerAtTip.setPosition(smoothedPath.getAt(smoothedPath.getLength() - 1));
 
-
-                        
 
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
