@@ -3,6 +3,7 @@ let marker;
 let polyline;
 let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una polilínea suave
 var previousMarkerPosition = null;
+let markerAtTip;
 
 function initMap() {
     // Inicializa el mapa
@@ -27,6 +28,18 @@ function initMap() {
         strokeOpacity: 1.0,
         strokeWeight: 2,
         map: map,
+    });
+
+    markerAtTip = new google.maps.Marker({
+        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE, // Usa un símbolo circular como marcador
+            scale: 5, // Tamaño del marcador
+            fillColor: '#FF0000', // Color de relleno del marcador
+            fillOpacity: 1, // Opacidad del relleno
+            strokeWeight: 0 // Sin borde
+        }
     });
 
     // Carga la tabla y actualiza el mapa
@@ -62,16 +75,13 @@ function reloadTable() {
 
                         // Agrega la nueva posición a la polilínea suave
                         smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+
 
 
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        
-                         if (lastMarkerPosition) {
-                            marker.setPosition(lastMarkerPosition);
-                        } else {
-                            marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        }
-                        
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                       
                         
                         
                         // Centra el mapa en la ubicación de la primera fila
