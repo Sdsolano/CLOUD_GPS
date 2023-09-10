@@ -1,6 +1,7 @@
 let map;
 let marker;
 let polyline;
+let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una polilínea suave
 var previousMarkerPosition = null;
 
 function initMap() {
@@ -18,15 +19,15 @@ function initMap() {
         title: "Mi Marcador"
     });
 
-    //create an empty path for the polyline
+    // Crea una polilínea suave con MVCArray
     polyline = new google.maps.Polyline({
-        path: [],
+        path: smoothedPath,
         geodesic: true,
-        strokeColor: '#FF0000', 
-        strokeOpacity: 1.0, 
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
         strokeWeight: 2,
         map: map,
-    })
+    });
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -39,9 +40,6 @@ function reloadTable() {
         success: function (response) {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
-                polyline.setPath([]);
-                var smoothedPath=([]);
-            
 
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
@@ -57,28 +55,22 @@ function reloadTable() {
 
                 if (response.length > 0) {
                     var firstRow = response[0];
-                    
                     var firstLatitude = parseFloat(firstRow.Latitude);
                     var firstLongitude = parseFloat(firstRow.Longitude);
 
-
-                    if (!isNaN(lastLatitude) && !isNaN(lasttLongitude)) {
+                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-
-                         // Centra el mapa en la ubicación de la primera fila
-                         map.setCenter(new google.maps.LatLng(firsttLatitude, firstLongitude));
                         
-                        polyline.setPath(smoothedPath)
-                        smoothedPath.getPath().push(new google.maps.LatLng(firstLatitude,firstLongitude));
+                        // Agrega la nueva posición a la polilínea suave
+                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
                         
-                       
+                        // Centra el mapa en la ubicación de la primera fila
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
                 }
-                // para hacerlo suave
-               
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
             }
@@ -90,6 +82,5 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    
     setInterval(reloadTable, 7000);
 });
