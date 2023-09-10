@@ -23,7 +23,6 @@ function initMap() {
         strokeOpacity: 0.8,
         strokeWeight: 5,
         strokeColor: '#0000FF',
-        clickable: false,
     });
 
     // Carga la tabla y actualiza el mapa
@@ -76,11 +75,8 @@ function reloadTable() {
 
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
-
+    setInterval(reloadTable, 7000);
 });
-
-
-
 
 
 
