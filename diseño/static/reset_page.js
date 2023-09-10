@@ -1,6 +1,6 @@
 let map;
 let marker;
-let polyline = null;
+let polyline;
 
 function initMap() {
     // Inicializa el mapa
@@ -17,13 +17,23 @@ function initMap() {
         title: "Mi Marcador"
     });
 
+    // Crea una polilínea en el mapa
+    polyline = new google.maps.Polyline({
+        path: [], // Inicialmente, la polilínea está vacía
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        map: map,
+    });
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
 
 function reloadTable() {
     $.ajax({
-        url: "/components",
+        url: "/components", // Reemplaza esto con la URL correcta de tu servidor
         method: "GET",
         success: function (response) {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
@@ -48,13 +58,15 @@ function reloadTable() {
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        var newPosition = new google.maps.LatLng(firstLatitude, firstLongitude);
+                        marker.setPosition(newPosition);
+
+                        // Agrega la nueva posición a la polilínea
+                        var path = polyline.getPath();
+                        path.push(newPosition);
 
                         // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
-
-                        // polilíneas 
-                        
+                        map.setCenter(newPosition);
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
@@ -70,7 +82,7 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    
-    setInterval(reloadTable, 7000);
-});
+    initMap(); // Inicializa el mapa cuando se carga el documento
 
+    setInterval(reloadTable, 7000); // Actualiza la tabla cada 7 segundos
+});
