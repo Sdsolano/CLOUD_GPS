@@ -18,22 +18,19 @@ function initMap() {
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-       position: { lat: -0.5, lng: 0.5 },
         map: map,
         title: "Mi Marcador"
     });
 
     // Crea una polilínea suave con MVCArray
     polyline = new google.maps.Polyline({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        position: { lat: -0.5, lng: 0.5 },
-        path: smoothedPath,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        map: map,
-    });
+    path: smoothedPath, // Aquí debes usar "smoothedPath" en lugar de "position"
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+    map: map,
+});
 
     markerAtTip = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
