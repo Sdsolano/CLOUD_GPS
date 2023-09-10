@@ -45,6 +45,11 @@ function initMap() {
     // Carga la tabla y actualiza el mapa
     reloadTable();
     loadCoordinatesFromDatabase();
+
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        marker.setPosition(map.getCenter());
+    });
+
     
 }
 
