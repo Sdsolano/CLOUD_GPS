@@ -1,6 +1,7 @@
 let map;
 let marker;
 let polyline;
+let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una polilínea suave
 
 function initMap() {
     // Inicializa el mapa
@@ -17,9 +18,9 @@ function initMap() {
         title: "Mi Marcador"
     });
 
-    // Crea la polilínea en blanco
+    // Crea una polilínea suave con MVCArray
     polyline = new google.maps.Polyline({
-        path: [],
+        path: smoothedPath,
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
@@ -61,9 +62,10 @@ function reloadTable() {
                         var newPosition = new google.maps.LatLng(firstLatitude, firstLongitude);
                         marker.setPosition(newPosition);
 
-                        // Agrega la nueva posición a la polilínea
-                        var path = polyline.getPath();
-                        path.push(newPosition);
+                        // Agrega la nueva posición a la polilínea suave solo si es la primera vez
+                        if (smoothedPath.getLength() === 0) {
+                            smoothedPath.push(newPosition);
+                        }
 
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(newPosition);
@@ -80,11 +82,6 @@ function reloadTable() {
         }
     });
 }
-
-$(document).ready(function () {
-    setInterval(reloadTable, 7000);
-});
-
 
 $(document).ready(function () {
     setInterval(reloadTable, 7000);
