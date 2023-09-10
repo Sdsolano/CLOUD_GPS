@@ -10,6 +10,22 @@ function initMap() {
         minZoom: 12,
     });
 
+    // Crea el marcador en el mapa
+    marker = new google.maps.Marker({
+        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        map: map,
+        title: "Mi Marcador",
+    });
+
+    // Crea la polilínea en el mapa
+    polyline = new google.maps.Polyline({
+        map: map, // Asocia la polilínea directamente al mapa
+        strokeOpacity: 0.8,
+        strokeWeight: 5,
+        strokeColor: '#0000FF',
+        clickable: false,
+    });
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
@@ -37,30 +53,13 @@ function reloadTable() {
                 if (response.length > 0) {
                     var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
-                    // Inicializa el marcador solo en la primera llamada
-                    if (!marker) {
-                        marker = new google.maps.Marker({
-                            position: path[0],
-                            map: map,
-                            title: "Mi Marcador",
-                        });
-                    }
+                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    marker.setPosition(path[0]);
 
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(path[0]);
 
-                    // Inicializa la polilínea solo en la primera llamada
-                    if (!polyline) {
-                        polyline = new google.maps.Polyline({
-                            map: map,
-                            strokeOpacity: 0.8,
-                            strokeWeight: 5,
-                            strokeColor: '#0000FF',
-                            clickable: false,
-                        });
-                    }
-
-                    // Establece el camino de la polilínea sin volver a crearla
+                    // Establece el camino de la polilínea
                     polyline.setPath(path);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
@@ -77,7 +76,7 @@ function reloadTable() {
 
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
-    setInterval(reloadTable, 7000);
+
 });
 
 
