@@ -5,6 +5,7 @@ let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una pol
 var previousMarkerPosition = null;
 let markerAtTip;
 
+initMap();
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
