@@ -39,13 +39,21 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
+                polyline.setPath([]);
+
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
                 tablaHTML += "<tbody>";
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
+                    var latitude = parseFloat(row.Latitude);
+                    var longitude = parseFloat(row.Longitude);
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    
+                    if (!isNaN(latitude) && !isNaN(longitude)) {
+                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
+                    }
                 }
                 tablaHTML += "</tbody></table>";
 
