@@ -42,46 +42,8 @@ function reloadTable() {
 
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
-                tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-                tablaHTML += "<tbody>";
-                for (var i = 0; i < Math.min(response.length, 3); i++) {
-                    var row = response[i];
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-                }
-                tablaHTML += "</tbody></table>";
+                tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude
 
-                $("#tabla-contenido").html(tablaHTML);
-
-                if (response.length > 0) {
-                    var firstRow = response[0];
-                    var firstLatitude = parseFloat(firstRow.Latitude);
-                    var firstLongitude = parseFloat(firstRow.Longitude);
-
-                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
-                        // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        var newPosition = new google.maps.LatLng(firstLatitude, firstLongitude);
-                        marker.setPosition(newPosition);
-
-                        // Agrega la nueva posición a la polilínea suave solo si es la primera vez
-                        if (smoothedPath.getLength() === 0) {
-                            smoothedPath.push(newPosition);
-                        }
-
-                        // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(newPosition);
-                    } else {
-                        console.error("Las coordenadas de la primera fila no son números válidos.");
-                    }
-                }
-            } else {
-                console.error("La API de Google Maps no se ha cargado correctamente.");
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("AJAX request failed", error);
-        }
-    });
-}
 
 $(document).ready(function () {
     setInterval(reloadTable, 7000);
