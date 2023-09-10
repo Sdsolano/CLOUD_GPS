@@ -1,5 +1,5 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /home/ubuntu/CLOUD_GPS/
+  - source: CLOUD_GPS/
+    destination: /home/ubuntu/
