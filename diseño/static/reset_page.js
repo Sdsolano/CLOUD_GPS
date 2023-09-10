@@ -18,7 +18,7 @@ function initMap() {
     });
 
     //create an empty path for the polyline
-    polyline = new google.maps.polyline({
+    polyline = new google.maps.p=Polyline({
         path: [],
         geodesic: true,
         strokeColor: '#FF0000', 
@@ -50,7 +50,7 @@ function reloadTable() {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
                     var latitude = parseFloat(row.Latitude);
-                    var longitud = parseFloat(row.Longitude);
+                    var longitude = parseFloat(row.Longitude);
                     // Add coordinates to the polyline's path
                     if (!isNaN(latitude) && !isNaN(longitude)) {
                         polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
