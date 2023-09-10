@@ -57,10 +57,7 @@ function reloadTable() {
 
                 if (response.length > 0) {
                     var firstRow = response[0];
-                    vr = lastRow = response[response.length - 1];
-                    var lastLatitude = parseFloat(lastRow.Latitude);
-                    var lastLongitude = parseFloat(lastRow.Longitude);
-
+                    
                     var firstLatitude = parseFloat(firstRow.Latitude);
                     var firstLongitude = parseFloat(firstRow.Longitude);
 
@@ -73,7 +70,8 @@ function reloadTable() {
                          map.setCenter(new google.maps.LatLng(firsttLatitude, firstLongitude));
                         
                         polyline.setPath(smoothedPath)
-                        previousMarkerPosition = new google.maps.LatLng(firstLatitude, firstLongitude) ;
+                        smoothedPath.getPath().push(new google.maps.LatLng(firstLatitude,firstLongitude));
+                        
                        
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
