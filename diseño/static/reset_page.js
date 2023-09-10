@@ -1,3 +1,7 @@
+let map;
+let marker;
+let polyline = null;
+
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -16,7 +20,7 @@ function initMap() {
 
     // Crea la polilínea en el mapa
     polyline = new google.maps.Polyline({
-        map: marker.getMap(),
+        map: marker.getMap(), // Solo se llama una vez
         fixed: true,
         strokeOpacity: 0.8,
         strokeWeight: 5,
@@ -62,8 +66,6 @@ function reloadTable() {
 
                         // Actualiza la posición de la polilínea con las coordenadas de la primera fila
                         polyline.setPath(response.map(row => new google.maps.LatLng(row.Latitude, row.Longitude)));
-                        
-                        // No es necesario llamar a polyline.setMap() de nuevo
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
@@ -81,5 +83,7 @@ function reloadTable() {
 $(document).ready(function () {   
     setInterval(reloadTable, 7000);
 });
+
+
 
 
