@@ -65,7 +65,7 @@ function reloadTable() {
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
+                        polyline.getPath().push(new google.maps.LatLng(firstLatitude, firstLongitude));
 
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
