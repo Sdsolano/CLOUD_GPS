@@ -1,5 +1,6 @@
 let map;
 let marker;
+let polyline = null; // Polilínea inicializada como nula
 
 function initMap() {
     // Inicializa el mapa
@@ -34,7 +35,7 @@ function reloadTable() {
                 tablaHTML += "<tbody>";
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
                 }
                 tablaHTML += "</tbody></table>";
 
@@ -47,10 +48,14 @@ function reloadTable() {
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        var newPosition = new google.maps.LatLng(firstLatitude, firstLongitude);
+                        marker.setPosition(newPosition);
 
                         // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        map.setCenter(newPosition);
+
+                        // Crea o actualiza la polilínea
+                        updatePolyline(newPosition);
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
@@ -65,7 +70,25 @@ function reloadTable() {
     });
 }
 
+// Función para crear o actualizar la polilínea
+function updatePolyline(newPosition) {
+    if (!polyline) {
+        // Si la polilínea aún no existe, créala
+        polyline = new google.maps.Polyline({
+            path: [newPosition],
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map,
+        });
+    } else {
+        // Si la polilínea ya existe, agrégale la nueva posición
+        var path = polyline.getPath();
+        path.push(newPosition);
+    }
+}
+
 $(document).ready(function () {
-    
     setInterval(reloadTable, 7000);
 });
