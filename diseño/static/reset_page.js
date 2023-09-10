@@ -1,6 +1,7 @@
 let map;
 let marker;
 let polyline;
+var previousMarkerPosition = null;
 
 function initMap() {
     // Inicializa el mapa
@@ -56,29 +57,38 @@ function reloadTable() {
 
                 if (response.length > 0) {
                     var firstRow = response[0];
-                    var firstLatitude = parseFloat(firstRow.Latitude);
-                    var firstLongitude = parseFloat(firstRow.Longitude);
+                    vr = lastRow = response[response.length - 1];
+                    var lastLatitude = parseFloat(lastRow.Latitude);
+                    var lastLongitude = parseFloat(lastRow.Longitude);
 
-                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
+                    if (!isNaN(lastLatitude) && !isNaN(lasttLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        smoothedPath.getPath().push(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
 
+                         // Centra el mapa en la ubicación de la primera fila
+                         map.setCenter(new google.maps.LatLng(lasttLatitude, lastLongitude));
+                        
+                        
+                        if (previousMarkerPosition !== null) {
+                            var lineHeading = google.maps.geometry.spherical.computeHeading(previousMarkerPosition, smoothedPath[0]);
+                            var numInterpolatedPoints = 100; // Ajusta este valor según sea necesario
 
-                        // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                            // Interpola puntos a lo largo del camino entre la posición anterior y la nueva
+                            for (var j = 0; j < numInterpolatedPoints; j++) {
+                                var fraction = j / numInterpolatedPoints;
+                                var interpolatedPoint = google.maps.geometry.spherical.interpolate(previousMarkerPosition, smoothedPath[0], fraction);
+                                smoothedPath.unshift(interpolatedPoint);
+                            }
+                        }
+                        polyline.setPath(smoothedPath)
+                        previousMarkerPosition = new google.maps.LatLng(lastLatitude, lastLongitude) ;
+                       
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
                 }
                 // para hacerlo suave
-                if (smoothedPath.length > 0 ){
-                    var bounds = new google.maps.LatLngBounds();
-                    for (var j = 0; j < smoothedPath.length; j++) {
-                        bounds.extend(smoothedPath[j]);
-                    }
-                    map.fitBounds(bounds);
-                }
+               
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
             }
