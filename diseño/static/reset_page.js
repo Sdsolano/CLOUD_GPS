@@ -65,7 +65,7 @@ function reloadTable() {
 
 
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        
                          if (lastMarkerPosition) {
                             marker.setPosition(lastMarkerPosition);
                         } else {
