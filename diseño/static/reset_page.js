@@ -74,6 +74,7 @@ function reloadTable() {
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
 
                         // Agrega la nueva posición a la polilínea suave
+                        smoothedPath.clear();
                         smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
                         markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
