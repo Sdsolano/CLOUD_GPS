@@ -22,9 +22,9 @@ function initMap() {
         path: [],
         geodesic: true,
         strokeColor: '#FF0000', 
-        strokeOpacity: 1.0,  //line
-        strokeWeight: 2, //line width
-        map: map,
+        strokeOpacity: 1.0, 
+        strokeWeight: 2,
+        map: map
     })
 
     // Carga la tabla y actualiza el mapa
@@ -46,7 +46,6 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                    
                 }
                 tablaHTML += "</tbody></table>";
 
