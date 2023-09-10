@@ -20,7 +20,6 @@ function initMap() {
 
     // Crea la polilínea en el mapa
     polyline = new google.maps.Polyline({
-        map: marker.getMap(), // Solo se llama una vez
         fixed: true,
         strokeOpacity: 0.8,
         strokeWeight: 5,
@@ -64,7 +63,7 @@ function reloadTable() {
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                        // Actualiza la posición de la polilínea con las coordenadas de la primera fila
+                        // Agrega las coordenadas de cada punto al final de la polilínea
                         polyline.setPath(response.map(row => new google.maps.LatLng(row.Latitude, row.Longitude)));
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
@@ -83,6 +82,7 @@ function reloadTable() {
 $(document).ready(function () {   
     setInterval(reloadTable, 7000);
 });
+
 
 
 
