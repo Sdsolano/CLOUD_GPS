@@ -67,10 +67,10 @@ function reloadTable() {
 
                     if (!isNaN(lastLatitude) && !isNaN(lasttLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
                          // Centra el mapa en la ubicación de la primera fila
-                         map.setCenter(new google.maps.LatLng(lasttLatitude, lastLongitude));
+                         map.setCenter(new google.maps.LatLng(firsttLatitude, firstLongitude));
                         
                         
                         if (previousMarkerPosition !== null) {
@@ -85,7 +85,7 @@ function reloadTable() {
                             }
                         }
                         polyline.setPath(smoothedPath)
-                        previousMarkerPosition = new google.maps.LatLng(lastLatitude, lastLongitude) ;
+                        previousMarkerPosition = new google.maps.LatLng(firstLatitude, firstLongitude) ;
                        
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
