@@ -1,6 +1,6 @@
 let map;
 let marker;
-let polyline;
+let polyline = null;
 
 function initMap() {
     // Inicializa el mapa
@@ -14,17 +14,8 @@ function initMap() {
     marker = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
-        title: "Mi Marcador"
-    });
-
-    // Crea una polilínea en el mapa
-    polyline = new google.maps.Polyline({
-        path: [], // Inicialmente, la polilínea está vacía
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        map: map,
+        title: "Mi Marcador",
+        fixed: true
     });
 
     // Carga la tabla y actualiza el mapa
@@ -33,7 +24,7 @@ function initMap() {
 
 function reloadTable() {
     $.ajax({
-        url: "/components", // Reemplaza esto con la URL correcta de tu servidor
+        url: "/components",
         method: "GET",
         success: function (response) {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
@@ -58,15 +49,13 @@ function reloadTable() {
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        var newPosition = new google.maps.LatLng(firstLatitude, firstLongitude);
-                        marker.setPosition(newPosition);
-
-                        // Agrega la nueva posición a la polilínea
-                        var path = polyline.getPath();
-                        path.push(newPosition);
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
                         // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(newPosition);
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+
+                        // polilíneas 
+                        
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
@@ -82,7 +71,5 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    initMap(); // Inicializa el mapa cuando se carga el documento
-
-    setInterval(reloadTable, 7000); // Actualiza la tabla cada 7 segundos
+    setInterval(reloadTable, 7000);
 });
