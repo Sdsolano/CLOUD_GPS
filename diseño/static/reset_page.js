@@ -5,7 +5,7 @@ let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una pol
 var previousMarkerPosition = null;
 let markerAtTip;
 
-initMap();
+
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -46,12 +46,32 @@ function initMap() {
     // Carga la tabla y actualiza el mapa
     reloadTable();
     loadCoordinatesFromDatabase();
+    loadPolylineFromLocalStorage();
 
     google.maps.event.addListener(map, 'center_changed', function() {
         marker.setPosition(map.getCenter());
     });
+    
 
     
+}
+
+function savePolylineToLocalStorage() {
+    var polylineArray = smoothedPath.getArray().map(function (latLng) {
+        return { lat: latLng.lat(), lng: latLng.lng() };
+    });
+    localStorage.setItem('polyline', JSON.stringify(polylineArray));
+}
+
+// Carga la polilínea desde el almacenamiento local
+function loadPolylineFromLocalStorage() {
+    var polylineArray = JSON.parse(localStorage.getItem('polyline'));
+    if (Array.isArray(polylineArray)) {
+        smoothedPath.clear();
+        polylineArray.forEach(function (coord) {
+            smoothedPath.push(new google.maps.LatLng(coord.lat, coord.lng));
+        });
+    }
 }
 
 function loadCoordinatesFromDatabase() {
