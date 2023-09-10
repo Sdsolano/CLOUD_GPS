@@ -18,6 +18,22 @@ function initMap() {
         fixed: true
     });
 
+    // Crea la polilínea en el mapa
+    polyline = new google.maps.Polyline({
+        map: map,
+        fixed: true,
+        strokeOpacity: 0.8,
+        strokeWeight: 5,
+        strokeColor: '#0000FF',
+        points: [
+            new google.maps.LatLng(-0.5, 0.5),
+            new google.maps.LatLng(0.5, 0.5),
+            new google.maps.LatLng(0.5, -0.5),
+            new google.maps.LatLng(-0.5, -0.5)
+        ],
+        smoothFactor: 0.9
+    });
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
@@ -54,8 +70,8 @@ function reloadTable() {
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                        // polilíneas 
-                        
+                        // Actualiza la posición de la polilínea con la posición del marcador
+                        polyline.setPosition(marker.getPosition());
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
@@ -70,6 +86,8 @@ function reloadTable() {
     });
 }
 
-$(document).ready(function () {
+$(document).ready(function () {   
     setInterval(reloadTable, 7000);
 });
+
+
