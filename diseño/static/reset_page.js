@@ -25,12 +25,6 @@ function initMap() {
         strokeOpacity: 0.8,
         strokeWeight: 5,
         strokeColor: '#0000FF',
-        points: [
-            new google.maps.LatLng(-0.5, 0.5),
-            new google.maps.LatLng(0.5, 0.5),
-            new google.maps.LatLng(0.5, -0.5),
-            new google.maps.LatLng(-0.5, -0.5)
-        ],
         smoothFactor: 0.9
     });
 
