@@ -47,10 +47,7 @@ function reloadTable() {
                 tablaHTML += "<tbody>";
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
-                    var latitude = parseFloat(row.Latitude);
-                    var longitude = parseFloat(row.Longitude);
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                    
                     
                 }
                 tablaHTML += "</tbody></table>";
@@ -65,7 +62,6 @@ function reloadTable() {
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        polyline.getPath().push(new google.maps.LatLng(firstLatitude, firstLongitude));
 
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
