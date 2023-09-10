@@ -32,19 +32,17 @@ function initMap() {
     map: map,
 });
 
-    markerAtTip = new google.maps.Marker({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+   markerAtTip = new google.maps.Marker({
+    map: map,
+    icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 20,
+        fillColor: '#FF0000',
+        fillOpacity: 1,
+        strokeWeight: 0
+    }
+});
 
-        map: map,
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE, // Usa un símbolo circular como marcador
-            scale: 20, // Tamaño del marcador
-            fillColor: '#FF0000', // Color de relleno del marcador
-            fillOpacity: 1, // Opacidad del relleno
-            strokeWeight: 0 // Sin borde
-        }
-    });
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
