@@ -15,7 +15,7 @@ function initMap() {
 
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
-       // position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+       position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador"
     });
@@ -35,7 +35,7 @@ function initMap() {
         map: map,
         icon: {
             path: google.maps.SymbolPath.CIRCLE, // Usa un símbolo circular como marcador
-            scale: 5, // Tamaño del marcador
+            scale: 20, // Tamaño del marcador
             fillColor: '#FF0000', // Color de relleno del marcador
             fillOpacity: 1, // Opacidad del relleno
             strokeWeight: 0 // Sin borde
@@ -53,7 +53,6 @@ function reloadTable() {
         success: function (response) {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
-                smoothedPath.clear();
 
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
@@ -75,17 +74,14 @@ function reloadTable() {
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
 
                         // Agrega la nueva posición a la polilínea suave
-                        var newPosition = new google.maps.LatLng(firstLatitude,firstLongitude)
-
-                        marker.setPosition(newPosition)
-
-                        smoothedPath.push(newPosition)
-                        markerAtTip.setPosition(newPosition);
+                        smoothedPath.clear();
+                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
 
 
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
-                       // marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
                        
                         
                         
