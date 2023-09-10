@@ -20,7 +20,7 @@ function initMap() {
 
     // Crea la polilínea en el mapa
     polyline = new google.maps.Polyline({
-        map: marker, // Solo se llama una vez
+        map: map, // Solo se llama una vez
         fixed: true,
         strokeOpacity: 0.8,
         strokeWeight: 5,
