@@ -46,7 +46,7 @@ function initMap() {
     reloadTable();
     loadCoordinatesFromDatabase();
 
-    google.maps.event.addListener(map, 'zoom_changed', function() {
+    google.maps.event.addListener(map, 'center_changed', function() {
         marker.setPosition(map.getCenter());
     });
 
