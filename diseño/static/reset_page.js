@@ -3,14 +3,15 @@ var marker;
 
 function initMap() {
     // Inicializa el mapa
-    map = L.map('map').setView([0, 0], 13);
+    map = L.map('map').setView([10.0, -74.0], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     // Crea el marcador en el mapa
-    marker = L.marker([0, 0]).addTo(map).bindPopup("Mi Marcador").openPopup();
+    marker = L.marker([10.0, -74.0]).addTo(map);
+    marker.bindPopup("Marcador").openPopup();
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -21,35 +22,28 @@ function reloadTable() {
         url: "/components",
         method: "GET",
         success: function (response) {
-            if (typeof L !== 'undefined') {
-                // Verifica si Leaflet se ha cargado
+            // Actualiza la tabla con los últimos tres datos
+            var tablaHTML = "<table>";
+            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+            tablaHTML += "<tbody>";
+            for (var i = 0; i < Math.min(response.length, 3); i++) {
+                var row = response[i];
+                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+            }
+            tablaHTML += "</tbody></table>";
 
-                // Actualiza la tabla con los últimos tres datos
-                var tablaHTML = "<table>";
-                tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-                tablaHTML += "<tbody>";
-                for (var i = 0; i < Math.min(response.length, 3); i++) {
-                    var row = response[i];
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-                }
-                tablaHTML += "</tbody></table>";
+            $("#tabla-contenido").html(tablaHTML);
 
-                $("#tabla-contenido").html(tablaHTML);
+            if (response.length > 0) {
+                var coords = [parseFloat(response[0].Latitude), parseFloat(response[0].Longitude)];
 
-                if (response.length > 0) {
-                    var latLng = [parseFloat(response[0].Latitude), parseFloat(response[0].Longitude)];
+                // Actualiza la posición del marcador con las coordenadas de la primera fila
+                marker.setLatLng(coords);
 
-                    // Actualiza la posición del marcador
-                    marker.setLatLng(latLng).update();
-
-                    // Centra el mapa en la ubicación
-                    map.setView(latLng);
-
-                } else {
-                    console.error("No se encontraron datos para mostrar en el mapa.");
-                }
+                // Centra el mapa en la ubicación de la primera fila
+                map.setView(coords);
             } else {
-                console.error("Leaflet no se ha cargado correctamente.");
+                console.error("No se encontraron datos para mostrar en el mapa.");
             }
         },
         error: function (xhr, status, error) {
@@ -58,7 +52,7 @@ function reloadTable() {
     });
 }
 
-$(document).ready(function () {
-    initMap();
+$(document).ready(function () {   
+    initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
