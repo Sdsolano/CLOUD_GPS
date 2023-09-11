@@ -1,7 +1,7 @@
 var map;
 var marker;
 var polyline;
-var coordenadas = [];
+var polylineOptions;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -10,17 +10,17 @@ function initMap() {
         maxZoom: 20, // Nivel de zoom máximo (aumentado a 20 para permitir más zoom)
         zoom: 10 // Nivel de zoom inicial
     });
-    polyline = new google.maps.Polyline({
-        path: [],
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-    });
-    polyline.setMap(map);
+    
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
 
     // Actualizar la tabla cada 5 segundos (5000 milisegundos)
     setInterval(actualizarDatos, 5000);
+
+    var path = new google.maps.Map.MVCArray();
+    polylineOptions = {path: path, strokeColor:"#ff0000", strokeWeight:10};
+    polyline = new google.maps.Polyline(polylineOptions);
+    polyline.setMap(map);
+
 }
 
 function actualizarDatos() {
@@ -45,10 +45,10 @@ function actualizarDatos() {
                 });
 
                 // Agregar la coordenada a la polilínea y mantener un registro
-                var path = polyline.getPath();
-                path.push(marker.getPosition());
-                coordenadas.push(marker.getPosition());
-
+                
+                
+                path.push(new google.maps.LatLng(parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)) );
+                
                 // Centrar el mapa en la primera coordenada
                 map.setCenter(marker.getPosition());
 
