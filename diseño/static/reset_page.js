@@ -1,5 +1,7 @@
 let map;
 let marker;
+let polyline; // Variable para la polilínea
+let previousMarkerPositions = []; // Arreglo para almacenar coordenadas anteriores
 
 function initMap() {
     // Inicializa el mapa
@@ -16,11 +18,23 @@ function initMap() {
         title: "Mi Marcador",
     });
 
+    // Inicializa la polilínea sin ningún punto
+    polyline = new google.maps.Polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: '#FF0000', // Color de la línea
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+
+    // Agrega la polilínea al mapa
+    polyline.setMap(map);
+
     // Carga la tabla y actualiza el mapa
-    reloadTableAndMap();
+    reloadTable();
 }
 
-function reloadTableAndMap() {
+function reloadTable() {
     $.ajax({
         url: "/components",
         method: "GET",
@@ -28,25 +42,7 @@ function reloadTableAndMap() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
-                if (response.length > 0) {
-                    // Obtiene las coordenadas geográficas de la primera fila de la respuesta AJAX
-                    var firstRow = response[0];
-                    var latitude = parseFloat(firstRow.Latitude);
-                    var longitude = parseFloat(firstRow.Longitude);
-
-                    // Crea un objeto LatLng con las coordenadas geográficas
-                    var firstRowLatLng = new google.maps.LatLng(latitude, longitude);
-
-                    // Actualiza la posición del marcador con las coordenadas geográficas
-                    marker.setPosition(firstRowLatLng);
-
-                    // Centra el mapa en la ubicación de las coordenadas geográficas
-                    map.setCenter(firstRowLatLng);
-                } else {
-                    console.error("No se encontraron datos para mostrar en el mapa.");
-                }
-
-                // Actualiza la tabla con los datos de la respuesta AJAX
+                // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
                 tablaHTML += "<tbody>";
@@ -57,6 +53,24 @@ function reloadTableAndMap() {
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
+
+                if (response.length > 0) {
+                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+
+                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    marker.setPosition(path[0]);
+
+                    // Agrega la nueva posición al arreglo de coordenadas anteriores
+                    previousMarkerPositions.push(path[0]);
+
+                    // Establece el camino de la polilínea con todas las coordenadas anteriores
+                    polyline.setPath(previousMarkerPositions);
+
+                    // Centra el mapa en la ubicación de la primera fila
+                    map.setCenter(path[0]);
+                } else {
+                    console.error("No se encontraron datos para mostrar en el mapa.");
+                }
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
             }
@@ -69,5 +83,5 @@ function reloadTableAndMap() {
 
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
-    setInterval(reloadTableAndMap, 7000); // Actualiza tanto la tabla como el mapa
+    setInterval(reloadTable, 7000);
 });
