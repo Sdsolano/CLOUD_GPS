@@ -1,6 +1,5 @@
 let map;
 let marker;
-let polyline; // Variable para la polilínea
 let previousMarkerPositions = []; // Arreglo para almacenar coordenadas anteriores
 
 function initMap() {
@@ -17,19 +16,6 @@ function initMap() {
         map: map,
         title: "Mi Marcador",
     });
-
-    // Inicializa la polilínea sin ningún punto
-    polyline = new google.maps.Polyline({
-        path: [], // Inicialmente vacío
-        geodesic: true,
-        strokeColor: '#FF0000', // Color de la línea
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        clickable: false // Evita la interacción con la polilínea
-    });
-
-    // Agrega la polilínea al mapa
-    polyline.setMap(map);
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -56,24 +42,26 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var path = response.map(row => {
-                        return {
-                            lat: parseFloat(row.Latitude),
-                            lng: parseFloat(row.Longitude)
-                        };
-                    });
-
-                    // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(path[0]);
+                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
                     // Agrega la nueva posición al arreglo de coordenadas anteriores
                     previousMarkerPositions.push(path[0]);
 
-                    // Establece el camino de la polilínea con todas las coordenadas anteriores
-                    polyline.setPath(previousMarkerPositions);
+                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    marker.setPosition(path[0]);
 
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(path[0]);
+
+                    // Crea una polilínea que conecta todas las coordenadas anteriores del marcador
+                    var polyline = new google.maps.Polyline({
+                        path: previousMarkerPositions,
+                        geodesic: true,
+                        strokeColor: '#FF0000', // Color de la línea
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                    });
+                    polyline.setMap(map);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
