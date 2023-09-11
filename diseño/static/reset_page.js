@@ -9,7 +9,7 @@ function initMap() {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-
+    marker = L.marker([10.0, -74.0]).addTo(map);
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
