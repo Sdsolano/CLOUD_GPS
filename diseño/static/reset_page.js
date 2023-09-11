@@ -1,26 +1,24 @@
 // Define variables globales para el mapa y el marcador
 let map;
-let marker;
+
+// Coordenadas geográficas fijas para el marcador
+const fixedLatLng = [0, 0]; // Reemplaza estas coordenadas con las que desees
 
 // Función para inicializar el mapa con Leaflet
 function initMap() {
-    if (!map) { // Verifica si el mapa aún no se ha inicializado
-        // Inicializa el mapa con Leaflet
-        map = L.map('map').setView([0, 0], 13);
+    // Inicializa el mapa con Leaflet
+    map = L.map('map').setView([0, 0], 13);
 
-        // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-    }
+    // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
-    if (!marker) { // Verifica si el marcador aún no se ha creado
-        // Crea un marcador en el mapa en una posición inicial
-        marker = L.marker([0, 0]).addTo(map);
-    }
+    // Crea un marcador en la posición geográfica fija
+    const marker = L.marker(fixedLatLng).addTo(map);
 }
 
-// Función para cargar y actualizar la tabla y la posición del marcador
+// Función para cargar y actualizar la tabla
 function reloadTable() {
     $.ajax({
         url: "/components",
@@ -39,18 +37,8 @@ function reloadTable() {
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
-
-                // Obtén las coordenadas de la primera fila de la tabla
-                var firstRow = response[0];
-                var latLng = [parseFloat(firstRow.Latitude), parseFloat(firstRow.Longitude)];
-
-                // Actualiza la posición del marcador con las coordenadas de la primera fila
-                marker.setLatLng(latLng).update();
-
-                // Centra el mapa en la ubicación de la primera fila
-                map.setView(latLng);
             } else {
-                console.error("No se encontraron datos para mostrar en el mapa.");
+                console.error("No se encontraron datos para mostrar en la tabla.");
             }
         },
         error: function (xhr, status, error) {
@@ -60,7 +48,7 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    initMap(); // Llama a la función initMap para inicializar el mapa (solo se ejecutará la primera vez)
+    initMap(); // Llama a la función initMap para inicializar el mapa
     reloadTable();
     setInterval(reloadTable, 7000);
 });
