@@ -1,26 +1,21 @@
 var map;
 var marker;
-var polyline;
 var polylineOptions;
+var allCoordinates = [];
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 0, lng: 0 }, // Centro del mapa inicial
-        minZoom: 12, // Nivel de zoom mínimo (ajusta este valor según tus necesidades)
-        maxZoom: 20, // Nivel de zoom máximo (aumentado a 20 para permitir más zoom)
-        zoom: 10 // Nivel de zoom inicial
+        center: { lat: 0, lng: 0 },
+        minZoom: 12,
+        maxZoom: 20,
+        zoom: 10
     });
-    
-    actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
+
+    // Llama a la función para cargar los datos y el mapa inicialmente
+    actualizarDatos();
 
     // Actualizar la tabla cada 5 segundos (5000 milisegundos)
     setInterval(actualizarDatos, 5000);
-
-    var path = new google.maps.Map.MVCArray();
-    polylineOptions = {path: path, strokeColor:"#ff0000", strokeWeight:10};
-    polyline = new google.maps.Polyline(polylineOptions);
-    polyline.setMap(map);
-
 }
 
 function actualizarDatos() {
@@ -34,23 +29,35 @@ function actualizarDatos() {
             }
 
             if (respuesta.length > 0) {
-                // Obtener solo el primer elemento de la respuesta
-                var primeraCoordenada = respuesta[0];
+                // Obtener todas las coordenadas de la respuesta
+                var coordenadas = respuesta.map(function (fila) {
+                    return new google.maps.LatLng(parseFloat(fila.Latitude), parseFloat(fila.Longitude));
+                });
+
+                // Agregar las coordenadas actuales al arreglo global
+                allCoordinates = allCoordinates.concat(coordenadas);
+
+                // Crear una nueva polilínea con todas las coordenadas acumuladas
+                if (polyline) {
+                    polyline.setPath(allCoordinates);
+                } else {
+                    polyline = new google.maps.Polyline({
+                        path: allCoordinates,
+                        strokeColor: "#ff0000",
+                        strokeWeight: 10,
+                        map: map
+                    });
+                }
 
                 // Marcar el mapa con la primera coordenada
                 marker = new google.maps.Marker({
-                    position: { lat: parseFloat(primeraCoordenada.Latitude), lng: parseFloat(primeraCoordenada.Longitude) },
+                    position: coordenadas[0],
                     map: map,
-                    title: "Ubicación " + primeraCoordenada.ID
+                    title: "Ubicación " + respuesta[0].ID
                 });
 
-                // Agregar la coordenada a la polilínea y mantener un registro
-                
-                
-                path.push(new google.maps.LatLng(parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)) );
-                
                 // Centrar el mapa en la primera coordenada
-                map.setCenter(marker.getPosition());
+                map.setCenter(coordenadas[0]);
 
                 // Construir la tabla con todos los datos de la respuesta JSON
                 var tablaHTML = "<table><thead><tr><th>ID</th><th>Latitud</th><th>Longitud</th><th>Timestamp</th></tr></thead><tbody>";
@@ -70,3 +77,4 @@ function actualizarDatos() {
 
 // Llama a la función initMap al cargar la página
 google.maps.event.addDomListener(window, 'load', initMap);
+
