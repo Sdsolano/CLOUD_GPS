@@ -1,4 +1,4 @@
-<script>
+
     var map;
     var markers = [];
 
@@ -54,4 +54,4 @@
 
     // Llama a la función initMap al cargar la página
     google.maps.event.addDomListener(window, 'load', initMap);
-</script>
+
