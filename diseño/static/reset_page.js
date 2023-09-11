@@ -15,6 +15,7 @@ function initMap() {
     marker = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
+        fixed: true,
         title: "Mi Marcador",
     });
 
