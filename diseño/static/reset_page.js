@@ -16,7 +16,7 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
-        fixed: true,
+      
     });
 
     // Crea una polilínea en el mapa con la opción geodesic
@@ -81,3 +81,5 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
+
+
