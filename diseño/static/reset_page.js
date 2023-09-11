@@ -1,6 +1,6 @@
 let map;
 let marker;
-
+let previousMarkerPositions = []; // Arreglo para almacenar coordenadas anteriores
 
 function initMap() {
     // Inicializa el mapa
@@ -47,10 +47,21 @@ function reloadTable() {
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
                     marker.setPosition(path[0]);
 
+                    // Agrega la nueva posición al arreglo de coordenadas anteriores
+                    previousMarkerPositions.push(path[0]);
+
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(path[0]);
 
-                    
+                    // Crea una polilínea que conecta todas las coordenadas anteriores del marcador
+                    var polyline = new google.maps.Polyline({
+                        path: previousMarkerPositions,
+                        geodesic: true,
+                        strokeColor: '#FF0000', // Color de la línea
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                    });
+                    polyline.setMap(map);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -68,7 +79,3 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
-
-
-
-
