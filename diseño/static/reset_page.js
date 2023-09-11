@@ -75,4 +75,6 @@ function reloadTable() {
 }
 
 $(document).ready(function () {   
-    initMap();
+    initMap(); // Llama a la función initMap para inicializar el mapa
+    setInterval(reloadTable, 7000);
+});
