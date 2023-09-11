@@ -1,34 +1,29 @@
+// Define variables globales para el mapa y el marcador
 let map;
 let marker;
 
-
+// Función para inicializar el mapa con Leaflet
 function initMap() {
-    // Inicializa el mapa
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        zoom: 13,
-        minZoom: 12,
-    });
+    // Inicializa el mapa con Leaflet
+    map = L.map('map').setView([0, 0], 13);
 
-    // Crea el marcador en el mapa
-    marker = new google.maps.Marker({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        map: map,
-        title: "Mi Marcador",
-    });
+    // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
-    // Carga la tabla y actualiza el mapa
-    reloadTable();
+    // Crea un marcador en el mapa
+    marker = L.marker([0, 0]).addTo(map);
 }
 
+// Función para cargar y actualizar la tabla y el mapa
 function reloadTable() {
     $.ajax({
         url: "/components",
         method: "GET",
         success: function (response) {
-            if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-                // Verifica si la API de Google Maps se ha cargado
-
+            // Verifica si la respuesta contiene datos
+            if (response.length > 0) {
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
@@ -41,21 +36,15 @@ function reloadTable() {
 
                 $("#tabla-contenido").html(tablaHTML);
 
-                if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                var latLng = [parseFloat(response[0].Latitude), parseFloat(response[0].Longitude)];
 
-                    // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(path[0]);
+                // Actualiza la posición del marcador con las coordenadas de la primera fila
+                marker.setLatLng(latLng).update();
 
-                    // Centra el mapa en la ubicación de la primera fila
-                    map.setCenter(path[0]);
-
-                    
-                } else {
-                    console.error("No se encontraron datos para mostrar en el mapa.");
-                }
+                // Centra el mapa en la ubicación de la primera fila
+                map.setView(latLng, 13);
             } else {
-                console.error("La API de Google Maps no se ha cargado correctamente.");
+                console.error("No se encontraron datos para mostrar en el mapa.");
             }
         },
         error: function (xhr, status, error) {
@@ -64,7 +53,8 @@ function reloadTable() {
     });
 }
 
-$(document).ready(function () {   
+$(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
+    reloadTable();
     setInterval(reloadTable, 7000);
 });
