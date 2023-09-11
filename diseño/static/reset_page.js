@@ -1,13 +1,21 @@
 var map;
 var marker;
+var polyline;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 0, lng: 0 }, // Centro del mapa inicial
-        minZoom: 10, // Nivel de zoom mínimo (ajusta este valor según tus necesidades)
+        minZoom: 5, // Nivel de zoom mínimo (ajusta este valor según tus necesidades)
         maxZoom: 20, // Nivel de zoom máximo (aumentado a 20 para permitir más zoom)
         zoom: 10 // Nivel de zoom inicial
     });
+    polyline = new google.maps.Polyline({
+        path: [],
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+    polyline.setMap(map);
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
 
     // Actualizar la tabla cada 5 segundos (5000 milisegundos)
@@ -34,6 +42,10 @@ function actualizarDatos() {
                     map: map,
                     title: "Ubicación " + primeraCoordenada.ID
                 });
+
+                // Agregar la coordenada a la polilínea
+                var path = polyline.getPath();
+                path.push(marker.getPosition());
 
                 // Centrar el mapa en la primera coordenada
                 map.setCenter(marker.getPosition());
