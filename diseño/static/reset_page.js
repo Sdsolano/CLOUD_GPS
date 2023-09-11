@@ -63,7 +63,7 @@ function reloadTable() {
 
                     // Centra el mapa en la ubicación de la primera fila y ajusta el zoom
                     map.setCenter(path[0]);
-                    map.setZoom(13); // Puedes ajustar el valor del zoom según tus preferencias
+                    map.fitBounds(polyline.getBounds()); // Ajusta el zoom para que abarque la polilínea
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
