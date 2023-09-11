@@ -5,7 +5,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 0, lng: 0 }, // Centro del mapa inicial
         minZoom: 5,
-        maxZoom: 10, 
+        maxZoom: 15, 
     });
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
 }
