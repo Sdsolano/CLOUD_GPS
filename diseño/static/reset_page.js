@@ -4,16 +4,20 @@ let marker;
 
 // Función para inicializar el mapa con Leaflet
 function initMap() {
-    // Inicializa el mapa con Leaflet
-    map = L.map('map').setView([0, 0], 13);
+    if (!map) { // Verifica si el mapa aún no se ha inicializado
+        // Inicializa el mapa con Leaflet
+        map = L.map('map').setView([0, 0], 13);
 
-    // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map);
+        // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+    }
 
-    // Crea un marcador en el mapa en una posición inicial
-    marker = L.marker([0, 0]).addTo(map);
+    if (!marker) { // Verifica si el marcador aún no se ha creado
+        // Crea un marcador en el mapa en una posición inicial
+        marker = L.marker([0, 0]).addTo(map);
+    }
 }
 
 // Función para cargar y actualizar la tabla y la posición del marcador
@@ -56,7 +60,7 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    initMap(); // Llama a la función initMap para inicializar el mapa
+    initMap(); // Llama a la función initMap para inicializar el mapa (solo se ejecutará la primera vez)
     reloadTable();
     setInterval(reloadTable, 7000);
 });
