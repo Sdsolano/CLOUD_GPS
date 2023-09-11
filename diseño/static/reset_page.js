@@ -12,11 +12,11 @@ function initMap() {
         maxZoom: 19,
     }).addTo(map);
 
-    // Crea un marcador en el mapa
+    // Crea un marcador en el mapa en una posición inicial
     marker = L.marker([0, 0]).addTo(map);
 }
 
-// Función para cargar y actualizar la tabla y el mapa
+// Función para cargar y actualizar la tabla y la posición del marcador
 function reloadTable() {
     $.ajax({
         url: "/components",
@@ -36,13 +36,15 @@ function reloadTable() {
 
                 $("#tabla-contenido").html(tablaHTML);
 
-                var latLng = [parseFloat(response[0].Latitude), parseFloat(response[0].Longitude)];
+                // Obtén las coordenadas de la primera fila de la tabla
+                var firstRow = response[0];
+                var latLng = [parseFloat(firstRow.Latitude), parseFloat(firstRow.Longitude)];
 
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng(latLng).update();
 
                 // Centra el mapa en la ubicación de la primera fila
-                map.setView(latLng, 13);
+                map.setView(latLng);
             } else {
                 console.error("No se encontraron datos para mostrar en el mapa.");
             }
