@@ -1,5 +1,6 @@
 // Define variables globales para el mapa y el marcador
 let map;
+let marker;
 
 // Coordenadas geográficas fijas para el marcador
 const fixedLatLng = [0, 0]; // Reemplaza estas coordenadas con las que desees
@@ -14,8 +15,8 @@ function initMap() {
         maxZoom: 19,
     }).addTo(map);
 
-    // Crea un marcador en la posición geográfica fija
-    const marker = L.marker(fixedLatLng).addTo(map);
+    // Crea un marcador en la posición geográfica fija, pero NO lo agregues al mapa aún
+    marker = L.marker(fixedLatLng);
 }
 
 // Función para cargar y actualizar la tabla
@@ -37,6 +38,21 @@ function reloadTable() {
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
+
+                // Obtén las coordenadas de la primera fila de la tabla
+                var firstRow = response[0];
+                var latLng = [parseFloat(firstRow.Latitude), parseFloat(firstRow.Longitude)];
+
+                // Actualiza la posición del marcador con las coordenadas de la primera fila
+                marker.setLatLng(latLng);
+
+                // Si el marcador aún no está en el mapa, agrégalo
+                if (!map.hasLayer(marker)) {
+                    marker.addTo(map);
+                }
+
+                // Centra el mapa en la ubicación de la primera fila
+                map.setView(latLng);
             } else {
                 console.error("No se encontraron datos para mostrar en la tabla.");
             }
