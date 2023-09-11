@@ -1,7 +1,5 @@
 let map;
 let marker;
-let polyline; // Variable para la polilínea
-let previousMarkerPositions = []; // Arreglo para almacenar coordenadas anteriores
 
 function initMap() {
     // Inicializa el mapa
@@ -18,24 +16,6 @@ function initMap() {
         title: "Mi Marcador",
     });
 
-    // Inicializa la polilínea sin ningún punto
-    polyline = new google.maps.Polyline({
-        path: [],
-        geodesic: true,
-        strokeColor: '#FF0000', // Color de la línea
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-    });
-
-    // Agrega la polilínea al mapa
-    polyline.setMap(map);
-
-    // Escucha el evento de cambio de zoom
-    google.maps.event.addListener(map, 'zoom_changed', function() {
-        // Actualiza la polilínea cuando cambia el zoom
-        updatePolyline();
-    });
-
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
@@ -48,32 +28,16 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
-                // Actualiza la tabla con los últimos tres datos
-                var tablaHTML = "<table>";
-                tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
-                tablaHTML += "<tbody>";
-                for (var i = 0; i < Math.min(response.length, 3); i++) {
-                    var row = response[i];
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                }
-                tablaHTML += "</tbody></table>";
-
-                $("#tabla-contenido").html(tablaHTML);
-
                 if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    // Obtiene las coordenadas de la primera fila de la respuesta
+                    var firstRow = response[0];
+                    var firstRowLatLng = new google.maps.LatLng(parseFloat(firstRow.Latitude), parseFloat(firstRow.Longitude));
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(path[0]);
-
-                    // Agrega la nueva posición al arreglo de coordenadas anteriores
-                    previousMarkerPositions.push(path[0]);
-
-                    // Establece el camino de la polilínea con todas las coordenadas anteriores
-                    polyline.setPath(previousMarkerPositions);
+                    marker.setPosition(firstRowLatLng);
 
                     // Centra el mapa en la ubicación de la primera fila
-                    map.setCenter(path[0]);
+                    map.setCenter(firstRowLatLng);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -85,19 +49,6 @@ function reloadTable() {
             console.error("AJAX request failed", error);
         }
     });
-}
-
-function updatePolyline() {
-    // Actualiza la polilínea cuando cambia el zoom
-    polyline.setMap(null); // Elimina la polilínea actual del mapa
-    polyline = new google.maps.Polyline({
-        path: previousMarkerPositions,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-    });
-    polyline.setMap(map); // Agrega la nueva polilínea al mapa
 }
 
 $(document).ready(function () {   
