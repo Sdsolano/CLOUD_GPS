@@ -4,6 +4,8 @@ var marker;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 0, lng: 0 }, // Centro del mapa inicial
+        minZoom: 5, // Nivel de zoom mínimo (ajusta este valor según tus necesidades)
+        maxZoom: 15, // Nivel de zoom máximo (ajusta este valor según tus necesidades)
         zoom: 10 // Nivel de zoom inicial
     });
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
