@@ -1,6 +1,6 @@
 let map;
 let marker;
-
+let polyline;
 
 function initMap() {
     // Inicializa el mapa
@@ -16,6 +16,17 @@ function initMap() {
         map: map,
         title: "Mi Marcador",
     });
+
+    // Inicializa la polilínea
+    polyline = new google.maps.Polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
+    polyline.setMap(map);
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -44,13 +55,15 @@ function reloadTable() {
                 if (response.length > 0) {
                     var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
+                    // Agrega las coordenadas a la polilínea
+                    polyline.setPath(path);
+
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
                     marker.setPosition(path[0]);
 
-                    // Centra el mapa en la ubicación de la primera fila
+                    // Centra el mapa en la ubicación de la primera fila y ajusta el zoom
                     map.setCenter(path[0]);
-
-                    
+                    map.setZoom(13); // Puedes ajustar el valor del zoom según tus preferencias
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
