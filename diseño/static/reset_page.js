@@ -6,19 +6,13 @@ function initMap() {
 
     // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18, // Nivel de zoom máximo
+        maxZoom: 15, // Nivel de zoom máximo
         minZoom: 5, // Nivel de zoom mínimo
     }).addTo(map);
 
-    // Crea el marcador inicial en una ubicación ficticia (será actualizado luego)
-    marker = L.marker([0, 0]).addTo(map);
+    marker = L.marker([0, 0]).addTo(map); // Agrega el marcador al mapa con una posición inicial
 
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
-
-    // Agrega un evento de zoom para manejar el marcador
-    map.on('zoomend', function () {
-        actualizarMarcador();
-    });
 
     // Actualizar la tabla cada 5 segundos (5000 milisegundos)
     setInterval(actualizarDatos, 5000);
@@ -35,10 +29,8 @@ function actualizarDatos() {
                 // Actualiza la posición del marcador con las coordenadas de la primera coordenada
                 marker.setLatLng([parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)]);
 
-                // Centra el mapa en la nueva posición del marcador solo si el zoom no ha cambiado
-                if (!map.isZooming()) {
-                    map.setView([parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)]);
-                }
+                // Centra el mapa en la nueva posición del marcador
+                map.setView([parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)]);
 
                 // Construye la tabla con todos los datos de la respuesta JSON
                 var tablaHTML = "<table><thead><tr><th>ID</th><th>Latitud</th><th>Longitud</th><th>Timestamp</th></tr></thead><tbody>";
@@ -54,11 +46,6 @@ function actualizarDatos() {
             }
         }
     });
-}
-
-function actualizarMarcador() {
-    // Actualiza la posición del marcador cuando cambia el zoom
-    marker.setLatLng(map.getCenter());
 }
 
 // Llama a la función initMap al cargar la página
