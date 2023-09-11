@@ -29,14 +29,18 @@ function reloadTable() {
                 // Verifica si la API de Google Maps se ha cargado
 
                 if (response.length > 0) {
-                    // Obtiene las coordenadas de la primera fila de la respuesta
+                    // Obtiene las coordenadas geográficas de la primera fila de la respuesta AJAX
                     var firstRow = response[0];
-                    var firstRowLatLng = new google.maps.LatLng(parseFloat(firstRow.Latitude), parseFloat(firstRow.Longitude));
+                    var latitude = parseFloat(firstRow.Latitude);
+                    var longitude = parseFloat(firstRow.Longitude);
 
-                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    // Crea un objeto LatLng con las coordenadas geográficas
+                    var firstRowLatLng = new google.maps.LatLng(latitude, longitude);
+
+                    // Actualiza la posición del marcador con las coordenadas geográficas
                     marker.setPosition(firstRowLatLng);
 
-                    // Centra el mapa en la ubicación de la primera fila
+                    // Centra el mapa en la ubicación de las coordenadas geográficas
                     map.setCenter(firstRowLatLng);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
