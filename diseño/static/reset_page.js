@@ -15,7 +15,6 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
-        fixed:true,
     });
 
     // Crea una polilínea vacía
@@ -25,7 +24,6 @@ function initMap() {
         strokeColor: '#FF0000', // Color de la línea (rojo en este caso)
         strokeOpacity: 1.0,
         strokeWeight: 2
-        fixed:true,
     });
 
     // Asigna la polilínea al mapa
@@ -83,3 +81,5 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
+
+
