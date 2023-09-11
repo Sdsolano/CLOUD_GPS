@@ -9,8 +9,6 @@ function initMap() {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Crea el marcador en el mapa
-    marker = L.marker([10.0, -74.0]).addTo(map);
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -38,7 +36,7 @@ function reloadTable() {
 
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng(coords);
-               
+                map.setView(parseFloat(response[0].Latitude), parseFloat(response[0].Longitude));
             } else {
                 console.error("No se encontraron datos para mostrar en el mapa.");
             }
