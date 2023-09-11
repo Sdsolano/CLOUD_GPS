@@ -20,7 +20,7 @@ function initMap() {
 
     // Inicializa la polilínea sin ningún punto
     polyline = new google.maps.Polyline({
-        path: [],
+        path: [], // Inicialmente vacío
         geodesic: true,
         strokeColor: '#FF0000', // Color de la línea
         strokeOpacity: 1.0,
@@ -56,7 +56,12 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    var path = response.map(row => {
+                        return {
+                            lat: parseFloat(row.Latitude),
+                            lng: parseFloat(row.Longitude)
+                        };
+                    });
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
                     marker.setPosition(path[0]);
