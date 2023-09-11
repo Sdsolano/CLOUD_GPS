@@ -11,7 +11,7 @@ function initMap() {
 
     // Crea el marcador en el mapa
     marker = L.marker([10.0, -74.0]).addTo(map);
-    marker.bindPopup("Marcador").openPopup();
+    
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
