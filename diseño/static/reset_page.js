@@ -42,9 +42,7 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    // Agrega una polylinea con las coordenadas de la tabla
                     var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
-                    addPolyline(path);
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
                     marker.setPosition(path[0]);
@@ -70,14 +68,3 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
-
-// Agrega una polylinea al mapa
-function addPolyline(path) {
-    var polyline = new google.maps.Polyline({
-        map: map,
-        points: path,
-        strokeWeight: 2,
-        strokeOpacity: 0.8,
-        strokeColor: '#000',
-    });
-}
