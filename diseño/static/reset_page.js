@@ -17,10 +17,10 @@ function initMap() {
     });
 
     // Carga la tabla y actualiza el mapa
-    reloadTable();
+    reloadTableAndMap();
 }
 
-function reloadTable() {
+function reloadTableAndMap() {
     $.ajax({
         url: "/components",
         method: "GET",
@@ -45,6 +45,18 @@ function reloadTable() {
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
+
+                // Actualiza la tabla con los datos de la respuesta AJAX
+                var tablaHTML = "<table>";
+                tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+                tablaHTML += "<tbody>";
+                for (var i = 0; i < Math.min(response.length, 3); i++) {
+                    var row = response[i];
+                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                }
+                tablaHTML += "</tbody></table>";
+
+                $("#tabla-contenido").html(tablaHTML);
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
             }
@@ -57,5 +69,5 @@ function reloadTable() {
 
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
-    setInterval(reloadTable, 7000);
+    setInterval(reloadTableAndMap, 7000); // Actualiza tanto la tabla como el mapa
 });
