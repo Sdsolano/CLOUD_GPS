@@ -4,7 +4,8 @@ var marker;
 function initMap() {
     // Inicializa el mapa
     map = L.map('map').setView([10.0, -74.0], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    map.setView([10.0, -74.0]);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -39,9 +40,7 @@ function reloadTable() {
 
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng(coords);
-
-                // Centra el mapa en la ubicación de la primera fila
-                map.setView(coords);
+               
             } else {
                 console.error("No se encontraron datos para mostrar en el mapa.");
             }
