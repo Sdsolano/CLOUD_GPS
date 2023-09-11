@@ -11,7 +11,7 @@ let map;
 
             // Agrega un marcador inicial
             marker = L.marker([10.0, -74.0]).addTo(map);
-
+            reloadTable();
         }
 
         function reloadTable() {
