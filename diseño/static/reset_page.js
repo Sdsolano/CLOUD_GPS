@@ -6,7 +6,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 0, lng: 0 }, // Centro del mapa inicial
         minZoom: 12, // Nivel de zoom mínimo (ajusta este valor según tus necesidades)
-        maxZoom: 20, // Nivel de zoom máximo (aumentado a 20 para permitir más zoom)
+        maxZoom: 23, // Nivel de zoom máximo (aumentado a 20 para permitir más zoom)
         zoom: 10 // Nivel de zoom inicial
     });
     polyline = new google.maps.Polyline({
