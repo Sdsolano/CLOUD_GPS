@@ -1,26 +1,22 @@
 // Define variables globales para el mapa y el marcador
-let map = null;
-let marker = null;
+let map;
+let marker;
 
 // Coordenadas geográficas fijas para el marcador
 const fixedLatLng = [0, 0]; // Reemplaza estas coordenadas con las que desees
 
 // Función para inicializar el mapa con Leaflet
 function initMap() {
-    if (map === null) {
-        // Inicializa el mapa con Leaflet solo si aún no está inicializado
-        map = L.map('map').setView([0, 0], 13);
+    // Inicializa el mapa con Leaflet
+    map = L.map('map').setView([0, 0], 13);
 
-        // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-    }
+    // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
-    if (marker === null) {
-        // Crea un marcador en la posición geográfica fija, pero NO lo agregues al mapa aún
-        marker = L.marker(fixedLatLng);
-    }
+    // Crea un marcador en la posición geográfica fija, pero NO lo agregues al mapa aún
+    marker = L.marker(fixedLatLng);
 }
 
 // Función para cargar y actualizar la tabla
@@ -47,13 +43,16 @@ function reloadTable() {
                 var firstRow = response[0];
                 var latLng = [parseFloat(firstRow.Latitude), parseFloat(firstRow.Longitude)];
 
+                // Si el marcador ya está en el mapa, elimínalo antes de realizar el zoom
+                if (map.hasLayer(marker)) {
+                    map.removeLayer(marker);
+                }
+
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng(latLng);
 
-                // Si el marcador aún no está en el mapa, agrégalo
-                if (!map.hasLayer(marker)) {
-                    marker.addTo(map);
-                }
+                // Agrégalo nuevamente al mapa
+                marker.addTo(map);
 
                 // Centra el mapa en la ubicación de la primera fila
                 map.setView(latLng);
