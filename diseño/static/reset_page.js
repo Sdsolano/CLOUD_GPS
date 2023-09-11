@@ -83,5 +83,5 @@ function reloadTable() {
 
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
-    setInterval(reloadTable, 7000);
+    setInterval(reloadTable, 7000); // Actualiza automáticamente la tabla y el mapa cada 7 segundos
 });
