@@ -4,6 +4,7 @@ var marker;
 function initMap() {
     // Inicializa el mapa
     map = L.map('map').setView([10.0, -74.0], 13);
+    map.setView([10.0, -74.0]);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -37,7 +38,7 @@ function reloadTable() {
                 var coords = [parseFloat(response[0].Latitude), parseFloat(response[0].Longitude)];
 
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
-                marker.setLatLng(coords);
+                marker.setLatLng(coords).update();
 
                 // Centra el mapa en las nuevas coordenadas
                 map.setView(coords);
