@@ -29,4 +29,27 @@ function reloadTable() {
                 var row = response[i];
                 tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
             }
-            tabla
+            tablaHTML += "</tbody></table>";
+
+            $("#tabla-contenido").html(tablaHTML);
+
+            if (response.length > 0) {
+                var coords = [parseFloat(response[0].Latitude), parseFloat(response[0].Longitude)];
+
+                // Actualiza la posición del marcador con las coordenadas de la primera fila
+                marker.setLatLng(coords);
+                map.setView(coords); // Corregido aquí
+            } else {
+                console.error("No se encontraron datos para mostrar en el mapa.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX request failed", error);
+        }
+    });
+}
+
+$(document).ready(function () {   
+    initMap(); // Llama a la función initMap para inicializar el mapa
+    setInterval(reloadTable, 7000);
+});
