@@ -12,9 +12,6 @@ function initMap() {
 
     // Agrega un marcador inicial
     marker = L.marker([10.0, -74.0]).addTo(map);
-
-    // Carga la tabla y actualiza el mapa
-    reloadTable();
 }
 
 function reloadTable() {
@@ -52,7 +49,7 @@ function reloadTable() {
     });
 }
 
-$(document).ready(function () {   
-    initMap(); // Llama a la función initMap para inicializar el mapa
+$(document).ready(function () { 
+     initMap();
     setInterval(reloadTable, 7000);
 });
