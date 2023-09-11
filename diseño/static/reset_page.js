@@ -1,7 +1,6 @@
 let map;
 let marker;
 let polyline;
-let path = []; // Vector para mantener un registro de las coordenadas
 
 function initMap() {
     // Inicializa el mapa
@@ -16,12 +15,10 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
-      
     });
 
     // Crea una polilínea en el mapa con la opción geodesic
     polyline = new google.maps.Polyline({
-        path: path,
         strokeColor: "#ff0000",
         strokeWeight: 10,
         map: map,
@@ -54,7 +51,7 @@ function reloadTable() {
 
                 if (response.length > 0) {
                     // Actualiza el vector de coordenadas con los nuevos datos
-                    path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
                     marker.setPosition(path[0]);
@@ -62,7 +59,7 @@ function reloadTable() {
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(path[0]);
 
-                    // Actualiza la polilínea con las nuevas coordenadas
+                    // Establece el nuevo path en la polilínea para que se actualice
                     polyline.setPath(path);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
@@ -78,8 +75,4 @@ function reloadTable() {
 }
 
 $(document).ready(function () {   
-    initMap(); // Llama a la función initMap para inicializar el mapa
-    setInterval(reloadTable, 7000);
-});
-
-
+    initMap();
