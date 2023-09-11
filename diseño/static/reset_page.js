@@ -1,7 +1,7 @@
 let map;
 let marker;
-let polylines = []; // Arreglo para almacenar polilíneas
-let previousMarkerPosition = null; // Variable para la posición anterior del marcador
+let polyline; // Variable para la polilínea
+let previousMarkerPositions = []; // Arreglo para almacenar coordenadas anteriores
 
 function initMap() {
     // Inicializa el mapa
@@ -15,8 +15,25 @@ function initMap() {
     marker = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
-        fixed: true,
         title: "Mi Marcador",
+    });
+
+    // Inicializa la polilínea sin ningún punto
+    polyline = new google.maps.Polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: '#FF0000', // Color de la línea
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+
+    // Agrega la polilínea al mapa
+    polyline.setMap(map);
+
+    // Escucha el evento de cambio de zoom
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        // Actualiza la polilínea cuando cambia el zoom
+        updatePolyline();
     });
 
     // Carga la tabla y actualiza el mapa
@@ -44,31 +61,19 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var latestCoordinate = new google.maps.LatLng(parseFloat(response[0].Latitude), parseFloat(response[0].Longitude));
+                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
-                    // Mueve el marcador a la última coordenada
-                    marker.setPosition(latestCoordinate);
+                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    marker.setPosition(path[0]);
 
-                    // Crea una nueva polilínea con la última coordenada
-                    var newPolyline = new google.maps.Polyline({
-                        path: previousMarkerPosition ? [previousMarkerPosition, latestCoordinate] : [latestCoordinate],
-                        geodesic: true,
-                        strokeColor: '#FF0000', // Color de la línea
-                        strokeOpacity: 1.0,
-                        strokeWeight: 2
-                    });
+                    // Agrega la nueva posición al arreglo de coordenadas anteriores
+                    previousMarkerPositions.push(path[0]);
 
-                    // Agrega la nueva polilínea al mapa
-                    newPolyline.setMap(map);
+                    // Establece el camino de la polilínea con todas las coordenadas anteriores
+                    polyline.setPath(previousMarkerPositions);
 
-                    // Agrega la nueva polilínea al arreglo de polilíneas
-                    polylines.push(newPolyline);
-
-                    // Actualiza la posición anterior del marcador
-                    previousMarkerPosition = latestCoordinate;
-
-                    // Centra el mapa en la última coordenada
-                    map.setCenter(latestCoordinate);
+                    // Centra el mapa en la ubicación de la primera fila
+                    map.setCenter(path[0]);
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -80,6 +85,19 @@ function reloadTable() {
             console.error("AJAX request failed", error);
         }
     });
+}
+
+function updatePolyline() {
+    // Actualiza la polilínea cuando cambia el zoom
+    polyline.setMap(null); // Elimina la polilínea actual del mapa
+    polyline = new google.maps.Polyline({
+        path: previousMarkerPositions,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+    polyline.setMap(map); // Agrega la nueva polilínea al mapa
 }
 
 $(document).ready(function () {   
