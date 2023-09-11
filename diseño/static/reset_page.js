@@ -40,7 +40,7 @@ function reloadTable() {
 
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng(coords);
-               
+                map.setView([parseFloat(response[0].Latitude),  parseFloat(response[0].Longitude]);
             } else {
                 console.error("No se encontraron datos para mostrar en el mapa.");
             }
