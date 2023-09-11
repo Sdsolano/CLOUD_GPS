@@ -1,8 +1,6 @@
-
 let map;
 let marker;
 let polyline;
-let overlay;
 
 function initMap() {
     // Inicializa el mapa
@@ -17,15 +15,7 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
-        fixed:true,
     });
-
-    // Inicializa la capa Overlay para la polilínea
-    overlay = new google.maps.OverlayView();
-    overlay.draw = function() {}; // Define una función vacía para draw
-
-    // Asigna la capa Overlay al mapa
-    overlay.setMap(map);
 
     // Crea una polilínea vacía
     polyline = new google.maps.Polyline({
@@ -36,8 +26,8 @@ function initMap() {
         strokeWeight: 2,
     });
 
-    // Asigna la polilínea a la capa Overlay
-    polyline.setMap(overlay);
+    // Asigna la polilínea al mapa
+    polyline.setMap(map);
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -54,7 +44,7 @@ function reloadTable() {
                 if (response.length > 0) {
                     var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
-                    // Actualiza las coordenadas de la polilínea sin reemplazar la polilínea
+                    // Agrega las coordenadas al array de la polilínea
                     polyline.setPath(path);
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
@@ -79,4 +69,3 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
-
