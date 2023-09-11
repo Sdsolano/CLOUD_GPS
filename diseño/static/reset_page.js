@@ -2,7 +2,7 @@ var map;
 var marker;
 
 function initMap() {
-    // Inicializa el mapa
+    // Recupera el mapa existente del contenedor con ID 'map' en tu HTML
     map = L.map('map').setView([0, 0], 10); // Centro del mapa inicial y nivel de zoom
 
     // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
