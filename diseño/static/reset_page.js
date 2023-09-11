@@ -38,7 +38,7 @@ function reloadTable() {
 
                 // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng(coords);
-                map.setView(coords); // Corregido aquí
+               
             } else {
                 console.error("No se encontraron datos para mostrar en el mapa.");
             }
