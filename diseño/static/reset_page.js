@@ -8,6 +8,10 @@ function initMap() {
         center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         zoom: 13,
         minZoom: 12,
+        draggable: false, // Desactiva la capacidad de arrastre
+        scrollwheel: false, // Desactiva el zoom con la rueda del ratón
+        disableDoubleClickZoom: true, // Desactiva el zoom al hacer doble clic
+        gestureHandling: 'none',
     });
 
     // Crea el marcador en el mapa
