@@ -2,53 +2,60 @@ var map;
 var marker;
 
 function initMap() {
-    map = L.map('map').setView([0, 0], 10); // Centro del mapa inicial y nivel de zoom
+    // Inicializa el mapa
+    map = L.map('map').setView([-0.5, 0.5], 13); // Coordenadas iniciales de ejemplo y nivel de zoom
 
     // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 15, // Nivel de zoom máximo
-        minZoom: 5, // Nivel de zoom mínimo
+        minZoom: 12, // Nivel de zoom mínimo
     }).addTo(map);
 
-    marker = L.marker([0, 0]).addTo(map); // Utiliza el marcador por defecto sin un icono personalizado
+    // Crea el marcador en el mapa con una ubicación inicial
+    marker = L.marker([-0.5, 0.5]).addTo(map);
+    marker.bindPopup("Mi Marcador"); // Agrega un mensaje emergente al marcador
 
-    actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
-
-    // Actualizar la tabla cada 5 segundos (5000 milisegundos)
-    setInterval(actualizarDatos, 5000);
+    // Carga la tabla y actualiza el mapa
+    reloadTable();
 }
 
-function actualizarDatos() {
+function reloadTable() {
     $.ajax({
-        url: "/components",
+        url: "/components", // Reemplaza con la URL correcta para obtener datos
         method: "GET",
-        success: function (respuesta) {
-            if (respuesta.length > 0) {
-                var primeraCoordenada = respuesta[0];
+        success: function (response) {
+            // Actualiza la tabla con los últimos tres datos
+            var tablaHTML = "<table>";
+            tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
+            tablaHTML += "<tbody>";
+            for (var i = 0; i < Math.min(response.length, 3); i++) {
+                var row = response[i];
+                tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+            }
+            tablaHTML += "</tbody></table>";
 
-                // Actualiza la posición del marcador con las coordenadas de la primera coordenada
+            $("#tabla-contenido").html(tablaHTML);
+
+            if (response.length > 0) {
+                var primeraCoordenada = response[0];
+
+                // Actualiza la posición del marcador con las coordenadas de la primera fila
                 marker.setLatLng([parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)]);
 
-                // Centra el mapa en la nueva posición del marcador
+                // Centra el mapa en la ubicación de la primera fila
                 map.setView([parseFloat(primeraCoordenada.Latitude), parseFloat(primeraCoordenada.Longitude)]);
 
-                // Construye la tabla con todos los datos de la respuesta JSON
-                var tablaHTML = "<table><thead><tr><th>ID</th><th>Latitud</th><th>Longitud</th><th>Timestamp</th></tr></thead><tbody>";
-
-                respuesta.forEach(function (fila) {
-                    tablaHTML += "<tr><td>" + fila.ID + "</td><td>" + fila.Latitude + "</td><td>" + fila.Longitude + "</td><td>" + fila.Time_stamp + "</td></tr>";
-                });
-
-                tablaHTML += "</tbody></table>";
-
-                // Actualiza el contenido del div "tabla-contenido"
-                $("#tabla-contenido").html(tablaHTML);
+            } else {
+                console.error("No se encontraron datos para mostrar en el mapa.");
             }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX request failed", error);
         }
     });
 }
 
-// Llama a la función initMap al cargar la página
-$(document).ready(function () {
-    initMap();
+$(document).ready(function () {   
+    initMap(); // Llama a la función initMap para inicializar el mapa
+    setInterval(reloadTable, 7000);
 });
