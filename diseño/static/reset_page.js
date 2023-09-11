@@ -6,7 +6,7 @@ function initMap() {
 
     // Agrega un mapa base de OpenStreetMap (puedes cambiarlo a otro proveedor de mapas)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 15, // Nivel de zoom máximo
+        maxZoom: 20, // Nivel de zoom máximo
         minZoom: 5, // Nivel de zoom mínimo
     }).addTo(map);
 
