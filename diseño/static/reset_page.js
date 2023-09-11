@@ -12,8 +12,6 @@ let map;
             // Agrega un marcador inicial
             marker = L.marker([10.0, -74.0]).addTo(map);
 
-            // Carga la tabla y actualiza el mapa
-            reloadTable();
         }
 
         function reloadTable() {
