@@ -9,6 +9,9 @@ function initMap() {
         zoom: 10 // Nivel de zoom inicial
     });
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
+
+    // Actualizar la tabla cada 5 segundos (5000 milisegundos)
+    setInterval(actualizarDatos, 5000);
 }
 
 function actualizarDatos() {
@@ -16,14 +19,14 @@ function actualizarDatos() {
         url: "/components",
         method: "GET",
         success: function (respuesta) {
+            // Limpiar marcador existente
+            if (marker) {
+                marker.setMap(null);
+            }
+
             if (respuesta.length > 0) {
                 // Obtener solo el primer elemento de la respuesta
                 var primeraCoordenada = respuesta[0];
-
-                // Limpiar marcador existente
-                if (marker) {
-                    marker.setMap(null);
-                }
 
                 // Marcar el mapa con la primera coordenada
                 marker = new google.maps.Marker({
@@ -35,15 +38,18 @@ function actualizarDatos() {
                 // Centrar el mapa en la primera coordenada
                 map.setCenter(marker.getPosition());
 
-                // Actualizar el contenido del div "tabla-contenido" solo con la primera fila
+                // Construir la tabla con todos los datos de la respuesta JSON
                 var tablaHTML = "<table><thead><tr><th>ID</th><th>Latitud</th><th>Longitud</th><th>Timestamp</th></tr></thead><tbody>";
-                tablaHTML += "<tr><td>" + primeraCoordenada.ID + "</td><td>" + primeraCoordenada.Latitude + "</td><td>" + primeraCoordenada.Longitude + "</td><td>" + primeraCoordenada.Time_stamp + "</td></tr>";
+
+                respuesta.forEach(function (fila) {
+                    tablaHTML += "<tr><td>" + fila.ID + "</td><td>" + fila.Latitude + "</td><td>" + fila.Longitude + "</td><td>" + fila.Time_stamp + "</td></tr>";
+                });
+
                 tablaHTML += "</tbody></table>";
+
+                // Actualizar el contenido del div "tabla-contenido"
                 $("#tabla-contenido").html(tablaHTML);
             }
-
-            // Llamar a la función nuevamente después de 5 segundos (5000 milisegundos)
-            setTimeout(actualizarDatos, 5000);
         }
     });
 }
