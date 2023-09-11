@@ -1,6 +1,6 @@
 let map;
 let marker;
-let polyline = null;
+
 
 function initMap() {
     // Inicializa el mapa
@@ -15,14 +15,6 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
-    });
-
-    // Crea la polilínea en el mapa
-    polyline = new google.maps.Polyline({
-        map: map, // Asocia la polilínea directamente al mapa
-        strokeOpacity: 0.8,
-        strokeWeight: 5,
-        strokeColor: '#0000FF',
     });
 
     // Carga la tabla y actualiza el mapa
@@ -58,8 +50,7 @@ function reloadTable() {
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(path[0]);
 
-                    // Establece el camino de la polilínea
-                    polyline.setPath(path);
+                    
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
