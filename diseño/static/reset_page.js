@@ -10,7 +10,7 @@ function initMap() {
         minZoom: 5, // Nivel de zoom mínimo
     }).addTo(map);
 
-    marker = L.marker([0, 0]).addTo(map); // Agrega el marcador al mapa con una posición inicial
+    marker = L.marker([0, 0]).addTo(map); // Utiliza el marcador por defecto sin un icono personalizado
 
     actualizarDatos(); // Llama a la función para cargar los datos y el mapa inicialmente
 
