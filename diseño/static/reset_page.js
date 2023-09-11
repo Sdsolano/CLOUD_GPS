@@ -1,13 +1,8 @@
+
 let map;
 let marker;
 let polyline;
-let polylineOptions = {
-    path: [],
-    geodesic: true,
-    strokeColor: '#FF0000', // Color de la línea (rojo en este caso)
-    strokeOpacity: 1.0,
-    strokeWeight: 2,
-};
+let overlay;
 
 function initMap() {
     // Inicializa el mapa
@@ -25,11 +20,24 @@ function initMap() {
         fixed:true,
     });
 
-    // Asigna las opciones de la polilínea
-    polyline = new google.maps.Polyline(polylineOptions);
+    // Inicializa la capa Overlay para la polilínea
+    overlay = new google.maps.OverlayView();
+    overlay.draw = function() {}; // Define una función vacía para draw
 
-    // Asigna la polilínea al mapa
-    polyline.setMap(map);
+    // Asigna la capa Overlay al mapa
+    overlay.setMap(map);
+
+    // Crea una polilínea vacía
+    polyline = new google.maps.Polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: '#FF0000', // Color de la línea (rojo en este caso)
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+
+    // Asigna la polilínea a la capa Overlay
+    polyline.setMap(overlay);
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -71,5 +79,4 @@ $(document).ready(function () {
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
-
 
