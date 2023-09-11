@@ -42,10 +42,10 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
-
-                    // Agrega la nueva posición al arreglo de coordenadas anteriores
-                    previousMarkerPositions.push(path[0]);
+                    var path = response.map(row => ({
+                        lat: parseFloat(row.Latitude),
+                        lng: parseFloat(row.Longitude)
+                    }));
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
                     marker.setPosition(path[0]);
@@ -55,7 +55,7 @@ function reloadTable() {
 
                     // Crea una polilínea que conecta todas las coordenadas anteriores del marcador
                     var polyline = new google.maps.Polyline({
-                        path: previousMarkerPositions,
+                        path: path,
                         geodesic: true,
                         strokeColor: '#FF0000', // Color de la línea
                         strokeOpacity: 1.0,
