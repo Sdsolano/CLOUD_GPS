@@ -34,6 +34,10 @@ function initMap() {
         togglePolylineDrawing();
     });
 
+    $("#polylineErase").click(function() {
+        erasePolyline();
+    });
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
@@ -65,6 +69,20 @@ function drawPolyline() {
 
     // Actualiza la polilínea con las coordenadas suavizadas
     polyline.setPath(smoothedPath);
+}
+
+function erasePolyline() {
+    // Detiene la creación de la polilínea
+    isDrawingPolyline = false;
+    
+    // Restaura el botón de dibujar la polilínea a su estado original
+    $("#polylineDraw").text("Iniciar Polilínea");
+    
+    // Borra las polilíneas existentes
+    polyline.setPath([]);
+    
+    // Establece el zoom mínimo en 13
+    map.setOptions({ minZoom: 13 });
 }
 
 function reloadTable() {
