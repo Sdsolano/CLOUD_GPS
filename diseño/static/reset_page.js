@@ -2,6 +2,7 @@ let map;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
+let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -28,18 +29,24 @@ function initMap() {
         map: map,
     });
 
-    // Configura el evento clic en el botón "polylineDraw" para dibujar la polilínea
+    // Configura el evento clic en el botón "polylineDraw" para iniciar o detener la polilínea
     $("#polylineDraw").click(function() {
-        drawPolyline();
+        togglePolylineDrawing();
     });
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
 
-function drawPolyline() {
-    // Añade las coordenadas actuales del marcador a la polilínea
-    polyline.getPath().push(marker.getPosition());
+function togglePolylineDrawing() {
+    isDrawingPolyline = !isDrawingPolyline;
+    if (isDrawingPolyline) {
+        // Comienza a dibujar la polilínea
+        $("#polylineDraw").text("Detener Polilínea");
+    } else {
+        // Detiene la polilínea
+        $("#polylineDraw").text("Iniciar Polilínea");
+    }
 }
 
 function reloadTable() {
@@ -57,6 +64,13 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    var latitude = parseFloat(row.Latitude);
+                    var longitude = parseFloat(row.Longitude);
+
+                    // Añade coordenadas a la polilínea si se está dibujando
+                    if (isDrawingPolyline && !isNaN(latitude) && !isNaN(longitude)) {
+                        markerCoordinates.push(new google.maps.LatLng(latitude, longitude));
+                    }
                 }
                 tablaHTML += "</tbody></table>";
 
@@ -93,4 +107,12 @@ $(document).ready(function () {
 
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 7000);
+    
+    // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
+    setInterval(function() {
+        if (isDrawingPolyline) {
+            drawPolyline();
+        }
+    }, 1000);
 });
+
