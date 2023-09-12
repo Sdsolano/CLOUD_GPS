@@ -50,6 +50,9 @@ function togglePolylineDrawing() {
         
         // Ajusta el zoom mínimo a 19
         map.setOptions({ minZoom: 19 });
+
+        // Restablece las coordenadas del marcador a un arreglo vacío
+        markerCoordinates = [];
     } else {
         // Detiene la polilínea
         $("#polylineDraw").text("Iniciar Polilínea");
@@ -58,6 +61,7 @@ function togglePolylineDrawing() {
         map.setOptions({ minZoom: 19 });
     }
 }
+
 
 
 function drawPolyline() {
