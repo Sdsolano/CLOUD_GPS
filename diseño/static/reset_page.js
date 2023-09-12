@@ -80,7 +80,7 @@ function erasePolyline() {
     isDrawingPolyline = false;
     
     // Restaura el botón de dibujar la polilínea a su estado original
-    $("#polylineDraw").text("Iniciar Polilínea");
+    $("#polylineDraw").text("Draw Polyline");
     
     // Borra las polilíneas existentes
     polyline.setPath([]);
