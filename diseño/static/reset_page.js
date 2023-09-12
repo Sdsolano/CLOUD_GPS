@@ -1,6 +1,6 @@
 let map;
 let marker;
-let polyline;
+
 
 function initMap() {
     // Inicializa el mapa
@@ -14,18 +14,8 @@ function initMap() {
     marker = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
-        title: "Mi Marcador"
+        title: "Mi Marcador",
     });
-
-    //create an empty path for the polyline
-    polyline = new google.maps.Polyline({
-        path: [],
-        geodesic: true,
-        strokeColor: '#FF0000', 
-        strokeOpacity: 1.0,  //line opacity
-        strokeWeight: 2, //line width
-        map: map,
-    })
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -39,9 +29,6 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
-                // Clear the previous path from the polyline
-                polyline.setPath([]);
-
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
@@ -49,31 +36,23 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
-                    var latitude = parseFloat(row.Latitude);
-                    var longitud = parseFloat(row.Longitude);
-                    // Add coordinates to the polyline's path
-                    if (!isNaN(latitude) && !isNaN(longitude)) {
-                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
-                    }
                 }
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var firstRow = response[0];
-                    var firstLatitude = parseFloat(firstRow.Latitude);
-                    var firstLongitude = parseFloat(firstRow.Longitude);
+                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
-                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
-                        // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                    // Actualiza la posición del marcador con las coordenadas de la primera fila
+                    marker.setPosition(path[0]);
 
-                        // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
-                    } else {
-                        console.error("Las coordenadas de la primera fila no son números válidos.");
-                    }
+                    // Centra el mapa en la ubicación de la primera fila
+                    map.setCenter(path[0]);
+
+                    
+                } else {
+                    console.error("No se encontraron datos para mostrar en el mapa.");
                 }
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
@@ -85,7 +64,7 @@ function reloadTable() {
     });
 }
 
-$(document).ready(function () {
-    
+$(document).ready(function () {   
+    initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 7000);
 });
