@@ -2,6 +2,7 @@ let map;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
+let isPolylineDrawn = false; // Bandera para verificar si se ha dibujado la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -28,8 +29,21 @@ function initMap() {
         map: map,
     });
 
+    // Configura el evento clic en el botón para dibujar la polilínea
+    $("#polylineDraw").click(function() {
+        drawPolyline();
+    });
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
+}
+
+function drawPolyline() {
+    if (!isPolylineDrawn) {
+        // Verifica si la polilínea ya ha sido dibujada
+        polyline.setPath(markerCoordinates);
+        isPolylineDrawn = true;
+    }
 }
 
 function reloadTable() {
@@ -52,7 +66,7 @@ function reloadTable() {
 
                     // Añade coordenadas a la polilínea
                     if (!isNaN(latitude) && !isNaN(longitude)) {
-                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
+                        markerCoordinates.push(new google.maps.LatLng(latitude, longitude));
                     }
                 }
                 tablaHTML += "</tbody></table>";
@@ -70,12 +84,6 @@ function reloadTable() {
 
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
-
-                        // Almacena las coordenadas del marcador en la matriz
-                        markerCoordinates.push(new google.maps.LatLng(firstLatitude, firstLongitude));
-
-                        // Actualiza la polilínea con las coordenadas actuales
-                        polyline.setPath(markerCoordinates);
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
@@ -91,6 +99,9 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    
+    // Carga la tabla y actualiza el mapa cuando se carga la página
+    reloadTable();
+
+    // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 7000);
 });
