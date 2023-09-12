@@ -78,11 +78,6 @@ function reloadTable() {
                     var latitude = parseFloat(row.Latitude);
                     var longitude = parseFloat(row.Longitude);
 
-                    // Añade coordenadas a la polilínea si se está dibujando
-                    if (isDrawingPolyline && !isNaN(latitude) && !isNaN(longitude)) {
-                        markerCoordinates.push(new google.maps.LatLng(latitude, longitude));
-                    }
-                }
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
@@ -91,6 +86,12 @@ function reloadTable() {
                     var firstRow = response[0];
                     var firstLatitude = parseFloat(firstRow.Latitude);
                     var firstLongitude = parseFloat(firstRow.Longitude);
+                    
+                    // Añade coordenadas a la polilínea si se está dibujando
+                    if (isDrawingPolyline && !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
+                        markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
+                    }
+                }
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
