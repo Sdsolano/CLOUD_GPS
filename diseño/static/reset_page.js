@@ -43,11 +43,18 @@ function togglePolylineDrawing() {
     if (isDrawingPolyline) {
         // Comienza a dibujar la polilínea
         $("#polylineDraw").text("Detener Polilínea");
+        
+        // Ajusta el zoom mínimo a 19
+        map.setOptions({ minZoom: 19 });
     } else {
         // Detiene la polilínea
         $("#polylineDraw").text("Iniciar Polilínea");
+        
+        // Restaura el valor original del zoom mínimo
+        map.setOptions({ minZoom: 19 });
     }
 }
+
 
 function drawPolyline() {
     // Añade las coordenadas actuales del marcador a la polilínea
