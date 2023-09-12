@@ -1,6 +1,7 @@
 let map;
 let marker;
 let polyline; // Variable para la polilínea
+let markerCoordinates = []; // Almacena las coordenadas del marcador
 
 function initMap() {
     // Inicializa el mapa
@@ -70,8 +71,11 @@ function reloadTable() {
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                        // Borra la polilínea anterior antes de dibujar una nueva
-                        polyline.setPath([]);
+                        // Almacena las coordenadas del marcador en la matriz
+                        markerCoordinates.push(new google.maps.LatLng(firstLatitude, firstLongitude));
+
+                        // Actualiza la polilínea con las coordenadas actuales
+                        polyline.setPath(markerCoordinates);
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
