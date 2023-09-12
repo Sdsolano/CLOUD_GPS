@@ -2,7 +2,6 @@ let map;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
-let isPolylineDrawn = false; // Bandera para verificar si se ha dibujado la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -29,7 +28,7 @@ function initMap() {
         map: map,
     });
 
-    // Configura el evento clic en el botón para dibujar la polilínea
+    // Configura el evento clic en el botón "polylineDraw" para dibujar la polilínea
     $("#polylineDraw").click(function() {
         drawPolyline();
     });
@@ -39,11 +38,8 @@ function initMap() {
 }
 
 function drawPolyline() {
-    if (!isPolylineDrawn) {
-        // Verifica si la polilínea ya ha sido dibujada
-        polyline.setPath(markerCoordinates);
-        isPolylineDrawn = true;
-    }
+    // Añade las coordenadas actuales del marcador a la polilínea
+    polyline.getPath().push(marker.getPosition());
 }
 
 function reloadTable() {
@@ -54,43 +50,31 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
-                // Actualiza la tabla con los últimos datos
+                // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
                 tablaHTML += "<tbody>";
-                for (var i = 0; i < response.length; i++) {
+                for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
-                    var latitude = parseFloat(row.Latitude);
-                    var longitude = parseFloat(row.Longitude);
-
-                    // Añade coordenadas a la polilínea
-                    if (!isNaN(latitude) && !isNaN(longitude)) {
-                        markerCoordinates.push(new google.maps.LatLng(latitude, longitude));
-                    }
+                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
                 }
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var lastRow = response[response.length - 1];
-                    var lastLatitude = parseFloat(lastRow.Latitude);
-                    var lastLongitude = parseFloat(lastRow.Longitude);
+                    var firstRow = response[0];
+                    var firstLatitude = parseFloat(firstRow.Latitude);
+                    var firstLongitude = parseFloat(firstRow.Longitude);
 
-                    if (!isNaN(lastLatitude) && !isNaN(lastLongitude)) {
-                        // Actualiza la posición del marcador con las coordenadas del último dato
-                        marker.setPosition(new google.maps.LatLng(lastLatitude, lastLongitude));
+                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
+                        // Actualiza la posición del marcador con las coordenadas de la primera fila
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                        // Centra el mapa en la ubicación del último dato
-                        map.setCenter(new google.maps.LatLng(lastLatitude, lastLongitude));
-
-                        // Si la polilínea ya se ha dibujado, añade la nueva coordenada al final de la polilínea
-                        if (isPolylineDrawn) {
-                            polyline.getPath().push(new google.maps.LatLng(lastLatitude, lastLongitude));
-                        }
+                        // Centra el mapa en la ubicación de la primera fila
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
                     } else {
-                        console.error("Las coordenadas del último dato no son números válidos.");
+                        console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
                 }
             } else {
