@@ -46,7 +46,7 @@ function togglePolylineDrawing() {
     isDrawingPolyline = !isDrawingPolyline;
     if (isDrawingPolyline) {
         // Comienza a dibujar la polilínea
-        $("#polylineDraw").text("Detener Polilínea");
+        $("#polylineDraw").text("Stop Polyline");
         
         // Ajusta el zoom mínimo a 19
         map.setOptions({ minZoom: 19 });
@@ -55,7 +55,7 @@ function togglePolylineDrawing() {
         markerCoordinates = [];
     } else {
         // Detiene la polilínea
-        $("#polylineDraw").text("Iniciar Polilínea");
+        $("#polylineDraw").text("Draw Polyline");
         
         // Restaura el valor original del zoom mínimo
         map.setOptions({ minZoom: 19 });
