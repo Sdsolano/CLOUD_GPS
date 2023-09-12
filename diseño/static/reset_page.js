@@ -64,6 +64,7 @@ function reloadTable() {
 }
 
 
+  $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
     setInterval(reloadTable, 1000);
-
+});
