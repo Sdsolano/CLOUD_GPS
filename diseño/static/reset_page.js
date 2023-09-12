@@ -17,8 +17,7 @@ function initMap() {
         title: "Mi Marcador",
     });
 
-    // Carga la tabla y actualiza el mapa
-    reloadTable();
+    
 }
 
 function reloadTable() {
