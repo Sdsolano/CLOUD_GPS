@@ -1,7 +1,9 @@
 let map;
 let marker;
-let polylinePath = []; // Vector para mantener un registro de las coordenadas de la polilínea
-let polyline; // Variable para mantener una referencia a la polilínea en el mapa
+let polyline;
+let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una polilínea suave
+var previousMarkerPosition = null;
+let markerAtTip;
 
 function initMap() {
     // Inicializa el mapa
@@ -13,17 +15,31 @@ function initMap() {
 
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+       position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
-        title: "Mi Marcador",
+        title: "Mi Marcador"
     });
 
-    // Configura el evento de clic en el mapa para actualizar la polilínea
-    map.addListener('click', function(event) {
-        // Agrega la posición del clic a las coordenadas de la polilínea
-        polylinePath.push(event.latLng);
-        // Actualiza la polilínea en el mapa
-        polylineDraw();
+    // Crea una polilínea suave con MVCArray
+    polyline = new google.maps.Polyline({
+        path: smoothedPath,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        map: map,
+    });
+
+    markerAtTip = new google.maps.Marker({
+        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE, // Usa un símbolo circular como marcador
+            scale: 20, // Tamaño del marcador
+            fillColor: '#FF0000', // Color de relleno del marcador
+            fillOpacity: 1, // Opacidad del relleno
+            strokeWeight: 0 // Sin borde
+        }
     });
 
     // Carga la tabla y actualiza el mapa
@@ -51,18 +67,31 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    // Actualiza el vector de coordenadas con los nuevos datos
-                    polylinePath = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    var firstRow = response[0];
+                    var firstLatitude = parseFloat(firstRow.Latitude);
+                    var firstLongitude = parseFloat(firstRow.Longitude);
 
-                    // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(polylinePath[0]);
+                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
 
-                    // Centra el mapa en la ubicación de la primera fila
-                    map.setCenter(polylinePath[0]);
+                        // Agrega la nueva posición a la polilínea suave
+                        
+                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                   
-                } else {
-                    console.error("No se encontraron datos para mostrar en el mapa.");
+                        // Actualiza la posición del marcador con las coordenadas de la primera fila
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                       
+                        
+                        
+                        // Centra el mapa en la ubicación de la primera fila
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        setTimeout(function() {
+                            smoothedPath.push(newPosition);
+                        }, 1000);
+
+                    } else {
+                        console.error("Las coordenadas de la primera fila no son números válidos.");
+                    }
                 }
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
@@ -74,37 +103,6 @@ function reloadTable() {
     });
 }
 
-// Función para dibujar la polilínea y configurar el zoom mínimo
-function polylineDraw() {
-    // Verifica que haya coordenadas en el vector 'polylinePath'
-    if (polylinePath.length > 0) {
-        // Si ya existe una polilínea, elimínala del mapa antes de crear la nueva
-        if (polyline) {
-            polyline.setMap(null);
-        }
-
-        // Crea la polilínea en el mapa con las coordenadas existentes
-        polyline = new google.maps.Polyline({
-            path: polylinePath,
-            strokeColor: "#ff0000",
-            strokeWeight: 10,
-            map: map,
-            geodesic: true,
-        });
-
-        // Configura el zoom mínimo en 15
-        map.setOptions({ minZoom: 15 });
-    }
-}
-
-// Configura el evento onclick para el botón con el ID "polylineDraw"
-$(document).ready(function () {   
-    initMap(); // Llama a la función initMap para inicializar el mapa
-
-    // Configura el evento de clic en el botón para habilitar la polilínea inicialmente
-    $("#polylineDraw").click(function() {
-        polylineDraw();
-    });
-
+$(document).ready(function () {
     setInterval(reloadTable, 7000);
 });
