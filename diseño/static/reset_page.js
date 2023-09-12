@@ -125,7 +125,7 @@ $(document).ready(function () {
     reloadTable();
 
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
-    setInterval(reloadTable, 7000);
+    setInterval(reloadTable, 1000);
 
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
     setInterval(function() {
