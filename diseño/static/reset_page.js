@@ -1,7 +1,6 @@
 let map;
 let marker;
 
-
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -14,9 +13,10 @@ function initMap() {
     marker = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
-        title: "Mi Marcador",
+        title: "Mi Marcador"
     });
 
+    // Carga la tabla y actualiza el mapa
     reloadTable();
 }
 
@@ -41,17 +41,19 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    var firstRow = response[0];
+                    var firstLatitude = parseFloat(firstRow.Latitude);
+                    var firstLongitude = parseFloat(firstRow.Longitude);
 
-                    // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(path[0]);
+                    if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
+                        // Actualiza la posición del marcador con las coordenadas de la primera fila
+                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
 
-                    // Centra el mapa en la ubicación de la primera fila
-                    map.setCenter(path[0]);
-
-                    
-                } else {
-                    console.error("No se encontraron datos para mostrar en el mapa.");
+                        // Centra el mapa en la ubicación de la primera fila
+                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                    } else {
+                        console.error("Las coordenadas de la primera fila no son números válidos.");
+                    }
                 }
             } else {
                 console.error("La API de Google Maps no se ha cargado correctamente.");
@@ -63,8 +65,7 @@ function reloadTable() {
     });
 }
 
-
-  $(document).ready(function () {   
-    initMap(); // Llama a la función initMap para inicializar el mapa
-    setInterval(reloadTable, 1000);
+$(document).ready(function () {
+    
+    setInterval(reloadTable, 7000);
 });
