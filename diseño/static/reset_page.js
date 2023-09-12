@@ -74,11 +74,7 @@ function reloadTable() {
 
 
                     // Añade coordenadas a la polilínea si se está dibujando
-                    if (isDrawingPolyline && !isNaN(latitude) && !isNaN(longitude)) {
-                        markerCoordinates.push(new google.maps.LatLng(latitude, longitude));
-                        console.log("Coordenadas de la polilínea:", markerCoordinates);
 
-                    }
                 }
                 tablaHTML += "</tbody></table>";
 
@@ -88,6 +84,11 @@ function reloadTable() {
                     var firstRow = response[0];
                     var firstLatitude = parseFloat(firstRow.Latitude);
                     var firstLongitude = parseFloat(firstRow.Longitude);
+                    if (isDrawingPolyline && !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
+                        markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
+                        console.log("Coordenadas de la polilínea:", markerCoordinates);
+
+                    }
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
