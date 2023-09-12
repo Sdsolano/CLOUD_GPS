@@ -1,6 +1,6 @@
 let map;
 let marker;
-
+let path = new google.maps.MVCArray(); // Vector para mantener un registro de las coordenadas
 
 function initMap() {
     // Inicializa el mapa
@@ -36,21 +36,22 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    // Llama a polylineDraw con las coordenadas de la fila
+                    polylineDraw(parseFloat(row.Latitude), parseFloat(row.Longitude));
                 }
                 tablaHTML += "</tbody></table>";
 
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    var coords = new google.maps.LatLng(parseFloat(response[0].Latitude), parseFloat(response[0].Longitude));
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(path[0]);
+                    marker.setPosition(coords);
 
-                    // Centra el mapa en la ubicación de la primera fila
-                    map.setCenter(path[0]);
+                    // Centra el mapa en las nuevas coordenadas
+                    map.setCenter(coords);
 
-                    
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -64,7 +65,39 @@ function reloadTable() {
     });
 }
 
+// Función para dibujar una polilínea con las coordenadas especificadas
+function polylineDraw(latitude, longitude) {
+    if (isNaN(latitude) || isNaN(longitude)) {
+        console.error("Coordenadas inválidas.");
+        return;
+    }
+
+    var coords = new google.maps.LatLng(latitude, longitude);
+
+    // Agrega la coordenada actual a la polilínea
+    path.push(coords);
+
+    // Configura la polilínea en el mapa
+    var polyline = new google.maps.Polyline({
+        path: path,
+        strokeColor: "#ff0000",
+        strokeWeight: 10,
+        map: map,
+        geodesic: true,
+    });
+
+    // Aplica un zoom mínimo de 15
+    var zoomLevel = map.getZoom();
+    if (zoomLevel < 15) {
+        map.setZoom(15);
+    }
+}
+
+// Configura el evento onclick en el botón con el ID "polylineDraw"
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
+    $("#polylineDraw").click(function() {
+        polylineDraw(parseFloat($("#latitude").val()), parseFloat($("#longitude").val()));
+    });
     setInterval(reloadTable, 7000);
 });
