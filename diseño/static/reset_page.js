@@ -77,7 +77,7 @@ function polylineDraw() {
         });
 
         // Configura el zoom mínimo en 15
-        map.setOptions({ minZoom: 15 });
+        map.setOptions({ minZoom: 20 });
     }
 }
 
