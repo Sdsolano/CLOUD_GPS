@@ -1,5 +1,6 @@
 let map;
 let marker;
+let polyline;
 
 function initMap() {
     // Inicializa el mapa
@@ -14,6 +15,16 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador"
+    });
+
+    // Inicializa una polilínea vacía en el mapa
+    polyline = new google.maps.Polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: '#FF0000', 
+        strokeOpacity: 1.0,  
+        strokeWeight: 2,
+        map: map,
     });
 
     // Carga la tabla y actualiza el mapa
@@ -35,6 +46,13 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    var latitude = parseFloat(row.Latitude);
+                    var longitude = parseFloat(row.Longitude);
+
+                    // Añade coordenadas a la polilínea
+                    if (!isNaN(latitude) && !isNaN(longitude)) {
+                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
+                    }
                 }
                 tablaHTML += "</tbody></table>";
 
