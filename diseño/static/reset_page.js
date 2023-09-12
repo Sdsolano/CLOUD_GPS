@@ -1,6 +1,6 @@
 let map;
 let marker;
-let polyline;
+let polyline; // Variable para la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -19,10 +19,10 @@ function initMap() {
 
     // Inicializa una polilínea vacía en el mapa
     polyline = new google.maps.Polyline({
-        path: [],
+        path: [], // Inicialmente vacío
         geodesic: true,
-        strokeColor: '#FF0000', 
-        strokeOpacity: 1.0,  
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
         strokeWeight: 2,
         map: map,
     });
@@ -45,7 +45,7 @@ function reloadTable() {
                 tablaHTML += "<tbody>";
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
-                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude + "</td><td>" + row.Time_stamp + "</td></tr>";
                     var latitude = parseFloat(row.Latitude);
                     var longitude = parseFloat(row.Longitude);
 
@@ -69,6 +69,9 @@ function reloadTable() {
 
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+
+                        // Borra la polilínea anterior antes de dibujar una nueva
+                        polyline.setPath([]);
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
