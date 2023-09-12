@@ -1,6 +1,6 @@
 let map;
 let marker;
-
+let polylinePath = []; // Vector para mantener un registro de las coordenadas de la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -42,15 +42,17 @@ function reloadTable() {
                 $("#tabla-contenido").html(tablaHTML);
 
                 if (response.length > 0) {
-                    var path = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
+                    // Actualiza el vector de coordenadas con los nuevos datos
+                    polylinePath = response.map(row => new google.maps.LatLng(parseFloat(row.Latitude), parseFloat(row.Longitude)));
 
                     // Actualiza la posición del marcador con las coordenadas de la primera fila
-                    marker.setPosition(path[0]);
+                    marker.setPosition(polylinePath[0]);
 
                     // Centra el mapa en la ubicación de la primera fila
-                    map.setCenter(path[0]);
+                    map.setCenter(polylinePath[0]);
 
-                    
+                    // Llama a la función polylineDraw cuando haya datos nuevos
+                    polylineDraw();
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -64,7 +66,29 @@ function reloadTable() {
     });
 }
 
+// Función para dibujar la polilínea y configurar el zoom mínimo
+function polylineDraw() {
+    // Verifica que haya coordenadas en el vector 'polylinePath'
+    if (polylinePath.length > 0) {
+        // Crea la polilínea en el mapa con las coordenadas existentes
+        var polyline = new google.maps.Polyline({
+            path: polylinePath,
+            strokeColor: "#ff0000",
+            strokeWeight: 10,
+            map: map,
+            geodesic: true,
+        });
+
+        // Configura el zoom mínimo en 15
+        map.setOptions({ minZoom: 15 });
+    }
+}
+
+// Configura el evento onclick para el botón con el ID "polylineDraw"
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
+    $("#polylineDraw").click(function() {
+        polylineDraw();
+    });
     setInterval(reloadTable, 7000);
 });
