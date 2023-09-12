@@ -60,8 +60,7 @@ function reloadTable() {
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(polylinePath[0]);
 
-                    // Llama a la función polylineDraw cuando haya datos nuevos
-                    polylineDraw();
+                   
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
