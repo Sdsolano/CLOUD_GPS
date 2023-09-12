@@ -9,7 +9,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         zoom: 13,
-        minZoom: 9,
+        minZoom: 5,
     });
 
     // Crea el marcador en el mapa
@@ -86,7 +86,7 @@ function erasePolyline() {
     polyline.setPath([]);
     
     // Establece el zoom mínimo en 13
-    map.setOptions({ minZoom: 13 });
+    map.setOptions({ minZoom: 5 });
 }
 
 function reloadTable() {
