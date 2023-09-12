@@ -17,7 +17,7 @@ function initMap() {
         title: "Mi Marcador",
     });
 
-    
+    reloadTable();
 }
 
 function reloadTable() {
