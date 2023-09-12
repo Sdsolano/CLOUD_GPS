@@ -1,9 +1,6 @@
 let map;
 let marker;
 let polyline;
-let smoothedPath = new google.maps.MVCArray(); // Usaremos MVCArray para una polilínea suave
-var previousMarkerPosition = null;
-let markerAtTip;
 
 function initMap() {
     // Inicializa el mapa
@@ -15,32 +12,20 @@ function initMap() {
 
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
-       position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
+        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador"
     });
 
-    // Crea una polilínea suave con MVCArray
-    polyline = new google.maps.Polyline({
-        path: smoothedPath,
+    //create an empty path for the polyline
+    polyline = new google.maps.polyline({
+        path: [],
         geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
+        strokeColor: '#FF0000', 
+        strokeOpacity: 1.0,  //line opacity
+        strokeWeight: 2, //line width
         map: map,
-    });
-
-    markerAtTip = new google.maps.Marker({
-        position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
-        map: map,
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE, // Usa un símbolo circular como marcador
-            scale: 20, // Tamaño del marcador
-            fillColor: '#FF0000', // Color de relleno del marcador
-            fillOpacity: 1, // Opacidad del relleno
-            strokeWeight: 0 // Sin borde
-        }
-    });
+    })
 
     // Carga la tabla y actualiza el mapa
     reloadTable();
@@ -54,6 +39,9 @@ function reloadTable() {
             if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
                 // Verifica si la API de Google Maps se ha cargado
 
+                // Clear the previous path from the polyline
+                polyline.setPath([]);
+
                 // Actualiza la tabla con los últimos tres datos
                 var tablaHTML = "<table>";
                 tablaHTML += "<thead><tr><th>ID</th><th>Latitude</th><th>Longitude</th><th>Time_stamp</th></tr></thead>";
@@ -61,6 +49,12 @@ function reloadTable() {
                 for (var i = 0; i < Math.min(response.length, 3); i++) {
                     var row = response[i];
                     tablaHTML += "<tr><td>" + row.ID + "</td><td>" + row.Latitude + "</td><td>" + row.Longitude +  "</td><td>" + row.Time_stamp + "</td></tr>";
+                    var latitude = parseFloat(row.Latitude);
+                    var longitud = parseFloat(row.Longitude);
+                    // Add coordinates to the polyline's path
+                    if (!isNaN(latitude) && !isNaN(longitude)) {
+                        polyline.getPath().push(new google.maps.LatLng(latitude, longitude));
+                    }
                 }
                 tablaHTML += "</tbody></table>";
 
@@ -72,19 +66,9 @@ function reloadTable() {
                     var firstLongitude = parseFloat(firstRow.Longitude);
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
-
-                        // Agrega la nueva posición a la polilínea suave
-                        smoothedPath.clear();
-                        smoothedPath.push(new google.maps.LatLng(firstLatitude, firstLongitude));
-                        markerAtTip.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-
-
-
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-                       
-                        
-                        
+
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
                     } else {
@@ -102,5 +86,6 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
+    
     setInterval(reloadTable, 7000);
 });
