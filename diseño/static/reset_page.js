@@ -104,8 +104,6 @@ function reloadTable() {
 }
 
 $(document).ready(function () {
-    // Carga la tabla y actualiza el mapa cuando se carga la página
-    reloadTable();
 
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 7000);
