@@ -49,7 +49,7 @@ function togglePolylineDrawing() {
         $("#polylineDraw").text("Stop Polyline");
         
         // Ajusta el zoom mínimo a 19
-        map.setOptions({ minZoom: 19 });
+        map.setOptions({ minZoom: 15 });
 
         // Restablece las coordenadas del marcador a un arreglo vacío
         markerCoordinates = [];
@@ -58,7 +58,7 @@ function togglePolylineDrawing() {
         $("#polylineDraw").text("Draw Polyline");
         
         // Restaura el valor original del zoom mínimo
-        map.setOptions({ minZoom: 19 });
+        map.setOptions({ minZoom: 15 });
     }
 }
 
