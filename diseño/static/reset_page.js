@@ -52,6 +52,12 @@ function togglePolylineDrawing() {
 function drawPolyline() {
     // Añade las coordenadas actuales del marcador a la polilínea
     polyline.setPath(markerCoordinates);
+
+    // Suaviza la polilínea
+    const smoothedPath = google.maps.geometry.spherical.computeSpline(markerCoordinates, 10);
+
+    // Actualiza la polilínea con las coordenadas suavizadas
+    polyline.setPath(smoothedPath);
 }
 
 function reloadTable() {
@@ -72,9 +78,10 @@ function reloadTable() {
                     var latitude = parseFloat(row.Latitude);
                     var longitude = parseFloat(row.Longitude);
 
-
                     // Añade coordenadas a la polilínea si se está dibujando
-
+                    if (isDrawingPolyline && !isNaN(latitude) && !isNaN(longitude)) {
+                        markerCoordinates.push(new google.maps.LatLng(latitude, longitude));
+                    }
                 }
                 tablaHTML += "</tbody></table>";
 
@@ -84,16 +91,10 @@ function reloadTable() {
                     var firstRow = response[0];
                     var firstLatitude = parseFloat(firstRow.Latitude);
                     var firstLongitude = parseFloat(firstRow.Longitude);
-                    if (isDrawingPolyline && !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
-                        markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
-                        console.log("Coordenadas de la polilínea:", markerCoordinates);
-
-                    }
 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
                         // Actualiza la posición del marcador con las coordenadas de la primera fila
                         marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
-
 
                         // Centra el mapa en la ubicación de la primera fila
                         map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
@@ -117,7 +118,7 @@ $(document).ready(function () {
 
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 7000);
-    
+
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
     setInterval(function() {
         if (isDrawingPolyline) {
@@ -125,4 +126,6 @@ $(document).ready(function () {
         }
     }, 1000);
 });
+
+
 
