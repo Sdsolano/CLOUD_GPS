@@ -18,7 +18,7 @@ function initMap() {
     });
 
     //create an empty path for the polyline
-    polyline = new google.maps.polyline({
+    polyline = new google.maps.Polyline({
         path: [],
         geodesic: true,
         strokeColor: '#FF0000', 
