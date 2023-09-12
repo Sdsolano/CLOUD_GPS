@@ -1,6 +1,6 @@
 let map;
 let marker;
-let path = new google.maps.MVCArray(); // Vector para mantener un registro de las coordenadas
+let path = new google.maps.MVCArray(); // Mueve la declaración de 'path' al ámbito global
 
 function initMap() {
     // Inicializa el mapa
@@ -52,6 +52,7 @@ function reloadTable() {
                     // Centra el mapa en las nuevas coordenadas
                     map.setCenter(coords);
 
+                    
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -101,3 +102,4 @@ $(document).ready(function () {
     });
     setInterval(reloadTable, 7000);
 });
+
