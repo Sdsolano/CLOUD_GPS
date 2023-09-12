@@ -49,6 +49,11 @@ function togglePolylineDrawing() {
     }
 }
 
+function drawPolyline() {
+    // Añade las coordenadas actuales del marcador a la polilínea
+    polyline.setPath(markerCoordinates);
+}
+
 function reloadTable() {
     $.ajax({
         url: "/components",
