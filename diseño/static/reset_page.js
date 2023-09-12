@@ -99,13 +99,18 @@ function reloadTable() {
                         markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
                     }
                 
-
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
-                        // Actualiza la posición del marcador con las coordenadas de la primera fila
-                        marker.setPosition(new google.maps.LatLng(firstLatitude, firstLongitude));
+                        // Comprueba si las coordenadas han cambiado
+                        var markerPosition = marker.getPosition();
+                        var newMarkerPosition = new google.maps.LatLng(firstLatitude, firstLongitude);
+                        
+                        if (!markerPosition.equals(newMarkerPosition)) {
+                            // Actualiza la posición del marcador con las coordenadas de la primera fila
+                            marker.setPosition(newMarkerPosition);
 
-                        // Centra el mapa en la ubicación de la primera fila
-                        map.setCenter(new google.maps.LatLng(firstLatitude, firstLongitude));
+                            // Centra el mapa en la nueva ubicación del marcador
+                            map.setCenter(newMarkerPosition);
+                        }
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
