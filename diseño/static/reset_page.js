@@ -9,7 +9,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         zoom: 13,
-        minZoom: 12,
+        minZoom: 9,
     });
 
     // Crea el marcador en el mapa
