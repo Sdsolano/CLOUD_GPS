@@ -1,6 +1,7 @@
 let map;
 let marker;
 let polylinePath = []; // Vector para mantener un registro de las coordenadas de la polilínea
+let polyline; // Variable para mantener una referencia a la polilínea en el mapa
 
 function initMap() {
     // Inicializa el mapa
@@ -15,6 +16,14 @@ function initMap() {
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador",
+    });
+
+    // Configura el evento de clic en el mapa para actualizar la polilínea
+    map.addListener('click', function(event) {
+        // Agrega la posición del clic a las coordenadas de la polilínea
+        polylinePath.push(event.latLng);
+        // Actualiza la polilínea en el mapa
+        polylineDraw();
     });
 
     // Carga la tabla y actualiza el mapa
@@ -50,6 +59,9 @@ function reloadTable() {
 
                     // Centra el mapa en la ubicación de la primera fila
                     map.setCenter(polylinePath[0]);
+
+                    // Llama a la función polylineDraw cuando haya datos nuevos
+                    polylineDraw();
                 } else {
                     console.error("No se encontraron datos para mostrar en el mapa.");
                 }
@@ -67,8 +79,13 @@ function reloadTable() {
 function polylineDraw() {
     // Verifica que haya coordenadas en el vector 'polylinePath'
     if (polylinePath.length > 0) {
+        // Si ya existe una polilínea, elimínala del mapa antes de crear la nueva
+        if (polyline) {
+            polyline.setMap(null);
+        }
+
         // Crea la polilínea en el mapa con las coordenadas existentes
-        var polyline = new google.maps.Polyline({
+        polyline = new google.maps.Polyline({
             path: polylinePath,
             strokeColor: "#ff0000",
             strokeWeight: 10,
@@ -77,15 +94,18 @@ function polylineDraw() {
         });
 
         // Configura el zoom mínimo en 15
-        map.setOptions({ minZoom: 20 });
+        map.setOptions({ minZoom: 15 });
     }
 }
 
 // Configura el evento onclick para el botón con el ID "polylineDraw"
 $(document).ready(function () {   
     initMap(); // Llama a la función initMap para inicializar el mapa
+
+    // Configura el evento de clic en el botón para habilitar la polilínea inicialmente
     $("#polylineDraw").click(function() {
-        polylineDraw(); // Llama a la función polylineDraw cuando hagas clic en el botón
+        polylineDraw();
     });
+
     setInterval(reloadTable, 7000);
 });
