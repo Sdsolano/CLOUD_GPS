@@ -36,6 +36,7 @@ function initMap() {
      $("#adjustView").click(function() {
         var markerCurrentPosition = marker.getPosition();
         map.setCenter(markerCurrentPosition);
+        map.setZoom(18);
     });
 
     $("#polylineErase").click(function() {
