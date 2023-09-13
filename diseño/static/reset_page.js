@@ -33,6 +33,10 @@ function initMap() {
     $("#polylineDraw").click(function() {
         togglePolylineDrawing();
     });
+     $("#adjustView").click(function() {
+        var markerCurrentPosition = marker.getPosition();
+        map.setCenter(markerCurrentPosition);
+    });
 
     $("#polylineErase").click(function() {
         erasePolyline();
