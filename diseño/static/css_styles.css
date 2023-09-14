@@ -4,18 +4,7 @@ h1{
     margin: 10px 10px;
 }
 
-#actionButtons {
-    float: left;
-    background-color: #f0f0f0; /* Color de fondo diferente */
-    margin-right: 5px; /* Espacio a la derecha del div */
-    width: auto;
-    height: 100vh;
-}
 
-#actionButtons .btn {
-    display: block;
-    margin-bottom: 5px 0; /* Espacio vertical entre botones */
-}
 
 #tabla-contenido {
     display: flex;
@@ -50,6 +39,20 @@ h6{
 
 #center_text {
     text-align: center; /* Centra el texto horizontalmente */
+
     transform: translateY(-50%);
+}
+
+/* funcionamiento básico del sistema de pestañas */
+.tab-content {
+  display: none;
+}
+
+.tab:target .tab-content, .tab:last-of-type .tab-content {
+  display: block;
+}
+
+.tab:target ~ .tab:last-of-type .tab-content {
+  display: none;
 }
 
