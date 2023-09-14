@@ -67,7 +67,24 @@ function togglePolylineDrawing() {
     }
 }
 
+function mostrarSeccionDesdeFragmento() {
+    var fragment = window.location.hash;
+    if (fragment === '#home') {
+        // Mostrar la sección Home
+        document.getElementById('home').style.display = 'block';
+        document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+    } else if (fragment === '#historicos') {
+        // Mostrar la sección Históricos
+        document.getElementById('home').style.display = 'none'; // Ocultar Home
+        document.getElementById('historicos').style.display = 'block';
+    }
+}
 
+// Ejecutar la función al cargar la página
+window.onload = mostrarSeccionDesdeFragmento;
+
+// Manejar cambios en la URL (por ejemplo, cuando se hace clic en los enlaces de la barra de navegación)
+window.onhashchange = mostrarSeccionDesdeFragmento;
 
 function drawPolyline() {
     // Añade las coordenadas actuales del marcador a la polilínea
