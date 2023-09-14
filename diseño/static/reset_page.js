@@ -2,7 +2,7 @@ let map;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
-let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
+let isDrawingPolyline = true; // Bandera para verificar si se está dibujando la polilínea
 
 function initMap() {
     // Inicializa el mapa
