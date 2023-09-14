@@ -82,6 +82,15 @@ function mostrarSeccionDesdeFragmento() {
     }
 }
 
+<script type="text/javascript">
+$("#datetime").datetimepicker({
+    format: 'yyyy-mm-dd hh:ii',
+    autoclose: true,
+    todayBtn: true
+});
+</script>
+
+
 // Ejecutar la función al cargar la página
 window.onload = mostrarSeccionDesdeFragmento;
 
