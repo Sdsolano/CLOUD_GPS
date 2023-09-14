@@ -38,7 +38,7 @@ h6{
 #actionButtons {
     float: left;
     background-color: #f0f0f0; /* Color de fondo diferente */
-    margin-right: 20px; /* Espacio a la derecha del div */
+    margin-right: 5px; /* Espacio a la derecha del div */
 }
 
 #actionButtons .btn {
