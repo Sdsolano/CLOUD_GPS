@@ -13,6 +13,7 @@
     
 </head>
 <body>
+  
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">GPS TRACKER</a>
@@ -22,16 +23,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href='javascript:cambiarPestanna(pestanas,home)'> Home </a>
+          <a class="nav-link active" aria-current="page" href='#tab2'> Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href='javascript:cambiarPestanna(pestanas,historicos)'>Históricos</a>
+          <a class="nav-link" href='#tab1'>Históricos</a>
         </li>
     </div>
   </div>
 </nav>
 
-    
+<div id="home" class="tab-content">     
     <h1> <b>GPS Tracker </b></h1>
     <div class="texto" id="center_text"> <p>Welcome to GPS Tracker, a real time gps tracking application. The following buttons allows you to follow the route of your car in real time: </p>
  </div>
@@ -48,14 +49,13 @@
     <div id="tabla-contenido" class="container2">
         <!-- Aquí no colocamos nada para que sea reemplazado por AJAX -->
     </div>
+
+</div>
     
     <body onload="javascript:cambiarPestanna(pestanas,pestana1);">
 
-    <div id="contenidopestanas">
-    <div id="home">
-    Contenido de la pestaña 1
-    </div>
-    <div id="historicos">
+    
+    <div id="historicos" class=tab-content>
     Contenido de la pestaña 2
     </div>
 
