@@ -88,7 +88,6 @@ $("#datetime").datetimepicker({
     autoclose: true,
     todayBtn: true
 });
-</script>
 
 
 // Ejecutar la función al cargar la página
