@@ -43,6 +43,12 @@ function initMap() {
         erasePolyline();
     });
 
+    $("#datetime").datetimepicker({
+    format: 'yyyy-mm-dd hh:ii',
+    autoclose: true,
+    todayBtn: true
+});
+
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
@@ -82,12 +88,7 @@ function mostrarSeccionDesdeFragmento() {
     }
 }
 
-<script type="text/javascript">
-$("#datetime").datetimepicker({
-    format: 'yyyy-mm-dd hh:ii',
-    autoclose: true,
-    todayBtn: true
-});
+
 
 
 // Ejecutar la función al cargar la página
