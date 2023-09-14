@@ -30,9 +30,7 @@ function initMap() {
     });
 
     // Configura el evento clic en el botón "polylineDraw" para iniciar o detener la polilínea
-    $("#polylineDraw").click(function() {
-        togglePolylineDrawing();
-    });
+   
      $("#adjustView").click(function() {
         var markerCurrentPosition = marker.getPosition();
         map.setCenter(markerCurrentPosition);
@@ -48,25 +46,7 @@ function initMap() {
     reloadTable();
 }
 
-function togglePolylineDrawing() {
-    isDrawingPolyline = !isDrawingPolyline;
-    if (isDrawingPolyline) {
-        // Comienza a dibujar la polilínea
-        $("#polylineDraw").text("Stop Polyline");
-        
-        // Ajusta el zoom mínimo a 19
-        map.setOptions({ minZoom: 15 });
 
-        // Restablece las coordenadas del marcador a un arreglo vacío
-        markerCoordinates = [];
-    } else {
-        // Detiene la polilínea
-        $("#polylineDraw").text("Draw Polyline");
-        
-        // Restaura el valor original del zoom mínimo
-        map.setOptions({ minZoom: 15 });
-    }
-}
 
 
 // Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
@@ -160,6 +140,7 @@ function reloadTable() {
 
                             // Centra el mapa en la nueva ubicación del marcador
                             map.setCenter(newMarkerPosition);
+                            drawPolyline();
                         }
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
@@ -183,6 +164,5 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
 
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
-    setInterval(drawPolyline(), 1000);
 
 }
