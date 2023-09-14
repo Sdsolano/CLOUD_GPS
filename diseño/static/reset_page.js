@@ -120,7 +120,6 @@ function reloadTable() {
                     // Añade coordenadas a la polilínea si se está dibujando
                     if (isDrawingPolyline && !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
                         markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
-                        markerCoordinates = [];
                         drawPolyline()
                     }
                 
