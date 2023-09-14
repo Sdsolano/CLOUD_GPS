@@ -4,6 +4,19 @@ h1{
     margin: 10px 10px;
 }
 
+#actionButtons {
+    float: left;
+    background-color: #f0f0f0; /* Color de fondo diferente */
+    margin-right: 5px; /* Espacio a la derecha del div */
+    width: auto;
+    height: 100vh;
+}
+
+#actionButtons .btn {
+    display: block;
+    margin-bottom: 5px 0; /* Espacio vertical entre botones */
+}
+
 #tabla-contenido {
     display: flex;
     justify-content: center;
@@ -33,19 +46,6 @@ h1{
 h6{
     margin: 10px auto;
     text-align: center;
-}
-
-#actionButtons {
-    float: left;
-    background-color: #f0f0f0; /* Color de fondo diferente */
-    margin-right: 5px; /* Espacio a la derecha del div */
-    width: auto;
-    height: 100vh;
-}
-
-#actionButtons .btn {
-    display: block;
-    margin-bottom: 5px 0; /* Espacio vertical entre botones */
 }
 
 #center_text {
