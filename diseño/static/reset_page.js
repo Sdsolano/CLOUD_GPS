@@ -140,7 +140,7 @@ function reloadTable() {
 
                             // Centra el mapa en la nueva ubicación del marcador
                             map.setCenter(newMarkerPosition);
-                            drawPolyline();
+                           
                         }
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
@@ -162,6 +162,7 @@ $(document).ready(function () {
 
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 1000);
+    setInterval( drawPolyline, 1000);
 
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
 
