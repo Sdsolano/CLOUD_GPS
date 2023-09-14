@@ -121,13 +121,6 @@ function reloadTable() {
                         if (!markerPosition.equals(newMarkerPosition)) {
                             // Actualiza la posición del marcador con las coordenadas de la primera fila
                             marker.setPosition(newMarkerPosition);
-                            polyline.setPath(markerCoordinates);
-
-                            // Suaviza la polilínea
-                            const smoothedPath = google.maps.geometry.spherical.computeSpline(markerCoordinates, 10);
-
-                            // Actualiza la polilínea con las coordenadas suavizadas
-                            polyline.setPath(smoothedPath);
 
                             // Centra el mapa en la nueva ubicación del marcador
                             map.setCenter(newMarkerPosition);
