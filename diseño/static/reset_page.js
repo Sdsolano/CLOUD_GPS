@@ -76,11 +76,10 @@ function drawPolyline() {
     // Añade las coordenadas actuales del marcador a la polilínea
     polyline.setPath(markerCoordinates);
 
-    // Suaviza la polilínea
-    const smoothedPath = google.maps.geometry.spherical.computeSpline(markerCoordinates, 10);
+    
 
     // Actualiza la polilínea con las coordenadas suavizadas
-    polyline.setPath(smoothedPath);
+    polyline.setPath(markerCoordinates);
 }
 
 function erasePolyline() {
