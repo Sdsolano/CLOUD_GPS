@@ -50,7 +50,6 @@ h6{
 
 #center_text {
     text-align: center; /* Centra el texto horizontalmente */
-    margin-top: 50vh; /* Centra verticalmente con respecto a la mitad de la ventana */
     transform: translateY(-50%);
 }
 
