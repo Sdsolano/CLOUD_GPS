@@ -76,7 +76,7 @@ function drawPolyline() {
     // Añade las coordenadas actuales del marcador a la polilínea
     polyline.setPath(markerCoordinates);
 
-    
+    const smoothedPath = google.maps.geometry.spherical.computeSpline(markerCoordinates, 10);
 
     // Actualiza la polilínea con las coordenadas suavizadas
     polyline.setPath(markerCoordinates);
@@ -124,7 +124,7 @@ function reloadTable() {
                     var firstLongitude = parseFloat(firstRow.Longitude);
                     
                     // Añade coordenadas a la polilínea si se está dibujando
-                    if (isDrawingPolyline && !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
+                    if ( !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
                         markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
                     }
                 
