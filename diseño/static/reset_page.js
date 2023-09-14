@@ -2,7 +2,7 @@ let map;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
-let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
+let isDrawingPolyline = true; // Bandera para verificar si se está dibujando la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -28,11 +28,7 @@ function initMap() {
         strokeWeight: 2,
         map: map,
     });
-
-    // Configura el evento clic en el botón "polylineDraw" para iniciar o detener la polilínea
-    $("#polylineDraw").click(function() {
-        togglePolylineDrawing();
-    });
+    
      $("#adjustView").click(function() {
         var markerCurrentPosition = marker.getPosition();
         map.setCenter(markerCurrentPosition);
@@ -134,6 +130,7 @@ function reloadTable() {
                         if (!markerPosition.equals(newMarkerPosition)) {
                             // Actualiza la posición del marcador con las coordenadas de la primera fila
                             marker.setPosition(newMarkerPosition);
+                            markerCoordinates = [];
                             drawPolyline()
 
                             // Centra el mapa en la nueva ubicación del marcador
