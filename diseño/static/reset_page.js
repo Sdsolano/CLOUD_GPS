@@ -2,7 +2,7 @@ let map;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
-let isDrawingPolyline = true; // Bandera para verificar si se está dibujando la polilínea
+let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
 
 function initMap() {
     // Inicializa el mapa
@@ -28,7 +28,11 @@ function initMap() {
         strokeWeight: 2,
         map: map,
     });
-    
+
+    // Configura el evento clic en el botón "polylineDraw" para iniciar o detener la polilínea
+    $("#polylineDraw").click(function() {
+        togglePolylineDrawing();
+    });
      $("#adjustView").click(function() {
         var markerCurrentPosition = marker.getPosition();
         map.setCenter(markerCurrentPosition);
@@ -120,7 +124,6 @@ function reloadTable() {
                     // Añade coordenadas a la polilínea si se está dibujando
                     if (isDrawingPolyline && !isNaN(parseFloat(firstRow.Latitude)) && !isNaN(parseFloat(firstRow.Longitude))) {
                         markerCoordinates.push(new google.maps.LatLng(parseFloat(firstRow.Latitude),parseFloat(firstRow.Longitude)));
-                        drawPolyline()
                     }
                 
                     if (!isNaN(firstLatitude) && !isNaN(firstLongitude)) {
@@ -131,7 +134,6 @@ function reloadTable() {
                         if (!markerPosition.equals(newMarkerPosition)) {
                             // Actualiza la posición del marcador con las coordenadas de la primera fila
                             marker.setPosition(newMarkerPosition);
-                            
 
                             // Centra el mapa en la nueva ubicación del marcador
                             map.setCenter(newMarkerPosition);
@@ -164,6 +166,5 @@ $(document).ready(function () {
         }
     }, 1000);
 });
-
 
 
