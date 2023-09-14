@@ -184,10 +184,8 @@ $(document).ready(function () {
 
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
     setInterval(function() {
-        if (isDrawingPolyline) {
-            drawPolyline();
-        }
-    }, 1000);
+            drawPolyline
+            , 1000);
 });
 
 
