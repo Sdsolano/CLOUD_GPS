@@ -183,6 +183,6 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
 
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
-    setInterval(drawPolyline, 1000);
+    setInterval(drawPolyline(), 1000);
 
 }
