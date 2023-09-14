@@ -165,4 +165,4 @@ $(document).ready(function () {
 
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
 
-}
+});
