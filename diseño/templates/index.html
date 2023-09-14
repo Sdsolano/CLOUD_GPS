@@ -22,10 +22,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href='javascript:cambiarPestanna(pestanas,home)'> Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Históricos</a>
+          <a class="nav-link" href='javascript:cambiarPestanna(pestanas,historicos)'>Históricos</a>
         </li>
     </div>
   </div>
@@ -42,16 +42,21 @@
     </div>
   
     <div id="map" style="height: 400px;" class="container2"></div> <!-- Map container -->
-    <div id="historicalSection" style="display: none;">
-    <!-- Contenido histórico aquí -->
-    <h2>Historical Data</h2>
-    <!-- Agrega aquí el contenido histórico que desees mostrar -->
-</div>
 
-
+    
     <div class="container2">  <h3><b>  Last Locations </b></h3></div> 
     <div id="tabla-contenido" class="container2">
         <!-- Aquí no colocamos nada para que sea reemplazado por AJAX -->
+    </div>
+    
+    <body onload="javascript:cambiarPestanna(pestanas,pestana1);">
+
+    <div id="contenidopestanas">
+    <div id="home">
+    Contenido de la pestaña 1
+    </div>
+    <div id="historicos">
+    Contenido de la pestaña 2
     </div>
 
 </body>
