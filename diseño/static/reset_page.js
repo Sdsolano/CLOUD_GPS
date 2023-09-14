@@ -84,16 +84,16 @@ function drawPolyline() {
 
 function erasePolyline() {
     // Detiene la creación de la polilínea
-    isDrawingPolyline = false;
+    markerCoordinates = [];
     
     // Restaura el botón de dibujar la polilínea a su estado original
     $("#polylineDraw").text("Draw Polyline");
     
     // Borra las polilíneas existentes
-    polyline.setPath([]);
+    polyline.setPath(markerCoordinates);
     
     // Establece el zoom mínimo en 13
-    map.setOptions({ minZoom: 5 });
+    
 }
 
 function reloadTable() {
