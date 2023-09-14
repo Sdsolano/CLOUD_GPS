@@ -40,7 +40,7 @@ h6{
     background-color: #f0f0f0; /* Color de fondo diferente */
     margin-right: 5px; /* Espacio a la derecha del div */
     width: auto;
-    height: 100vh;
+    height: 100%;
 }
 
 #actionButtons .btn {
