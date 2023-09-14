@@ -67,9 +67,11 @@ function togglePolylineDrawing() {
     }
 }
 
+
+// Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
 function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
-    if (fragment === '#home') {
+    if (fragment === '#home' || fragment === '') {
         // Mostrar la sección Home
         document.getElementById('home').style.display = 'block';
         document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
