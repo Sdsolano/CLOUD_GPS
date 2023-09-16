@@ -207,6 +207,7 @@ $(document).ready(function () {
             success: function (response) {
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
+                actualizarHistoricosData(response);
     
             },
             error: function (error) {
@@ -214,24 +215,7 @@ $(document).ready(function () {
             }
         });
 
-          //Obtener arreglo
-     $.ajax({
-        type: 'POST',
-        url: '/coordenadas_entre_fechas', // La URL a la que enviar los datos
-        data: { fecha_inicio_unix: fechaInicio, fecha_fin_unix: fechaFin }, // Datos enviados al servidor
-        success: function (response) {
-            // Maneja la respuesta del servidor
-            console.log(response); // Imprime la respuesta en la consola del navegador
-
-            // Actualiza el div con id="historicos-data" con la respuesta
-            actualizarHistoricosData(response);
-        },
-        error: function (error) {
-            console.error(error);
-        }
-        });
-    });
-
+          
 
 });
 
