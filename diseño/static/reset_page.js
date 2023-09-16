@@ -155,6 +155,34 @@ function reloadTable() {
     });
 }
 
+
+
+function actualizarHistoricosData(data) {
+    var historicosDataDiv = $("#historicos-data");
+    historicosDataDiv.empty(); // Limpia el contenido anterior
+
+    if (Array.isArray(data) && data.length > 0) {
+        // Crea una tabla para mostrar las coordenadas
+        var table = $("<table></table>");
+        table.append("<thead><tr><th>Latitude</th><th>Longitude</th></tr></thead>");
+        var tbody = $("<tbody></tbody>");
+
+        // Itera sobre los datos y agrega filas a la tabla
+        data.forEach(function (coordenada) {
+            var row = $("<tr></tr>");
+            row.append("<td>" + coordenada.Latitude + "</td>");
+            row.append("<td>" + coordenada.Longitude + "</td>");
+            tbody.append(row);
+        });
+
+        table.append(tbody);
+        historicosDataDiv.append(table);
+    } else {
+        // Si no hay datos, muestra un mensaje en el div
+        historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
+    }
+}
+
 $(document).ready(function () {
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
@@ -184,6 +212,23 @@ $(document).ready(function () {
             error: function (error) {
                 console.error(error);
             }
+        });
+
+          //Obtener arreglo
+     $.ajax({
+        type: 'POST',
+        url: '/coordenadas_entre_fechas', // La URL a la que enviar los datos
+        data: { fecha_inicio_unix: fechaInicio, fecha_fin_unix: fechaFin }, // Datos enviados al servidor
+        success: function (response) {
+            // Maneja la respuesta del servidor
+            console.log(response); // Imprime la respuesta en la consola del navegador
+
+            // Actualiza el div con id="historicos-data" con la respuesta
+            actualizarHistoricosData(response);
+        },
+        error: function (error) {
+            console.error(error);
+        }
         });
     });
 
