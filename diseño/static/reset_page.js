@@ -233,7 +233,7 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-    $("#campo1").datepicker({
+    $("#campo1").datetimepicker({
         dateFormat: "yy-mm-dd", // Formato de fecha deseado
         timeFormat: "HH:mm:00", // Formato de hora deseado
         onSelect: function (dateText) {
