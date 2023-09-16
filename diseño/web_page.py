@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, render_template_string
 import mysql.connector
 from mysql.connector import Error
 import datetime
@@ -56,17 +56,17 @@ def obtener_valores_historicos():
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
 
-        # Ahora puedes utilizar fecha_inicio y fecha_fin en tu lógica
-        # para procesar los valores del formulario como lo necesites.
+        # Realiza cualquier procesamiento necesario con los datos
 
-        # Por ejemplo, puedes imprimirlos en la consola
-        print("Fecha de inicio:", fecha_inicio)
-        print("Fecha de fin:", fecha_fin)
+        # Construye una respuesta HTML basada en una plantilla o de la forma que desees
+        response_html = render_template_string("""
+        <h1><b>GPS Tracker</b></h1>
+        <p>Fecha de inicio: {{ fecha_inicio }}</p>
+        <p>Fecha de fin: {{ fecha_fin }}</p>
+        """, fecha_inicio=fecha_inicio, fecha_fin=fecha_fin)
 
-        # También puedes realizar cualquier otro procesamiento que necesites aquí
-
-
-    return redirect(url_for('index', _anchor='historicos'))
+        # Devuelve la respuesta HTML al cliente
+        return response_html
 
 
 
