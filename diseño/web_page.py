@@ -74,7 +74,7 @@ def obtener_valores_historicos():
 
 
 
-// Database historic search
+#Database historic search
 
 @app.route('/coordenadas_entre_fechas', methods=['POST'])
 def coordenadas_entre_fechas():
