@@ -177,16 +177,17 @@ $("#historicos-form").submit(function (event) {
     var fechaFin = $("#campo2").val();
 
     // Enviar los valores al servidor Flask utilizando AJAX
-  $.ajax({
-    type: 'POST', // Utiliza el método POST para enviar datos al servidor
-    url: '/historicos', // La URL a la que enviar los datos
-    data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
-    success: function (response) {
-        
-        $("#historicos").html(response);
-    },
-    error: function (error) {
-        console.error(error);
-    }
+    $.ajax({
+        type: 'POST', // Utiliza el método POST para enviar datos al servidor
+        url: '/historicos', // La URL a la que enviar los datos
+        data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
+        success: function (response) {
+            // Manejar la respuesta del servidor aquí si es necesario
+            console.log(response); // Imprime la respuesta en la consola del navegador
+        },
+        error: function (error) {
+            console.error(error);
+        }
     });
 });
+
