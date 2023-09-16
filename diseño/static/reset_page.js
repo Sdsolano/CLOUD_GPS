@@ -166,3 +166,26 @@ $(document).ready(function () {
     // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
 
 });
+
+
+
+$("#historicos-form").submit(function (event) {
+    event.preventDefault(); // Evita que el formulario se envíe de forma estándar
+
+    // Obtener los valores de los campos de fecha de inicio y fecha de fin
+    var fechaInicio = $("#campo1").val();
+    var fechaFin = $("#campo2").val();
+
+    // Enviar los valores al servidor Flask utilizando AJAX
+    $.ajax({
+        type: 'POST', // Utiliza el método POST para enviar datos al servidor
+        url: '/historicos', // La URL a la que enviar los datos
+        data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
+        success: function (response) {
+            // Manejar la respuesta del servidor aquí si es necesario
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+});
