@@ -65,8 +65,8 @@ def obtener_valores_historicos():
 
         # También puedes realizar cualquier otro procesamiento que necesites aquí
 
-    # Redirecciona a la página históricos o muestra una respuesta adecuada
-    return render_template("index.html")
+
+    return None
 
 
 
