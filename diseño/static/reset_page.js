@@ -46,9 +46,6 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
-    $("#inicial").on("click",function() {
-    $("#calendario1").modal(P)
-                )
 
     
     // Configura las opciones del mapa
