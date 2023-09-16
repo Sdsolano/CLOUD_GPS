@@ -233,13 +233,7 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-      $("#historicos-form").submit(function (event) {
-        
-          
-        event.preventDefault(); // Evita que el formulario se envíe de forma estándar
-        console.log("Formulario enviado");
-
-          $("#fecha-inicio").datepicker({
+    $("#fecha-inicio").datepicker({
         dateFormat: "yy-mm-dd", // Formato de fecha deseado
         timeFormat: "HH:mm:ss", // Formato de hora deseado
         onSelect: function (dateText) {
@@ -248,6 +242,12 @@ $(document).ready(function () {
             $("#fecha-inicio").val(selectedDate);
         }
     });
+
+      $("#historicos-form").submit(function (event) {
+        
+          
+        event.preventDefault(); // Evita que el formulario se envíe de forma estándar
+        console.log("Formulario enviado");
           
     
         // Obtener los valores de los campos de fecha de inicio y fecha de fin
