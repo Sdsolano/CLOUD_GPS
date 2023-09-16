@@ -179,6 +179,11 @@ $(document).ready(function () {
         success: function (response) {
             // Manejar la respuesta del servidor aquí si es necesario
             console.log(response); // Imprime la respuesta en la consola del navegador
+            if (response && Array.isArray(response)) {
+                var historicosDataDiv = $("#historicos-data");
+                historicosDataDiv.empty(); // Limpia el contenido anterior
+                historicosDataDiv.append("<pre>" + JSON.stringify(response, null, 2) + "</pre>");
+            }
         },
         error: function (error) {
             console.error(error);
