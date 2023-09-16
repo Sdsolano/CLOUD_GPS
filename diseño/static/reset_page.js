@@ -243,6 +243,11 @@ $(document).ready(function () {
         }
     });
 
+      $("#abrir-datepicker").click(function () {
+        $("#fecha-inicio").datepicker("show");
+    });
+    
+
       $("#historicos-form").submit(function (event) {
         
           
