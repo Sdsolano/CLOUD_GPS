@@ -94,8 +94,8 @@ def obtener_valores_historicos():
 @app.route('/coordenadas_entre_fechas', methods=['POST'])
 def coordenadas_entre_fechas():
     if request.method == 'POST':
-        fecha_inicio_unix = request.form.get('fecha_inicio_unix_ms')
-        fecha_fin_unix = request.form.get('fecha_fin_unix_ms')
+        fecha_inicio_unix = request.form.get('fecha_inicio_unix')
+        fecha_fin_unix = request.form.get('fecha_fin_unix')
 
         try:
             connect = database_connect()
@@ -108,7 +108,7 @@ def coordenadas_entre_fechas():
                 FROM datos
                 WHERE Time_stamp >= %s AND Time_stamp <= %s
                 """
-                cursor.execute(sql, (fecha_inicio_unix, fecha_fin_unix))
+                cursor.execute(sql, (fecha_inicio_unix_ms, fecha_fin_unix_ms))
                 result = cursor.fetchall()
                 
                 cursor.close()
