@@ -57,6 +57,9 @@ def obtener_valores_historicos():
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
 
+        print("Fecha de inicio recibida:", fecha_inicio)
+        print("Fecha de fin recibida:", fecha_fin)
+
         # Convierte las fechas al formato Unix Epoch Time usando datetime
         try:
             fecha_inicio_datetime = datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
