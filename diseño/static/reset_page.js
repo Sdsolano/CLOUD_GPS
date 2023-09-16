@@ -45,6 +45,43 @@ function initMap() {
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
+function initMap2() {
+    // Configura las opciones del mapa
+    var mapOptions = {
+        zoom: 10, // Establece el nivel de zoom inicial
+    };
+
+    // Crea un nuevo mapa en el div "mapa-historicos"
+    var map = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
+
+    // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
+    $.ajax({
+        url: "/components", // Cambia la URL a la que debes hacer la solicitud AJAX
+        method: "GET",
+        success: function (response) {
+            if (Array.isArray(response) && response.length > 0) {
+                // Obtiene la última posición de la respuesta
+                var lastPosition = response[0];
+
+                // Obtiene las coordenadas de la última posición
+                var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
+
+                // Crea un marcador en la última posición
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    title: "Última posición"
+                });
+
+                // Centra el mapa en la última posición
+                map.setCenter(latLng);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX request failed", error);
+        }
+    });
+}
 
 
 
@@ -61,6 +98,7 @@ function mostrarSeccionDesdeFragmento() {
         // Mostrar la sección Históricos
         document.getElementById('home').style.display = 'none'; // Ocultar Home
         document.getElementById('historicos').style.display = 'block';
+        initMap2();
     }
 }
 
