@@ -59,8 +59,8 @@ def obtener_valores_historicos():
 
         # Convierte las fechas al formato Unix Epoch Time
         try:
-            fecha_inicio_unix = int(time.mktime(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S").timetuple()))
-            fecha_fin_unix = int(time.mktime(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S").timetuple()))
+            fecha_inicio_unix = int(time.mktime(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S").timetuple()))*1000
+            fecha_fin_unix = int(time.mktime(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S").timetuple()))*1000
         except Exception as e:
             return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
 
