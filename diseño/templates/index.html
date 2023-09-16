@@ -2,17 +2,10 @@
 <html>
 <head>
     <title>GPS Tracker</title>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css_styles.css')}}"/>
-    
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('static', filename='reset_page.js')}}"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
   
   <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async defer></script>
 
@@ -62,18 +55,14 @@
 <div id="historicos" class="tab-content">
     <h1><b>GPS Tracker</b></h1>
 
-    <form id="historicos-form" method="POST">        
-        
-        <label for="campo1" class="btn btn-primary">Fecha de inicio:</label>
+    <form id="historicos-form" method="POST">
+        <label for="campo1">Fecha de inicio:</label>
         <input type="text" id="campo1" name="fecha_inicio"><br><br>
 
-        <label for="campo2" class="btn btn-primary">Fecha de fin:</label>
+        <label for="campo2">Fecha de fin:</label>
         <input type="text" id="campo2" name="fecha_fin"><br><br>
 
-        
-
         <input type="submit" id="enviar" value="Enviar">
-        
     </form>
     <div id="mapa-historicos" style="height: 400px;" class="container2"></div>
     <div id="historicos-data"></div>
