@@ -50,9 +50,9 @@ def data():
     except Exception as e:
         return "Error " + str(e)
 
-@app.route('/historicos', methods=['POST'])
+@app.route('/historicos', methods=['GET'])
 def obtener_valores_historicos():
-    if request.method == 'POST':
+    if request.method == 'GET':
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
 
@@ -60,8 +60,8 @@ def obtener_valores_historicos():
         # para procesar los valores del formulario como lo necesites.
 
         # Por ejemplo, puedes imprimirlos en la consola
-        print("Fecha de inicio:", fecha_inicio)
-        print("Fecha de fin:", fecha_fin)
+        print("Fecha de inicio: "+ fecha_inicio + "\n")
+        print("Fecha de fin: "+ fecha_fin + "\n")
 
         # También puedes realizar cualquier otro procesamiento que necesites aquí
 
