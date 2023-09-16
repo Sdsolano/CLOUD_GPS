@@ -50,9 +50,9 @@ def data():
     except Exception as e:
         return "Error " + str(e)
 
-@app.route('/historicos', methods=['GET'])
+@app.route('/historicos', methods=['POST'])
 def obtener_valores_historicos():
-    if request.method == 'GET':
+    if request.method == 'POST':
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
 
