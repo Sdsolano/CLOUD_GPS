@@ -46,8 +46,6 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
-
-    
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -136,7 +134,6 @@ function erasePolyline() {
     // Establece el zoom mínimo en 13
     
 }
-
 
 function reloadTable() {
     $.ajax({
@@ -233,27 +230,9 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-    $("#campo1").datepicker({
-        dateFormat: "yy-mm-dd", // Formato de fecha deseado
-        timeFormat: "HH:mm:ss", // Formato de hora deseado
-        onSelect: function (dateText) {
-            // Seleccionar fecha de inicio
-            var selectedDate = dateText + "00:00:00";  // Establece la hora a medianoche
-            $("#fecha-inicio").val(selectedDate);
-        }
-    });
-
-      $("#abrir-datepicker").click(function () {
-        $("#fecha-inicio").datepicker("show");
-    });
-    
-
       $("#historicos-form").submit(function (event) {
-        
-          
         event.preventDefault(); // Evita que el formulario se envíe de forma estándar
         console.log("Formulario enviado");
-          
     
         // Obtener los valores de los campos de fecha de inicio y fecha de fin
         var fechaInicio = $("#campo1").val();
@@ -278,6 +257,12 @@ $(document).ready(function () {
          }); 
 
 });
+
+
+
+
+
+
 
 
 
