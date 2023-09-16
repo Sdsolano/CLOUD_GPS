@@ -77,6 +77,7 @@ def obtener_valores_historicos():
         # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time en milisegundos
         return jsonify({'fecha_inicio_unix_ms': fecha_inicio_unix_ms, 'fecha_fin_unix_ms': fecha_fin_unix_ms})
 
+
 # Database historic search
 @app.route('/coordenadas_entre_fechas', methods=['POST'])
 def coordenadas_entre_fechas():
