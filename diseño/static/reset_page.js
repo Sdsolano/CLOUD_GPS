@@ -171,6 +171,7 @@ $(document).ready(function () {
 
 $("#historicos-form").submit(function (event) {
     event.preventDefault(); // Evita que el formulario se envíe de forma estándar
+    console.log("Formulario enviado"); 
 
     // Obtener los valores de los campos de fecha de inicio y fecha de fin
     var fechaInicio = $("#campo1").val();
