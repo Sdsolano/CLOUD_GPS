@@ -101,7 +101,7 @@ def obtener_valores_historicos():
                 
                 cursor.close()
                 connect.close()
-                print(result)
+               
                 
                 # Devuelve un arreglo de coordenadas en formato JSON
                 return jsonify(result)
