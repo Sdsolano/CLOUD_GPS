@@ -73,8 +73,8 @@ def obtener_valores_historicos():
             fecha_fin_datetime = bogota_timezone.localize(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))
             
             # Convierte las fechas a milisegundos Unix Epoch Time
-            fecha_inicio_unix_ms = int(fecha_inicio_datetime.timestamp()*1000 )
-            fecha_fin_unix_ms = int(fecha_fin_datetime.timestamp()*1000 )
+            fecha_inicio_unix_ms = int(fecha_inicio_datetime.timestamp() )*1000
+            fecha_fin_unix_ms = int(fecha_fin_datetime.timestamp() )*1000
         except Exception as e:
             return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
             
