@@ -52,20 +52,19 @@
 
 </div>
     
-    <div id="historicos" class=tab-content>
-        <h1> <b>GPS Tracker </b></h1>
-    
-        <form>
-            <label for="campo1">Campo 1:</label>
-            <input type="text" id="campo1" name="campo1"><br><br>
-            
-            <label for="campo2">Campo 2:</label>
-            <input type="text" id="campo2" name="campo2"><br><br>
-            
-            <input type="submit" value="Enviar">
-        </form>
+<div id="historicos" class="tab-content">
+    <h1><b>GPS Tracker</b></h1>
 
-    </div>
+    <form id="historicos-form" action="/historicos" method="POST">
+        <label for="campo1">Fecha de inicio:</label>
+        <input type="text" id="campo1" name="fecha_inicio"><br><br>
+
+        <label for="campo2">Fecha de fin:</label>
+        <input type="text" id="campo2" name="fecha_fin"><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</div>
 
 </body>
 </html>
