@@ -135,6 +135,10 @@ function erasePolyline() {
     
 }
 
+$("#inicial").on("click",function() {
+    $("#calendario1").modal(P)
+                )
+
 function reloadTable() {
     $.ajax({
         url: "/components",
