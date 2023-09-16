@@ -74,6 +74,40 @@ def obtener_valores_historicos():
 
 
 
+// Database historic search
+
+@app.route('/coordenadas_entre_fechas', methods=['POST'])
+def coordenadas_entre_fechas():
+    if request.method == 'POST':
+        fecha_inicio_unix = request.form.get('fecha_inicio_unix')
+        fecha_fin_unix = request.form.get('fecha_fin_unix')
+
+        try:
+            connect = database_connect()
+            if connect:
+                cursor = connect.cursor(dictionary=True)
+                
+                # Sentencia SQL para seleccionar las coordenadas entre las dos fechas en formato Unix Epoch Time
+                sql = """
+                SELECT Latitude, Longitude
+                FROM datos
+                WHERE Time_stamp >= %s AND Time_stamp <= %s
+                """
+                cursor.execute(sql, (fecha_inicio_unix, fecha_fin_unix))
+                result = cursor.fetchall()
+                
+                cursor.close()
+                connect.close()
+                
+                # Devuelve un arreglo de coordenadas en formato JSON
+                return jsonify(result)
+            else:
+                return "Database unreachable"
+        except Exception as e:
+            return jsonify({'error': 'Error al obtener coordenadas: ' + str(e)}), 500
+
+
+
 
 @app.route('/')
 def index():
