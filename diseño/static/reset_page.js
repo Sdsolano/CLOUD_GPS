@@ -233,12 +233,12 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-    $("#campo1").datetimepicker({
+    $("#campo1").datepicker({
         dateFormat: "yy-mm-dd", // Formato de fecha deseado
-        timeFormat: "HH:mm:00", // Formato de hora deseado
+        timeFormat: "HH:mm:ss", // Formato de hora deseado
         onSelect: function (dateText) {
             // Seleccionar fecha de inicio
-            var selectedDate = dateText  // Establece la hora a medianoche
+            var selectedDate = dateText + "00:00:00";  // Establece la hora a medianoche
             $("#fecha-inicio").val(selectedDate);
         }
     });
