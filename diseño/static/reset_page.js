@@ -4,6 +4,8 @@ let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
 
+
+
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -222,7 +224,22 @@ function actualizarHistoricosData(data) {
     }
 }
 
+
 $(document).ready(function () {
+    $('#date-range').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd', // Set the date format
+        startDate: '2023-01-01', // Set the start date
+        endDate: '2023-12-31',   // Set the end date
+    });
+});
+
+
+
+
+$(document).ready(function () {
+
+    
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
 
