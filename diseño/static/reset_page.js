@@ -163,33 +163,39 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-    $("#historicos-form").submit(function (event) {
-    event.preventDefault(); // Evita que el formulario se envíe de forma estándar
-    console.log("Formulario enviado");
-
-    // Obtener los valores de los campos de fecha de inicio y fecha de fin
-    var fechaInicio = $("#campo1").val();
-    var fechaFin = $("#campo2").val();
-
-    // Enviar los valores al servidor Flask utilizando AJAX
-    $.ajax({
-        type: 'POST', // Utiliza el método POST para enviar datos al servidor
-        url: '/historicos', // La URL a la que enviar los datos
-        data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
-        success: function (response) {
-            // Manejar la respuesta del servidor aquí si es necesario
-            console.log(response); // Imprime la respuesta en la consola del navegador
-            if (response && Array.isArray(response)) {
-                var historicosDataDiv = $("#historicos-data");
-                historicosDataDiv.empty(); // Limpia el contenido anterior
-                historicosDataDiv.append("<pre>" + JSON.stringify(response, null, 2) + "</pre>");
+      $("#historicos-form").submit(function (event) {
+        event.preventDefault(); // Evita que el formulario se envíe de forma estándar
+        console.log("Formulario enviado");
+    
+        // Obtener los valores de los campos de fecha de inicio y fecha de fin
+        var fechaInicio = $("#campo1").val();
+        var fechaFin = $("#campo2").val();
+    
+        // Enviar los valores al servidor Flask utilizando AJAX
+        $.ajax({
+            type: 'POST', // Utiliza el método POST para enviar datos al servidor
+            url: '/historicos', // La URL a la que enviar los datos
+            data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
+            success: function (response) {
+                // Manejar la respuesta del servidor aquí
+                console.log(response); // Imprime la respuesta en la consola del navegador
+    
+                // Muestra la respuesta en la sección #historicos en tu página web
+                if (response && Array.isArray(response)) {
+                    var historicosDataDiv = $("#historicos-data");
+                    historicosDataDiv.empty(); // Limpia el contenido anterior
+    
+                    // Crea un elemento <pre> para formatear la respuesta JSON
+                    var preElement = $("<pre></pre>").text(JSON.stringify(response, null, 2));
+                    historicosDataDiv.append(preElement);
+                }
+            },
+            error: function (error) {
+                console.error(error);
             }
-        },
-        error: function (error) {
-            console.error(error);
-        }
+        });
     });
-});
+
 
 });
 
