@@ -230,6 +230,11 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
+    $('#campo1').datetimepicker({
+        format: 'Y-m-d H:i:00', // Formato deseado
+        defaultDate: new Date(), // Fecha y hora predeterminadas (los segundos estarán en 0)
+    });
+
       $("#historicos-form").submit(function (event) {
         event.preventDefault(); // Evita que el formulario se envíe de forma estándar
         console.log("Formulario enviado");
