@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, render_template_string
 import mysql.connector
 from mysql.connector import Error
+import time
 import datetime
 import pytz
 import sys
@@ -59,22 +60,16 @@ def obtener_valores_historicos():
         print("Fecha de inicio recibida:", fecha_inicio)
         print("Fecha de fin recibida:", fecha_fin)
 
-        # Convierte las fechas al formato Unix Epoch Time en milisegundos
+        # Convierte las fechas al formato Unix Epoch Time en milisegundos utilizando la librería time
         try:
-            fecha_inicio_datetime = datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
-            fecha_fin_datetime = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S")
-
-            fecha_inicio_unix_ms = int(fecha_inicio_datetime.timestamp()) * 1000
-            fecha_fin_unix_ms = int(fecha_fin_datetime.timestamp()) * 1000
+            fecha_inicio_unix_ms = int(time.mktime(time.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S"))) * 1000
+            fecha_fin_unix_ms = int(time.mktime(time.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))) * 1000
         except Exception as e:
             return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
 
         print("Fecha de inicio (Unix Epoch Time en milisegundos): " + str(fecha_inicio_unix_ms) + "\n")
         print("Fecha de fin (Unix Epoch Time en milisegundos): " + str(fecha_fin_unix_ms) + "\n")
 
-        # También puedes realizar cualquier otro procesamiento que necesites aquí
-
-        # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time en milisegundos
         return jsonify({'fecha_inicio_unix_ms': fecha_inicio_unix_ms, 'fecha_fin_unix_ms': fecha_fin_unix_ms})
 
 
