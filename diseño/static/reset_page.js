@@ -45,16 +45,7 @@ function initMap() {
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
- function initMap2() {
-            
-            var mapOptions = {
-                center: { lat: 0, lng: 0 }, // Centra el mapa en una ubicación inicial (puedes cambiar esto)
-                zoom: 10, // Establece el nivel de zoom inicial
-            };
 
-            // Crea un nuevo mapa en el div "mapa-historicos"
-            var map = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
-        }
 
 
 
