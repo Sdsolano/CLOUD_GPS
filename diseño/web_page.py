@@ -85,24 +85,12 @@ def obtener_valores_historicos():
         print("Fecha de inicio (Unix Epoch Time en milisegundos): " + str(fecha_inicio_unix_ms) + "\n")
         print("Fecha de fin (Unix Epoch Time en milisegundos): " + str(fecha_fin_unix_ms) + "\n")
 
-        # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time en milisegundos
-        return jsonify({'fecha_inicio_unix_ms': fecha_inicio_unix_ms, 'fecha_fin_unix_ms': fecha_fin_unix_ms})
-
-
-
-# Database historic search
-@app.route('/coordenadas_entre_fechas', methods=['POST'])
-def coordenadas_entre_fechas():
-    if request.method == 'POST':
-        fecha_inicio_unix = request.form.get('fecha_inicio_unix')
-        fecha_fin_unix = request.form.get('fecha_fin_unix')
-
         try:
             connect = database_connect()
             if connect:
                 cursor = connect.cursor(dictionary=True)
                 
-                # Sentencia SQL para seleccionar las coordenadas entre las dos fechas en formato Unix Epoch Time
+                # Sentencia SQL para seleccionar las coordenadas entre las dos fechas en formato Unix Epoch Time en milisegundos
                 sql = """
                 SELECT Latitude, Longitude
                 FROM datos
@@ -121,6 +109,11 @@ def coordenadas_entre_fechas():
                 return "Database unreachable"
         except Exception as e:
             return jsonify({'error': 'Error al obtener coordenadas: ' + str(e)}), 500
+
+
+
+
+
 
 @app.route('/')
 def index():
