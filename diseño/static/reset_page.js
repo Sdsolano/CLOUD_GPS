@@ -123,6 +123,8 @@ function drawPolyline() {
     polyline.setPath(markerCoordinates);
 }
 
+
+
 function erasePolyline() {
     // Detiene la creación de la polilínea
     markerCoordinates = [];
@@ -235,10 +237,23 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-    $('#campo1').datetimepicker({
-        format: 'Y-m-d H:i:00', // Formato deseado
-        defaultDate: new Date(), // Fecha y hora predeterminadas (los segundos estarán en 0)
+    $('#campo1, #campo2').daterangepicker({
+        singleDatePicker: true, // Habilita la selección de una sola fecha
+        timePicker: true, // Habilita la selección de hora
+        timePicker24Hour: true, // Utiliza el formato de 24 horas
+        timePickerSeconds: false, // Deshabilita la selección de segundos
+        locale: {
+            format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
+        },
     });
+
+    // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
+    $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
+        var input = $(this);
+        input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
+    });
+
+
 
       $("#historicos-form").submit(function (event) {
         event.preventDefault(); // Evita que el formulario se envíe de forma estándar
