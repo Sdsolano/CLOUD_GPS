@@ -55,16 +55,18 @@ def obtener_valores_historicos():
     if request.method == 'POST':
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
-        print(fecha_inicio)
-        print(fecha_fin)
 
-        # Realiza cualquier procesamiento necesario con los datos
+        # Ahora puedes utilizar fecha_inicio y fecha_fin en tu lógica
+        # para procesar los valores del formulario como lo necesites.
 
-        # Construye una respuesta HTML basada en una plantilla o de la forma que desees
-        response_html= fecha_inicio + " " + fecha_fin
+        # Por ejemplo, puedes imprimirlos en la consola
+        print("Fecha de inicio:", fecha_inicio)
+        print("Fecha de fin:", fecha_fin)
 
-        # Devuelve la respuesta HTML al cliente
-        return response_html
+        # También puedes realizar cualquier otro procesamiento que necesites aquí
+
+        # Devuelve una respuesta simple al cliente (puede ser un mensaje JSON, por ejemplo)
+        return jsonify({'message': 'Datos recibidos exitosamente'})
 
 
 
