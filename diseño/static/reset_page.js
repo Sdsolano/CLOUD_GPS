@@ -163,13 +163,7 @@ $(document).ready(function () {
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
 
-    // Configura un intervalo para actualizar la polilínea cada segundo si está dibujando
-
-});
-
-
-
-$("#historicos-form").submit(function (event) {
+    $("#historicos-form").submit(function (event) {
     event.preventDefault(); // Evita que el formulario se envíe de forma estándar
     console.log("Formulario enviado");
 
@@ -191,6 +185,12 @@ $("#historicos-form").submit(function (event) {
         }
     });
 });
+
+});
+
+
+
+
 
 
 
