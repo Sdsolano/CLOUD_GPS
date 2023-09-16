@@ -66,7 +66,7 @@ def obtener_valores_historicos():
         # También puedes realizar cualquier otro procesamiento que necesites aquí
 
 
-    return None
+    return redirect(url_for('index', _anchor='historicos'))
 
 
 
