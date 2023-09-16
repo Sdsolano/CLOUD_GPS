@@ -60,23 +60,22 @@ def obtener_valores_historicos():
         print("Fecha de inicio recibida:", fecha_inicio)
         print("Fecha de fin recibida:", fecha_fin)
 
-        # Convierte las fechas al formato Unix Epoch Time usando datetime
+   
         try:
-            fecha_inicio_datetime = datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
-            fecha_fin_datetime = datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S")
+            fecha_inicio_datetime = datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
+            fecha_fin_datetime = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S")
 
-            fecha_inicio_unix = int((fecha_inicio_datetime - datetime(1970, 1, 1)).total_seconds()) * 1000
-            fecha_fin_unix = int((fecha_fin_datetime - datetime(1970, 1, 1)).total_seconds()) * 1000
+            fecha_inicio_unix = int((fecha_inicio_datetime - datetime.datetime(1970, 1, 1)).total_seconds()) * 1000
+            fecha_fin_unix = int((fecha_fin_datetime - datetime.datetime(1970, 1, 1)).total_seconds()) * 1000
         except Exception as e:
             return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
 
         print("Fecha de inicio (Unix Epoch Time): "+ str(fecha_inicio_unix) + "\n")
         print("Fecha de fin (Unix Epoch Time): "+ str(fecha_fin_unix) + "\n")
 
-        # También puedes realizar cualquier otro procesamiento que necesites aquí
-
-        # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time
+       
         return jsonify({'fecha_inicio_unix': fecha_inicio_unix, 'fecha_fin_unix': fecha_fin_unix})
+
 
 
 
