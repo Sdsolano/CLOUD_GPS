@@ -53,6 +53,7 @@ def data():
 
 
 
+
 @app.route('/historicos', methods=['POST'])
 def obtener_valores_historicos():
     if request.method == 'POST':
@@ -64,12 +65,16 @@ def obtener_valores_historicos():
 
         # Convierte las fechas al formato Unix Epoch Time en milisegundos
         try:
-            fecha_inicio_datetime = datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
-            fecha_fin_datetime = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S")
+            # Define la zona horaria de Bogotá
+            bogota_timezone = pytz.timezone('America/Bogota')
+
+            # Convierte las fechas de entrada a objetos datetime con la zona horaria de Bogotá
+            fecha_inicio_datetime = bogota_timezone.localize(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S"))
+            fecha_fin_datetime = bogota_timezone.localize(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))
 
             # Obtiene la diferencia en segundos desde la época Unix (1970-01-01)
-            fecha_inicio_unix = (fecha_inicio_datetime - datetime.datetime(1970, 1, 1)).total_seconds()
-            fecha_fin_unix = (fecha_fin_datetime - datetime.datetime(1970, 1, 1)).total_seconds()
+            fecha_inicio_unix = (fecha_inicio_datetime - datetime.datetime(1970, 1, 1, tzinfo=pytz.utc)).total_seconds()
+            fecha_fin_unix = (fecha_fin_datetime - datetime.datetime(1970, 1, 1, tzinfo=pytz.utc)).total_seconds()
 
             # Convierte los segundos a milisegundos
             fecha_inicio_unix_ms = int(fecha_inicio_unix * 1000)
@@ -82,6 +87,7 @@ def obtener_valores_historicos():
 
         # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time en milisegundos
         return jsonify({'fecha_inicio_unix_ms': fecha_inicio_unix_ms, 'fecha_fin_unix_ms': fecha_fin_unix_ms})
+
 
 
 
