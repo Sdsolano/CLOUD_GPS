@@ -234,8 +234,21 @@ $(document).ready(function () {
     setInterval( drawPolyline, 1000);
 
       $("#historicos-form").submit(function (event) {
+        
+          
         event.preventDefault(); // Evita que el formulario se envíe de forma estándar
         console.log("Formulario enviado");
+
+          $("#fecha-inicio").datepicker({
+        dateFormat: "yy-mm-dd", // Formato de fecha deseado
+        timeFormat: "HH:mm:ss", // Formato de hora deseado
+        onSelect: function (dateText) {
+            // Seleccionar fecha de inicio
+            var selectedDate = dateText + " 00:00:00"; // Establece la hora a medianoche
+            $("#fecha-inicio").val(selectedDate);
+        }
+    });
+          
     
         // Obtener los valores de los campos de fecha de inicio y fecha de fin
         var fechaInicio = $("#campo1").val();
