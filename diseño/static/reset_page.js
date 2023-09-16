@@ -180,15 +180,6 @@ $(document).ready(function () {
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
     
-                // Muestra la respuesta en la sección #historicos en tu página web
-                if (response && Array.isArray(response)) {
-                    var historicosDataDiv = $("#historicos-data");
-                    historicosDataDiv.empty(); // Limpia el contenido anterior
-    
-                    // Crea un elemento <pre> para formatear la respuesta JSON
-                    var preElement = $("<pre></pre>").text(JSON.stringify(response, null, 2));
-                    historicosDataDiv.append(preElement);
-                }
             },
             error: function (error) {
                 console.error(error);
