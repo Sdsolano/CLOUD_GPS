@@ -55,15 +55,13 @@ def obtener_valores_historicos():
     if request.method == 'POST':
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
+        print(fecha_inicio)
+        print(fecha_fin)
 
         # Realiza cualquier procesamiento necesario con los datos
 
         # Construye una respuesta HTML basada en una plantilla o de la forma que desees
-        response_html = render_template_string("""
-        <h1><b>GPS Tracker</b></h1>
-        <p>Fecha de inicio: {{ fecha_inicio }}</p>
-        <p>Fecha de fin: {{ fecha_fin }}</p>
-        """, fecha_inicio=fecha_inicio, fecha_fin=fecha_fin)
+        response_html= fecha_inicio + " " + fecha_fin
 
         # Devuelve la respuesta HTML al cliente
         return response_html
