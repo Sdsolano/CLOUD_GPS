@@ -51,6 +51,8 @@ def data():
     except Exception as e:
         return "Error " + str(e)
 
+
+
 @app.route('/historicos', methods=['POST'])
 def obtener_valores_historicos():
     if request.method == 'POST':
@@ -60,24 +62,27 @@ def obtener_valores_historicos():
         print("Fecha de inicio recibida:", fecha_inicio)
         print("Fecha de fin recibida:", fecha_fin)
 
-        # Define la zona horaria UTC
-        utc_timezone = pytz.timezone('UTC')
-
-        # Convierte las fechas al formato Unix Epoch Time en milisegundos utilizando la zona horaria UTC
+        # Convierte las fechas al formato Unix Epoch Time en milisegundos
         try:
-            fecha_inicio_datetime = utc_timezone.localize(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S"))
-            fecha_fin_datetime = utc_timezone.localize(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))
+            fecha_inicio_datetime = datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S")
+            fecha_fin_datetime = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S")
 
-            fecha_inicio_unix_ms = int(fecha_inicio_datetime.timestamp()) * 1000
-            fecha_fin_unix_ms = int(fecha_fin_datetime.timestamp()) * 1000
+            # Obtiene la diferencia en segundos desde la época Unix (1970-01-01)
+            fecha_inicio_unix = (fecha_inicio_datetime - datetime.datetime(1970, 1, 1)).total_seconds()
+            fecha_fin_unix = (fecha_fin_datetime - datetime.datetime(1970, 1, 1)).total_seconds()
+
+            # Convierte los segundos a milisegundos
+            fecha_inicio_unix_ms = int(fecha_inicio_unix * 1000)
+            fecha_fin_unix_ms = int(fecha_fin_unix * 1000)
         except Exception as e:
             return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
 
         print("Fecha de inicio (Unix Epoch Time en milisegundos): " + str(fecha_inicio_unix_ms) + "\n")
         print("Fecha de fin (Unix Epoch Time en milisegundos): " + str(fecha_fin_unix_ms) + "\n")
 
-        
+        # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time en milisegundos
         return jsonify({'fecha_inicio_unix_ms': fecha_inicio_unix_ms, 'fecha_fin_unix_ms': fecha_fin_unix_ms})
+
 
 
 # Database historic search
