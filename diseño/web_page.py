@@ -60,16 +60,23 @@ def obtener_valores_historicos():
         print("Fecha de inicio recibida:", fecha_inicio)
         print("Fecha de fin recibida:", fecha_fin)
 
-        # Convierte las fechas al formato Unix Epoch Time en milisegundos utilizando la librería time
+        # Define la zona horaria UTC
+        utc_timezone = pytz.timezone('UTC')
+
+        # Convierte las fechas al formato Unix Epoch Time en milisegundos utilizando la zona horaria UTC
         try:
-            fecha_inicio_unix_ms = int(time.mktime(time.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S"))) * 1000
-            fecha_fin_unix_ms = int(time.mktime(time.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))) * 1000
+            fecha_inicio_datetime = utc_timezone.localize(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S"))
+            fecha_fin_datetime = utc_timezone.localize(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))
+
+            fecha_inicio_unix_ms = int(fecha_inicio_datetime.timestamp()) * 1000
+            fecha_fin_unix_ms = int(fecha_fin_datetime.timestamp()) * 1000
         except Exception as e:
             return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
 
         print("Fecha de inicio (Unix Epoch Time en milisegundos): " + str(fecha_inicio_unix_ms) + "\n")
         print("Fecha de fin (Unix Epoch Time en milisegundos): " + str(fecha_fin_unix_ms) + "\n")
 
+        
         return jsonify({'fecha_inicio_unix_ms': fecha_inicio_unix_ms, 'fecha_fin_unix_ms': fecha_fin_unix_ms})
 
 
