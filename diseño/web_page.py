@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, render_template_string
 import mysql.connector
 from mysql.connector import Error
+import time
 import datetime
 import pytz
 import sys
@@ -56,17 +57,20 @@ def obtener_valores_historicos():
         fecha_inicio = request.form.get('fecha_inicio')
         fecha_fin = request.form.get('fecha_fin')
 
-        # Ahora puedes utilizar fecha_inicio y fecha_fin en tu lógica
-        # para procesar los valores del formulario como lo necesites.
+        # Convierte las fechas al formato Unix Epoch Time
+        try:
+            fecha_inicio_unix = int(time.mktime(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S").timetuple()))
+            fecha_fin_unix = int(time.mktime(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S").timetuple()))
+        except Exception as e:
+            return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
 
-        # Por ejemplo, puedes imprimirlos en la consola
-        print("Fecha de inicio: "+ fecha_inicio + "\n")
-        print("Fecha de fin: "+ fecha_fin + "\n")
+        print("Fecha de inicio (Unix Epoch Time): "+ str(fecha_inicio_unix) + "\n")
+        print("Fecha de fin (Unix Epoch Time): "+ str(fecha_fin_unix) + "\n")
 
         # También puedes realizar cualquier otro procesamiento que necesites aquí
 
-        # Devuelve una respuesta simple al cliente (puede ser un mensaje JSON, por ejemplo)
-        return jsonify({'message': 'Datos recibidos exitosamente'})
+        # Devuelve una respuesta JSON con las fechas en formato Unix Epoch Time
+        return jsonify({'fecha_inicio_unix': fecha_inicio_unix, 'fecha_fin_unix': fecha_fin_unix})
 
 
 
