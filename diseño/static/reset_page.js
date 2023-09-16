@@ -46,6 +46,11 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
+    $("#inicial").on("click",function() {
+    $("#calendario1").modal(P)
+                )
+
+    
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -135,9 +140,6 @@ function erasePolyline() {
     
 }
 
-$("#inicial").on("click",function() {
-    $("#calendario1").modal(P)
-                )
 
 function reloadTable() {
     $.ajax({
