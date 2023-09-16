@@ -248,10 +248,10 @@ $(document).ready(function () {
     });
 
     // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
-    $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
-        var input = $(this);
-        input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
-    });
+    // $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
+       // var input = $(this);
+       // input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
+   //  });
 
 
 
@@ -282,16 +282,3 @@ $(document).ready(function () {
          }); 
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
