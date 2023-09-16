@@ -4,8 +4,6 @@ let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
 
-
-
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -123,8 +121,6 @@ function drawPolyline() {
     polyline.setPath(markerCoordinates);
 }
 
-
-
 function erasePolyline() {
     // Detiene la creación de la polilínea
     markerCoordinates = [];
@@ -226,34 +222,13 @@ function actualizarHistoricosData(data) {
     }
 }
 
-
 $(document).ready(function () {
-
-    
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
 
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
-
-    $('#campo1, #campo2').daterangepicker({
-        singleDatePicker: true, // Habilita la selección de una sola fecha
-        timePicker: true, // Habilita la selección de hora
-        timePicker24Hour: true, // Utiliza el formato de 24 horas
-        timePickerSeconds: false, // Deshabilita la selección de segundos
-        locale: {
-            format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
-        },
-    });
-
-    // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
-    // $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
-       // var input = $(this);
-       // input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
-   //  });
-
-
 
       $("#historicos-form").submit(function (event) {
         event.preventDefault(); // Evita que el formulario se envíe de forma estándar
@@ -282,3 +257,10 @@ $(document).ready(function () {
          }); 
 
 });
+
+
+
+
+
+
+
