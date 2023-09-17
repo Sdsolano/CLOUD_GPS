@@ -175,11 +175,6 @@ function actualizarHistoricosData(data) {
         polyline2.setMap(null);
     }
 
-    // Elimina el marcador de la polilínea anterior si existe
-    if (firstMarker) {
-        firstMarker.setMap(null);
-    }
-
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
 
@@ -192,17 +187,16 @@ function actualizarHistoricosData(data) {
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
+                polylineCoordinates.push(latLng);
 
                 // Agrega un marcador en la primera posición
                 if (index === 0) {
-                    firstMarker = new google.maps.Marker({
+                    var firstMarker = new google.maps.Marker({
                         position: latLng,
                         map: map2,
                         title: "Primera Coordenada",
                     });
                 }
-
-                polylineCoordinates.push(latLng);
             }
         });
 
