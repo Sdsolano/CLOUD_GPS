@@ -8,6 +8,7 @@ let firstMarker;
 let currentIndex;
 let polyline; 
 let polyline2;
+let infoArray;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; 
 
@@ -227,6 +228,23 @@ function actualizarHistoricosData(data, indexCenter) {
 
 
 
+$("#anteriorBtn").click(function () {
+    if (currentIndex > 0) {
+        currentIndex--;
+        actualizarHistoricosData(infoArray, currentIndex);
+    }
+});
+
+
+$("#siguienteBtn").click(function () {
+    if (currentIndex < infoArray.length - 1) {
+        currentIndex++;
+        actualizarHistoricosData(infoArray, currentIndex);
+    }
+});
+
+
+
 
 
 
@@ -269,6 +287,7 @@ $(document).ready(function () {
             data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
             success: function (response) {
                 currentIndex=0;
+                infoArray = response;
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
                 actualizarHistoricosData(response, currentIndex);
