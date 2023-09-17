@@ -228,20 +228,7 @@ function actualizarHistoricosData(data, indexCenter) {
 
 
 
-$("#anteriorBtn").click(function () {
-    if (currentIndex > 0) {
-        currentIndex--;
-        actualizarHistoricosData(infoArray, currentIndex);
-    }
-});
 
-
-$("#siguienteBtn").click(function () {
-    if (currentIndex < infoArray.length - 1) {
-        currentIndex++;
-        actualizarHistoricosData(infoArray, currentIndex);
-    }
-});
 
 
 
@@ -298,4 +285,20 @@ $(document).ready(function () {
             }
         });
          }); 
+
+         
+         $("#anteriorBtn").click(function () {
+            if (currentIndex > 0) {
+                currentIndex--;
+                actualizarHistoricosData(infoArray, currentIndex);
+            }
+        });
+        
+        
+        $("#siguienteBtn").click(function () {
+            if (currentIndex < infoArray.length - 1) {
+                currentIndex++;
+                actualizarHistoricosData(infoArray, currentIndex);
+            }
+        });
 });
