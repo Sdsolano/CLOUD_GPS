@@ -179,13 +179,10 @@ function actualizarHistoricosData(data) {
         polyline.setMap(null);
     }
 
-    // Creamos un arreglo para almacenar los infoWindows
-    var infoWindows = [];
+    // Creamos un arreglo para almacenar las coordenadas de la polilínea
+    var polylineCoordinates = [];
 
     if (Array.isArray(data) && data.length > 0) {
-        // Crea un nuevo arreglo para almacenar las coordenadas de la polilínea
-        var polylineCoordinates = [];
-
         // Itera sobre los datos y agrega coordenadas a la polilínea
         data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
@@ -196,13 +193,25 @@ function actualizarHistoricosData(data) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
 
+                // Crea un marcador en esta coordenada
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map2,
+                    title: "Coordenada " + index,
+                });
+
+                // Agrega el marcador al arreglo
+                markers.push(marker);
+
                 // Crea un infoWindow con la información
                 var infoWindow = new google.maps.InfoWindow({
                     content: "Posición en el vector: " + index + "<br>Latitud: " + latitude + "<br>Longitud: " + longitude + "<br>Tiempo: " + coordenada.Time_stamp,
                 });
 
-                // Agrega el infoWindow al arreglo
-                infoWindows.push(infoWindow);
+                // Agrega un evento clic al marcador para mostrar el infoWindow
+                marker.addListener("click", function () {
+                    infoWindow.open(map2, marker);
+                });
             }
         });
 
