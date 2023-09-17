@@ -217,8 +217,8 @@ function actualizarHistoricosData(data, indexCenter) {
         });
 
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
-        if (polylineCoordinates.length > 0) {
-            map2.setCenter(polylineCoordinates[0]);
+        if (firstMarker) {
+            map2.setCenter(firstMarker.getPosition());
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
@@ -286,7 +286,7 @@ $(document).ready(function () {
         });
          }); 
 
-         
+
          $("#anteriorBtn").click(function () {
             if (currentIndex > 0) {
                 currentIndex--;
