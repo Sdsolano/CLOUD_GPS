@@ -268,7 +268,7 @@ $(document).ready(function () {
             url: '/historicos', // La URL a la que enviar los datos
             data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
             success: function (response) {
-                currentIndex=3;
+                currentIndex=10;
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
                 actualizarHistoricosData(response, currentIndex);
