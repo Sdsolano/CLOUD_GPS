@@ -2,7 +2,8 @@ let map;
 let map2;
 let marker;
 let marker2;
-let markers2
+let markers2;
+let markerHis;
 let polyline; 
 let polyline2;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
@@ -60,7 +61,7 @@ function initMap2() {
                 // Obtiene las coordenadas de la última posición
                 var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
                 // Crea un marcador en la última posición
-                var marker = new google.maps.Marker({
+                markerHis = new google.maps.Marker({
                     position: latLng,
                     map: map2,
                     title: "Última posición"
@@ -205,6 +206,7 @@ function actualizarHistoricosData(data) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
             map2.setCenter(polylineCoordinates[0]);
+            markerHis.setCenter(polylineCoordinates[0]);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
