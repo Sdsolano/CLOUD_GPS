@@ -207,6 +207,7 @@ function actualizarHistoricosData(data) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
             map2.setCenter(polylineCoordinates[0]);
+            markerHis.setmap(polylineCoordinates[0]);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
