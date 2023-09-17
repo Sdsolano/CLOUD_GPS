@@ -170,11 +170,6 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
-    // Elimina la polilínea existente si hay una
-    if (polyline2) {
-        polyline2.setMap(null);
-    }
-
     // Elimina los marcadores anteriores
     if (markers2) {
         markers2.forEach(function (marker) {
@@ -210,22 +205,24 @@ function actualizarHistoricosData(data) {
 
             // Agrega la primera coordenada a la polilínea
             polylineCoordinates.push(latLng);
-
-            // Crea una nueva polilínea en el mapa utilizando las coordenadas
-            polyline2 = new google.maps.Polyline({
-                path: polylineCoordinates,
-                geodesic: true,
-                strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-                strokeOpacity: 1.0,
-                strokeWeight: 2,
-                map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
-            });
-
-            // Centra el mapa en la primera ubicación del marcador
-            map2.setCenter(latLng);
         } else {
             // Si las coordenadas en la primera posición no son válidas, muestra un mensaje de error
             historicosDataDiv.text("Las coordenadas en la primera posición no son válidas.");
+        }
+
+        // Crea una nueva polilínea en el mapa utilizando las coordenadas
+        polyline2 = new google.maps.Polyline({
+            path: polylineCoordinates,
+            geodesic: true,
+            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
+        });
+
+        // Centra el mapa en la primera ubicación del marcador
+        if (polylineCoordinates.length > 0) {
+            map2.setCenter(polylineCoordinates[0]);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
