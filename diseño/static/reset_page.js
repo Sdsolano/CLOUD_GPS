@@ -205,12 +205,16 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
+    // Creamos un arreglo para almacenar los marcadores y los infoWindows
+    var markers = [];
+    var infoWindows = [];
+
     if (Array.isArray(data) && data.length > 0) {
         // Crea un nuevo arreglo para almacenar las coordenadas de la polilínea
         var polylineCoordinates = [];
 
         // Itera sobre los datos y agrega coordenadas a la polilínea
-        data.forEach(function (coordenada) {
+        data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
 
@@ -218,6 +222,27 @@ function actualizarHistoricosData(data) {
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
+
+                // Crea un marcador en esta coordenada
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map2,
+                    title: "Coordenada " + index,
+                });
+
+                // Crea un infoWindow con la información
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "Posición en el vector: " + index + "<br>Latitud: " + latitude + "<br>Longitud: " + longitude + "<br>Tiempo: " + coordenada.Time_stamp,
+                });
+
+                // Agrega el marcador y el infoWindow a los arreglos
+                markers.push(marker);
+                infoWindows.push(infoWindow);
+
+                // Agrega un evento clic al marcador para mostrar el infoWindow
+                marker.addListener("click", function () {
+                    infoWindow.open(map2, marker);
+                });
             }
         });
 
@@ -234,19 +259,13 @@ function actualizarHistoricosData(data) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
             map2.setCenter(polylineCoordinates[0]);
-
-            // Coloca un marcador en la primera posición de la polilínea
-            var marker = new google.maps.Marker({
-                position: polylineCoordinates[0],
-                map: map2,
-                title: "Primer punto"
-            });
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 
