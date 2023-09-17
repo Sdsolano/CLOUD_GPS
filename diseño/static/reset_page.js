@@ -60,6 +60,13 @@ function initMap2() {
                 var lastPosition = response[0];
                 // Obtiene las coordenadas de la última posición
                 var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
+                 // Crea un marcador en la última posición
+                markerHis = new google.maps.Marker({
+                    position: latLng,
+                    map: map2,
+                    title: "Última posición"
+                });
+                // Centra el mapa en la última posición
                 
                 map2.setCenter(latLng);
             }
