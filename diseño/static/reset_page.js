@@ -54,7 +54,7 @@ function initMap2() {
     };
 
     // Crea un nuevo mapa en el div "mapa-historicos"
-    var map2 = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
+    var map = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
 
     // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
     $.ajax({
@@ -71,7 +71,7 @@ function initMap2() {
                 // Crea un marcador en la última posición
                 var marker = new google.maps.Marker({
                     position: latLng,
-                    map: map2,
+                    map: map,
                     title: "Última posición"
                 });
 
