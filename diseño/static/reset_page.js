@@ -175,12 +175,19 @@ function actualizarHistoricosData(data) {
         polyline2.setMap(null);
     }
 
+    // Elimina los marcadores anteriores
+    if (markers2) {
+        markers2.forEach(function (marker) {
+            marker.setMap(null);
+        });
+    }
+
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
 
     if (Array.isArray(data) && data.length > 0) {
         // Itera sobre los datos y agrega coordenadas a la polilínea
-        data.forEach(function (coordenada) {
+        data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
 
@@ -188,6 +195,16 @@ function actualizarHistoricosData(data) {
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
+
+                // Agrega un marcador en la primera posición
+                if (index === 0) {
+                    var firstMarker = new google.maps.Marker({
+                        position: latLng,
+                        map: map2,
+                        title: "Primera Coordenada",
+                    });
+                    markers2.push(firstMarker);
+                }
             }
         });
 
@@ -210,6 +227,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 
