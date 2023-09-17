@@ -232,24 +232,7 @@ function actualizarHistoricosData(data, index) {
 }
 
 
-// Variables globales para rastrear el índice actual
-var currentIndex = 0;
 
-// Manejar el clic en el botón "Anterior"
-$("#anteriorBtn").click(function () {
-    if (currentIndex > 0) {
-        currentIndex--;
-        actualizarHistoricosData(data, currentIndex);
-    }
-});
-
-// Manejar el clic en el botón "Siguiente"
-$("#siguienteBtn").click(function () {
-    if (currentIndex < data.length - 1) {
-        currentIndex++;
-        actualizarHistoricosData(data, currentIndex);
-    }
-});
 
 
 
@@ -293,7 +276,25 @@ $(document).ready(function () {
             success: function (response) {
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
-                actualizarHistoricosData(response);
+                 var currentIndex = 0;
+                actualizarHistoricosData(response, currentIndex);// Variables globales para rastrear el índice actual
+                           
+                            
+                            // Manejar el clic en el botón "Anterior"
+                            $("#anteriorBtn").click(function () {
+                                if (currentIndex > 0) {
+                                    currentIndex--;
+                                    actualizarHistoricosData(respone, currentIndex);
+                                }
+                            });
+                            
+                            // Manejar el clic en el botón "Siguiente"
+                            $("#siguienteBtn").click(function () {
+                                if (currentIndex < data.length - 1) {
+                                    currentIndex++;
+                                    actualizarHistoricosData(response, currentIndex);
+                                }
+                            });
     
             },
             error: function (error) {
