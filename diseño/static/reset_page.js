@@ -175,6 +175,11 @@ function actualizarHistoricosData(data) {
         polyline2.setMap(null);
     }
 
+    // Elimina el marcador de la polilínea anterior si existe
+    if (firstMarker) {
+        firstMarker.setMap(null);
+    }
+
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
 
@@ -191,7 +196,7 @@ function actualizarHistoricosData(data) {
 
                 // Agrega un marcador en la primera posición
                 if (index === 0) {
-                    var firstMarker = new google.maps.Marker({
+                    firstMarker = new google.maps.Marker({
                         position: latLng,
                         map: map2,
                         title: "Primera Coordenada",
