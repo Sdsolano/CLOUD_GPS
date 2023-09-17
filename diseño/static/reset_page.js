@@ -166,7 +166,7 @@ function reloadTable() {
     });
 }
 
-function actualizarHistoricosData(data, index) {
+function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
@@ -186,21 +186,20 @@ function actualizarHistoricosData(data, index) {
     var polylineCoordinates = [];
 
     if (Array.isArray(data) && data.length > 0) {
-        // Crea un arreglo para almacenar el marcador
+        // Creamos un arreglo para almacenar los nuevos marcadores
         markers2 = [];
 
-        // Verifica si el índice proporcionado está dentro del rango de datos
-        if (index >= 0 && index < data.length) {
-            // Obtiene la coordenada en la posición del índice
-            var coordenada = data[index];
+        // Itera sobre los datos y agrega coordenadas a la polilínea y crea marcadores
+        data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
 
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
+                polylineCoordinates.push(latLng);
 
-                // Crea un marcador en la coordenada actual
+                // Crea un nuevo marcador en esta coordenada
                 var newMarker = new google.maps.Marker({
                     position: latLng,
                     map: map2,
@@ -209,41 +208,28 @@ function actualizarHistoricosData(data, index) {
 
                 // Agrega el nuevo marcador al arreglo de marcadores
                 markers2.push(newMarker);
-
-                // Agrega la coordenada actual a la polilínea
-                polylineCoordinates.push(latLng);
-
-                // Crea una nueva polilínea en el mapa utilizando las coordenadas
-                polyline2 = new google.maps.Polyline({
-                    path: polylineCoordinates,
-                    geodesic: true,
-                    strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2,
-                    map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
-                });
-
-                // Centra el mapa en la nueva ubicación del marcador
-                map2.setCenter(latLng);
-            } else {
-                // Si las coordenadas en la posición del índice no son válidas, muestra un mensaje de error
-                historicosDataDiv.text("Las coordenadas en la posición del índice no son válidas.");
             }
-        } else {
-            // Si el índice está fuera de rango, muestra un mensaje de error
-            historicosDataDiv.text("Índice fuera de rango.");
+        });
+
+        // Crea una nueva polilínea en el mapa utilizando las coordenadas
+        polyline2 = new google.maps.Polyline({
+            path: polylineCoordinates,
+            geodesic: true,
+            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
+        });
+
+        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
+        if (polylineCoordinates.length > 0) {
+            map2.setCenter(polylineCoordinates[0]);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
-
-
-
-
-
-
 
 
 
@@ -286,25 +272,7 @@ $(document).ready(function () {
             success: function (response) {
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
-                 var currentIndex = 0;
-                actualizarHistoricosData(response, currentIndex);// Variables globales para rastrear el índice actual
-                           
-                            
-                            // Manejar el clic en el botón "Anterior"
-                            $("#anteriorBtn").click(function () {
-                                if (currentIndex > 0) {
-                                    currentIndex--;
-                                    actualizarHistoricosData(respone, currentIndex);
-                                }
-                            });
-                            
-                            // Manejar el clic en el botón "Siguiente"
-                            $("#siguienteBtn").click(function () {
-                                if (currentIndex < data.length - 1) {
-                                    currentIndex++;
-                                    actualizarHistoricosData(response, currentIndex);
-                                }
-                            });
+                actualizarHistoricosData(response);
     
             },
             error: function (error) {
