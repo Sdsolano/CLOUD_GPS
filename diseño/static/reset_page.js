@@ -219,7 +219,20 @@ function actualizarHistoricosData(data, indexCenter) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (firstMarker) {
             map2.setCenter(firstMarker.getPosition());
+            var infoContent = '<div>' +
+            '<p>Posición en el vector: ' + indexCenter + '</p>' +
+            '<p>Coordenadas: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
+            '</div>';
+    
+        // Crea un info window para el marcador
+        var infowindow = new google.maps.InfoWindow({
+            content: infoContent
+        });
+    
+        // Abre el info window en el marcador
+        infowindow.open(map2, firstMarker);
         }
+        
     } else {
         // Si no hay datos, muestra un mensaje en el div
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
