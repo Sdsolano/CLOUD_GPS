@@ -218,17 +218,6 @@ function actualizarHistoricosData(data) {
         // Crea una polilínea en el mapa utilizando las coordenadas
         var polyline = new google.maps.Polyline({
             path: polylineCoordinates,
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
             geodesic: true,
             strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
             strokeOpacity: 1.0,
