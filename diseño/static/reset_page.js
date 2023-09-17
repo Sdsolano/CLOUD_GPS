@@ -5,6 +5,7 @@ let marker2;
 let markers2;
 let markerHis;
 let firstMarker;
+let currentIndex;
 let polyline; 
 let polyline2;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
@@ -167,7 +168,7 @@ function reloadTable() {
     });
 }
 
-function actualizarHistoricosData(data) {
+function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
@@ -194,7 +195,7 @@ function actualizarHistoricosData(data) {
                 polylineCoordinates.push(latLng);
 
                 // Agrega un marcador en la primera posición
-                if (index === 0) {
+                if (index === indexCenter) {
                      firstMarker = new google.maps.Marker({
                         position: latLng,
                         map: map2,
@@ -267,9 +268,10 @@ $(document).ready(function () {
             url: '/historicos', // La URL a la que enviar los datos
             data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
             success: function (response) {
+                currentIndex=0;
                 // Manejar la respuesta del servidor aquí
                 console.log(response); // Imprime la respuesta en la consola del navegador
-                actualizarHistoricosData(response);
+                actualizarHistoricosData(response, currentIndex);
     
             },
             error: function (error) {
