@@ -177,7 +177,7 @@ function actualizarHistoricosData(data, indexCenter) {
     if (polyline2) {
         polyline2.setMap(null);
     }
-      if (firstMarker) {
+    if (firstMarker) {
         firstMarker.setMap(null);
     }
 
@@ -196,12 +196,31 @@ function actualizarHistoricosData(data, indexCenter) {
                 polylineCoordinates.push(latLng);
 
                 // Agrega un marcador en la primera posición
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map2,
+                    title: "Coordenada " + index,
+                });
+
+                // Crea un contenido HTML para el infowindow
+                var infoContent = '<div>' +
+                    '<p>Posición en el vector: ' + index + '</p>' +
+                    '<p>Coordenadas: ' + latitude + ', ' + longitude + '</p>' +
+                    '<p>Tiempo: ' + coordenada.Time_stamp + '</p>' +
+                    '</div>';
+
+                // Crea un infowindow para el marcador
+                var infowindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                // Agrega un evento clic al marcador para mostrar el infowindow
+                marker.addListener('click', function () {
+                    infowindow.open(map2, marker);
+                });
+
                 if (index === indexCenter) {
-                     firstMarker = new google.maps.Marker({
-                        position: latLng,
-                        map: map2,
-                        title: "Primera Coordenada",
-                    });
+                    firstMarker = marker;
                 }
             }
         });
@@ -216,7 +235,7 @@ function actualizarHistoricosData(data, indexCenter) {
             map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
         });
 
-        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
+        // Centra el mapa en el marcador de la primera posición
         if (firstMarker) {
             map2.setCenter(firstMarker.getPosition());
         }
