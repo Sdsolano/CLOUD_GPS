@@ -1,7 +1,8 @@
 let map;
 let map2;
 let marker;
-let polyline; // Variable para la polilínea
+let polyline; 
+let polyline2;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
 function initMap() {
@@ -168,15 +169,9 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
-    // Elimina los marcadores existentes
-    markers.forEach(function (marker) {
-        marker.setMap(null);
-    });
-    markers = []; // Limpia el arreglo de marcadores
-
-    // Elimina la polilínea existente
-    if (polyline) {
-        polyline.setMap(null);
+    // Elimina la polilínea existente si hay una
+    if (polyline2) {
+        polyline2.setMap(null);
     }
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
@@ -192,31 +187,11 @@ function actualizarHistoricosData(data) {
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
-
-                // Crea un marcador en esta coordenada
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map2,
-                    title: "Coordenada " + index,
-                });
-
-                // Agrega el marcador al arreglo
-                markers.push(marker);
-
-                // Crea un infoWindow con la información
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "Posición en el vector: " + index + "<br>Latitud: " + latitude + "<br>Longitud: " + longitude + "<br>Tiempo: " + coordenada.Time_stamp,
-                });
-
-                // Agrega un evento clic al marcador para mostrar el infoWindow
-                marker.addListener("click", function () {
-                    infoWindow.open(map2, marker);
-                });
             }
         });
 
-        // Crea una polilínea en el mapa utilizando las coordenadas
-        polyline = new google.maps.Polyline({
+        // Crea una nueva polilínea en el mapa utilizando las coordenadas
+        polyline2 = new google.maps.Polyline({
             path: polylineCoordinates,
             geodesic: true,
             strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
@@ -234,6 +209,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 
