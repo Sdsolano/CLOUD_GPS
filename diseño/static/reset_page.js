@@ -166,7 +166,7 @@ function reloadTable() {
     });
 }
 
-function actualizarHistoricosData(data) {
+function actualizarHistoricosData(data, index) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
@@ -182,54 +182,75 @@ function actualizarHistoricosData(data) {
         });
     }
 
-    // Creamos un arreglo para almacenar las coordenadas de la polilínea
-    var polylineCoordinates = [];
-
     if (Array.isArray(data) && data.length > 0) {
-        // Creamos un arreglo para almacenar los nuevos marcadores
-        markers2 = [];
-
-        // Itera sobre los datos y agrega coordenadas a la polilínea y crea marcadores
-        data.forEach(function (coordenada, index) {
+        if (index >= 0 && index < data.length) {
+            // Obtiene la coordenada actual
+            var coordenada = data[index];
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
 
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
-                polylineCoordinates.push(latLng);
 
                 // Crea un nuevo marcador en esta coordenada
                 var newMarker = new google.maps.Marker({
                     position: latLng,
                     map: map2,
-                    title: "Coordenada " + index,
+                    title: "Marcador " + index,
                 });
 
                 // Agrega el nuevo marcador al arreglo de marcadores
                 markers2.push(newMarker);
+
+                // Actualiza la polilínea con todas las coordenadas hasta el índice actual
+                var polylineCoordinates = data.slice(0, index + 1).map(function (coordenada) {
+                    return new google.maps.LatLng(parseFloat(coordenada.Latitude), parseFloat(coordenada.Longitude));
+                });
+
+                // Crea una nueva polilínea en el mapa utilizando las coordenadas
+                polyline2 = new google.maps.Polyline({
+                    path: polylineCoordinates,
+                    geodesic: true,
+                    strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    map: map2,
+                });
+
+                // Centra el mapa en la nueva ubicación del marcador
+                map2.setCenter(latLng);
             }
-        });
-
-        // Crea una nueva polilínea en el mapa utilizando las coordenadas
-        polyline2 = new google.maps.Polyline({
-            path: polylineCoordinates,
-            geodesic: true,
-            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
-        });
-
-        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
-        if (polylineCoordinates.length > 0) {
-            map2.setCenter(polylineCoordinates[0]);
+        } else {
+            // Si el índice está fuera de rango, muestra un mensaje en el div
+            historicosDataDiv.text("Índice fuera de rango.");
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
-        historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
+        historicosDataDiv.text("No se encontraron coordenadas válidas para mostrar.");
     }
 }
+
+
+// Variables globales para rastrear el índice actual
+var currentIndex = 0;
+
+// Manejar el clic en el botón "Anterior"
+$("#anteriorBtn").click(function () {
+    if (currentIndex > 0) {
+        currentIndex--;
+        actualizarHistoricosData(data, currentIndex);
+    }
+});
+
+// Manejar el clic en el botón "Siguiente"
+$("#siguienteBtn").click(function () {
+    if (currentIndex < data.length - 1) {
+        currentIndex++;
+        actualizarHistoricosData(data, currentIndex);
+    }
+});
+
 
 
 
