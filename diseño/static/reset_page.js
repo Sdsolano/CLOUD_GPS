@@ -189,41 +189,43 @@ function actualizarHistoricosData(data) {
         // Creamos un arreglo para almacenar los nuevos marcadores
         markers2 = [];
 
-        // Itera sobre los datos y agrega coordenadas a la polilínea y crea marcadores
-        data.forEach(function (coordenada, index) {
-            var latitude = parseFloat(coordenada.Latitude);
-            var longitude = parseFloat(coordenada.Longitude);
+        // Obtén la primera coordenada de los datos
+        var firstCoordenada = data[0];
+        var latitude = parseFloat(firstCoordenada.Latitude);
+        var longitude = parseFloat(firstCoordenada.Longitude);
 
-            // Verifica si las coordenadas son números válidos
-            if (!isNaN(latitude) && !isNaN(longitude)) {
-                var latLng = new google.maps.LatLng(latitude, longitude);
-                polylineCoordinates.push(latLng);
+        // Verifica si las coordenadas son números válidos
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+            var latLng = new google.maps.LatLng(latitude, longitude);
 
-                // Crea un nuevo marcador en esta coordenada
-                var newMarker = new google.maps.Marker({
-                    position: latLng,
-                    map: map2,
-                    title: "Coordenada " + index,
-                });
+            // Crea un nuevo marcador en la primera coordenada
+            var newMarker = new google.maps.Marker({
+                position: latLng,
+                map: map2,
+                title: "Coordenada 0",
+            });
 
-                // Agrega el nuevo marcador al arreglo de marcadores
-                markers2.push(newMarker);
-            }
-        });
+            // Agrega el nuevo marcador al arreglo de marcadores
+            markers2.push(newMarker);
 
-        // Crea una nueva polilínea en el mapa utilizando las coordenadas
-        polyline2 = new google.maps.Polyline({
-            path: polylineCoordinates,
-            geodesic: true,
-            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
-        });
+            // Agrega la primera coordenada a la polilínea
+            polylineCoordinates.push(latLng);
 
-        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
-        if (polylineCoordinates.length > 0) {
-            map2.setCenter(polylineCoordinates[0]);
+            // Crea una nueva polilínea en el mapa utilizando las coordenadas
+            polyline2 = new google.maps.Polyline({
+                path: polylineCoordinates,
+                geodesic: true,
+                strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
+            });
+
+            // Centra el mapa en la primera ubicación del marcador
+            map2.setCenter(latLng);
+        } else {
+            // Si las coordenadas en la primera posición no son válidas, muestra un mensaje de error
+            historicosDataDiv.text("Las coordenadas en la primera posición no son válidas.");
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
