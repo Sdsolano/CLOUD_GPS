@@ -170,45 +170,26 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
-    // Elimina los marcadores anteriores
-    if (markers2) {
-        markers2.forEach(function (marker) {
-            marker.setMap(null);
-        });
+    // Elimina la polilínea existente si hay una
+    if (polyline2) {
+        polyline2.setMap(null);
     }
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
 
     if (Array.isArray(data) && data.length > 0) {
-        // Creamos un arreglo para almacenar los nuevos marcadores
-        markers2 = [];
+        // Itera sobre los datos y agrega coordenadas a la polilínea
+        data.forEach(function (coordenada) {
+            var latitude = parseFloat(coordenada.Latitude);
+            var longitude = parseFloat(coordenada.Longitude);
 
-        // Obtén la primera coordenada de los datos
-        var firstCoordenada = data[0];
-        var latitude = parseFloat(firstCoordenada.Latitude);
-        var longitude = parseFloat(firstCoordenada.Longitude);
-
-        // Verifica si las coordenadas son números válidos
-        if (!isNaN(latitude) && !isNaN(longitude)) {
-            var latLng = new google.maps.LatLng(latitude, longitude);
-
-            // Crea un nuevo marcador en la primera coordenada
-            var newMarker = new google.maps.Marker({
-                position: latLng,
-                map: map2,
-                title: "Coordenada 0",
-            });
-
-            // Agrega el nuevo marcador al arreglo de marcadores
-            markers2.push(newMarker);
-
-            // Agrega la primera coordenada a la polilínea
-            polylineCoordinates.push(latLng);
-        } else {
-            // Si las coordenadas en la primera posición no son válidas, muestra un mensaje de error
-            historicosDataDiv.text("Las coordenadas en la primera posición no son válidas.");
-        }
+            // Verifica si las coordenadas son números válidos
+            if (!isNaN(latitude) && !isNaN(longitude)) {
+                var latLng = new google.maps.LatLng(latitude, longitude);
+                polylineCoordinates.push(latLng);
+            }
+        });
 
         // Crea una nueva polilínea en el mapa utilizando las coordenadas
         polyline2 = new google.maps.Polyline({
@@ -220,7 +201,7 @@ function actualizarHistoricosData(data) {
             map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
         });
 
-        // Centra el mapa en la primera ubicación del marcador
+        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
             map2.setCenter(polylineCoordinates[0]);
         }
