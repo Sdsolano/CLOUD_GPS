@@ -220,7 +220,7 @@ function actualizarHistoricosData(data, indexCenter) {
         if (firstMarker) {
             map2.setCenter(firstMarker.getPosition());
             var infoContent = '<div>' +
-            '<p>Posición en el vector: ' + indexCenter + '</p>' +
+            '<p>Posición en el vector: ' + (indexCenter+1) + '</p>' +
             '<p>Coordenadas: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
             '</div>';
     
@@ -232,7 +232,7 @@ function actualizarHistoricosData(data, indexCenter) {
         // Abre el info window en el marcador
         infowindow.open(map2, firstMarker);
         }
-        
+
     } else {
         // Si no hay datos, muestra un mensaje en el div
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
