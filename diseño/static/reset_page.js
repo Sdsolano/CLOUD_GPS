@@ -171,11 +171,6 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
-    // Elimina el marcador existente si hay uno
-    if (marker2) {
-        marker2.setMap(null);
-    }
-
     // Elimina la polilínea existente si hay una
     if (polyline2) {
         polyline2.setMap(null);
@@ -183,6 +178,13 @@ function actualizarHistoricosData(data) {
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
+
+    // Elimina los marcadores existentes si los hay
+    markers2.forEach(function (marker) {
+        marker.setMap(null);
+    });
+
+    markers2 = []; // Limpia el arreglo de marcadores
 
     if (Array.isArray(data) && data.length > 0) {
         // Obtiene la primera coordenada para el marcador
