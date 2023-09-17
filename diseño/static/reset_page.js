@@ -239,12 +239,26 @@ function actualizarHistoricosData(data) {
                 markers.push(marker);
                 infoWindows.push(infoWindow);
 
-                // Agrega un evento clic al marcador para mostrar el infoWindow
+                // Agrega un evento clic al marcador para mostrar el infoWindow y ocultar los demás
                 marker.addListener("click", function () {
-                    infoWindow.open(map2, marker);
+                    infoWindows.forEach(function (iw) {
+                        iw.close(); // Cierra todos los infoWindows
+                    });
+                    infoWindow.open(map2, marker); // Abre el infoWindow del marcador clicado
                 });
             }
         });
+
+        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
+        if (polylineCoordinates.length > 0) {
+            map2.setCenter(polylineCoordinates[0]);
+        }
+    } else {
+        // Si no hay datos, muestra un mensaje en el div
+        historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
+    }
+}
+
 
         // Crea una polilínea en el mapa utilizando las coordenadas
         var polyline = new google.maps.Polyline({
