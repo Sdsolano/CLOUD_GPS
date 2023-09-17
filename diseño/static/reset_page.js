@@ -205,26 +205,41 @@ function actualizarHistoricosData(data) {
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
     if (Array.isArray(data) && data.length > 0) {
-        // Crea una tabla para mostrar las coordenadas
-        var table = $("<table></table>");
-        table.append("<thead><tr><th>Latitude</th><th>Longitude</th></tr></thead>");
-        var tbody = $("<tbody></tbody>");
+        // Crea un nuevo arreglo para almacenar las coordenadas de la polilínea
+        var polylineCoordinates = [];
 
-        // Itera sobre los datos y agrega filas a la tabla
+        // Itera sobre los datos y agrega coordenadas a la polilínea
         data.forEach(function (coordenada) {
-            var row = $("<tr></tr>");
-            row.append("<td>" + coordenada.Latitude + "</td>");
-            row.append("<td>" + coordenada.Longitude + "</td>");
-            tbody.append(row);
+            var latitude = parseFloat(coordenada.Latitude);
+            var longitude = parseFloat(coordenada.Longitude);
+
+            // Verifica si las coordenadas son números válidos
+            if (!isNaN(latitude) && !isNaN(longitude)) {
+                var latLng = new google.maps.LatLng(latitude, longitude);
+                polylineCoordinates.push(latLng);
+            }
         });
 
-        table.append(tbody);
-        historicosDataDiv.append(table);
+        // Crea una polilínea en el mapa utilizando las coordenadas
+        var polyline = new google.maps.Polyline({
+            path: polylineCoordinates,
+            geodesic: true,
+            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map, // Asigna el mapa en el que deseas dibujar la polilínea
+        });
+
+        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
+        if (polylineCoordinates.length > 0) {
+            map.setCenter(polylineCoordinates[0]);
+        }
     } else {
         // Si no hay datos, muestra un mensaje en el div
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 $(document).ready(function () {
