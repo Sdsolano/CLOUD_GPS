@@ -179,7 +179,7 @@ function actualizarHistoricosData(data) {
         polyline.setMap(null);
     }
 
-    // Creamos un arreglo para almacenar los marcadores y los infoWindows
+    // Creamos un arreglo para almacenar los infoWindows
     var infoWindows = [];
 
     if (Array.isArray(data) && data.length > 0) {
@@ -196,31 +196,18 @@ function actualizarHistoricosData(data) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
 
-                // Crea un marcador en esta coordenada
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map2,
-                    title: "Coordenada " + index,
-                });
-
                 // Crea un infoWindow con la información
                 var infoWindow = new google.maps.InfoWindow({
                     content: "Posición en el vector: " + index + "<br>Latitud: " + latitude + "<br>Longitud: " + longitude + "<br>Tiempo: " + coordenada.Time_stamp,
                 });
 
-                // Agrega el marcador y el infoWindow a los arreglos
-                markers.push(marker);
+                // Agrega el infoWindow al arreglo
                 infoWindows.push(infoWindow);
-
-                // Agrega un evento clic al marcador para mostrar el infoWindow
-                marker.addListener("click", function () {
-                    infoWindow.open(map2, marker);
-                });
             }
         });
 
         // Crea una polilínea en el mapa utilizando las coordenadas
-        var polyline = new google.maps.Polyline({
+        polyline = new google.maps.Polyline({
             path: polylineCoordinates,
             geodesic: true,
             strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
@@ -238,6 +225,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 $(document).ready(function () {
