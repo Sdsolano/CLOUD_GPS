@@ -168,8 +168,18 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
+    // Elimina los marcadores existentes
+    markers.forEach(function (marker) {
+        marker.setMap(null);
+    });
+    markers = []; // Limpia el arreglo de marcadores
+
+    // Elimina la polilínea existente
+    if (polyline) {
+        polyline.setMap(null);
+    }
+
     // Creamos un arreglo para almacenar los marcadores y los infoWindows
-    var markers = [];
     var infoWindows = [];
 
     if (Array.isArray(data) && data.length > 0) {
@@ -228,6 +238,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 $(document).ready(function () {
     
