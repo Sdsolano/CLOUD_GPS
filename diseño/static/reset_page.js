@@ -182,24 +182,16 @@ function actualizarHistoricosData(data, index) {
         });
     }
 
+    // Creamos un arreglo para almacenar las coordenadas de la polilínea
+    var polylineCoordinates = [];
+
     if (Array.isArray(data) && data.length > 0) {
+        // Crea un arreglo para almacenar el marcador
+        markers2 = [];
+
+        // Verifica si el índice proporcionado está dentro del rango de datos
         if (index >= 0 && index < data.length) {
-            // Obtiene todas las coordenadas desde el inicio hasta la posición actual
-            var polylineCoordinates = data.slice(0, index + 1).map(function (coordenada) {
-                return new google.maps.LatLng(parseFloat(coordenada.Latitude), parseFloat(coordenada.Longitude));
-            });
-
-            // Crea una nueva polilínea en el mapa utilizando todas las coordenadas
-            polyline2 = new google.maps.Polyline({
-                path: polylineCoordinates,
-                geodesic: true,
-                strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-                strokeOpacity: 1.0,
-                strokeWeight: 2,
-                map: map2,
-            });
-
-            // Obtiene la coordenada actual
+            // Obtiene la coordenada en la posición del índice
             var coordenada = data[index];
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
@@ -208,28 +200,45 @@ function actualizarHistoricosData(data, index) {
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
 
-                // Crea un nuevo marcador en esta coordenada
+                // Crea un marcador en la coordenada actual
                 var newMarker = new google.maps.Marker({
                     position: latLng,
                     map: map2,
-                    title: "Marcador " + index,
+                    title: "Coordenada " + index,
                 });
 
                 // Agrega el nuevo marcador al arreglo de marcadores
                 markers2.push(newMarker);
 
+                // Agrega la coordenada actual a la polilínea
+                polylineCoordinates.push(latLng);
+
+                // Crea una nueva polilínea en el mapa utilizando las coordenadas
+                polyline2 = new google.maps.Polyline({
+                    path: polylineCoordinates,
+                    geodesic: true,
+                    strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
+                });
+
                 // Centra el mapa en la nueva ubicación del marcador
                 map2.setCenter(latLng);
+            } else {
+                // Si las coordenadas en la posición del índice no son válidas, muestra un mensaje de error
+                historicosDataDiv.text("Las coordenadas en la posición del índice no son válidas.");
             }
         } else {
-            // Si el índice está fuera de rango, muestra un mensaje en el div
+            // Si el índice está fuera de rango, muestra un mensaje de error
             historicosDataDiv.text("Índice fuera de rango.");
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
-        historicosDataDiv.text("No se encontraron coordenadas válidas para mostrar.");
+        historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 
