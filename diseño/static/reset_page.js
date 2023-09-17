@@ -4,6 +4,7 @@ let marker;
 let marker2;
 let markers2;
 let markerHis;
+let firstMarker;
 let polyline; 
 let polyline2;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
@@ -174,6 +175,9 @@ function actualizarHistoricosData(data) {
     if (polyline2) {
         polyline2.setMap(null);
     }
+      if (firstMarker) {
+        firstMarker.setMap(null);
+    }
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
@@ -191,7 +195,7 @@ function actualizarHistoricosData(data) {
 
                 // Agrega un marcador en la primera posición
                 if (index === 0) {
-                    var firstMarker = new google.maps.Marker({
+                     firstMarker = new google.maps.Marker({
                         position: latLng,
                         map: map2,
                         title: "Primera Coordenada",
