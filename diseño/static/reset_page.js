@@ -177,15 +177,22 @@ function actualizarHistoricosData(data) {
     if (polyline2) {
         polyline2.setMap(null);
     }
-    if (markerHis){
-        markerHis.setMap(null);
+
+    // Elimina los marcadores anteriores
+    if (markers2) {
+        markers2.forEach(function (marker) {
+            marker.setMap(null);
+        });
     }
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
 
     if (Array.isArray(data) && data.length > 0) {
-        // Itera sobre los datos y agrega coordenadas a la polilínea
+        // Creamos un arreglo para almacenar los nuevos marcadores
+        markers2 = [];
+
+        // Itera sobre los datos y agrega coordenadas a la polilínea y crea marcadores
         data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
@@ -194,6 +201,16 @@ function actualizarHistoricosData(data) {
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
+
+                // Crea un nuevo marcador en esta coordenada
+                var newMarker = new google.maps.Marker({
+                    position: latLng,
+                    map: map2,
+                    title: "Coordenada " + index,
+                });
+
+                // Agrega el nuevo marcador al arreglo de marcadores
+                markers2.push(newMarker);
             }
         });
 
@@ -210,7 +227,6 @@ function actualizarHistoricosData(data) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
             map2.setCenter(polylineCoordinates[0]);
-            markerHis.setMap(map2);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
