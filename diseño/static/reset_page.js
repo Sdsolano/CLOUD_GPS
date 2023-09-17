@@ -227,12 +227,12 @@ function actualizarHistoricosData(data) {
             strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
             strokeOpacity: 1.0,
             strokeWeight: 2,
-            map: map, // Asigna el mapa en el que deseas dibujar la polilínea
+            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
         });
 
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
-            map.setCenter(polylineCoordinates[0]);
+            map2.setCenter(polylineCoordinates[0]);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
