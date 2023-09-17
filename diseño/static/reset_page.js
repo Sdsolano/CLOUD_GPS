@@ -177,6 +177,9 @@ function actualizarHistoricosData(data) {
     if (polyline2) {
         polyline2.setMap(null);
     }
+    if (markerHis){
+        markerHis.setMap(null);
+    }
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
