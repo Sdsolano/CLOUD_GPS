@@ -192,7 +192,6 @@ function actualizarHistoricosData(data) {
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
-                polylineCoordinates.push(latLng);
 
                 // Agrega un marcador en la primera posición
                 if (index === 0) {
@@ -202,6 +201,8 @@ function actualizarHistoricosData(data) {
                         title: "Primera Coordenada",
                     });
                 }
+
+                polylineCoordinates.push(latLng);
             }
         });
 
@@ -224,6 +225,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 
