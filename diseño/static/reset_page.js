@@ -1,4 +1,5 @@
 let map;
+let map2;
 let marker;
 let polyline; // Variable para la polilínea
 let markerCoordinates = []; // Almacena las coordenadas del marcador
