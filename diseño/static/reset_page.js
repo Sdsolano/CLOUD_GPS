@@ -170,6 +170,11 @@ function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
+    // Elimina la polilínea existente si hay una
+    if (polyline2) {
+        polyline2.setMap(null);
+    }
+
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
 
@@ -195,24 +200,15 @@ function actualizarHistoricosData(data) {
             }
         });
 
-        // Si ya existe una polilínea, simplemente agrega las nuevas coordenadas
-        if (polyline2) {
-            var currentPath = polyline2.getPath();
-            polylineCoordinates.forEach(function (coord) {
-                currentPath.push(coord);
-            });
-            polyline2.setPath(currentPath);
-        } else {
-            // Si no existe una polilínea, crea una nueva
-            polyline2 = new google.maps.Polyline({
-                path: polylineCoordinates,
-                geodesic: true,
-                strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-                strokeOpacity: 1.0,
-                strokeWeight: 2,
-                map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
-            });
-        }
+        // Siempre crea una nueva polilínea, incluso si hay una existente, ya que eliminamos la existente arriba
+        polyline2 = new google.maps.Polyline({
+            path: polylineCoordinates,
+            geodesic: true,
+            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
+        });
 
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
@@ -223,6 +219,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
 
