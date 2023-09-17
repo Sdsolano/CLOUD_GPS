@@ -184,6 +184,21 @@ function actualizarHistoricosData(data, index) {
 
     if (Array.isArray(data) && data.length > 0) {
         if (index >= 0 && index < data.length) {
+            // Obtiene todas las coordenadas desde el inicio hasta la posición actual
+            var polylineCoordinates = data.slice(0, index + 1).map(function (coordenada) {
+                return new google.maps.LatLng(parseFloat(coordenada.Latitude), parseFloat(coordenada.Longitude));
+            });
+
+            // Crea una nueva polilínea en el mapa utilizando todas las coordenadas
+            polyline2 = new google.maps.Polyline({
+                path: polylineCoordinates,
+                geodesic: true,
+                strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map2,
+            });
+
             // Obtiene la coordenada actual
             var coordenada = data[index];
             var latitude = parseFloat(coordenada.Latitude);
@@ -203,21 +218,6 @@ function actualizarHistoricosData(data, index) {
                 // Agrega el nuevo marcador al arreglo de marcadores
                 markers2.push(newMarker);
 
-                // Actualiza la polilínea con todas las coordenadas hasta el índice actual
-                var polylineCoordinates = data.slice(0, index + 1).map(function (coordenada) {
-                    return new google.maps.LatLng(parseFloat(coordenada.Latitude), parseFloat(coordenada.Longitude));
-                });
-
-                // Crea una nueva polilínea en el mapa utilizando las coordenadas
-                polyline2 = new google.maps.Polyline({
-                    path: polylineCoordinates,
-                    geodesic: true,
-                    strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2,
-                    map: map2,
-                });
-
                 // Centra el mapa en la nueva ubicación del marcador
                 map2.setCenter(latLng);
             }
@@ -230,6 +230,7 @@ function actualizarHistoricosData(data, index) {
         historicosDataDiv.text("No se encontraron coordenadas válidas para mostrar.");
     }
 }
+
 
 
 
