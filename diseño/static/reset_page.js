@@ -234,6 +234,13 @@ function actualizarHistoricosData(data) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (polylineCoordinates.length > 0) {
             map2.setCenter(polylineCoordinates[0]);
+
+            // Coloca un marcador en la primera posición de la polilínea
+            var marker = new google.maps.Marker({
+                position: polylineCoordinates[0],
+                map: map2,
+                title: "Primer punto"
+            });
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
