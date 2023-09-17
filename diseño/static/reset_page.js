@@ -7,7 +7,8 @@ let markerHis;
 let polyline; 
 let polyline2;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
-let isDrawingPolyline = false; // Bandera para verificar si se está dibujando la polilínea
+let isDrawingPolyline = false; 
+
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -61,11 +62,7 @@ function initMap2() {
                 // Obtiene las coordenadas de la última posición
                 var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
                  // Crea un marcador en la última posición
-                markerHis = new google.maps.Marker({
-                    position: latLng,
-                    map: map2,
-                    title: "Última posición"
-                });
+            
                 // Centra el mapa en la última posición
                 
                 map2.setCenter(latLng);
