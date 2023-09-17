@@ -1,12 +1,13 @@
-var map;
-var map2;
-var marker;
-var marker2;
-var markers2 = [];
-var polyline;
-var polyline2;
-var markerCoordinates = [];
-var currentIndex = 0;
+let map;
+let map2;
+let marker;
+let marker2;
+let markers2;
+let markerHis;
+let polyline; 
+let polyline2;
+let markerCoordinates = []; // Almacena las coordenadas del marcador
+let isDrawingPolyline = false; 
 
 function initMap() {
     // Inicializa el mapa
@@ -15,14 +16,12 @@ function initMap() {
         zoom: 13,
         minZoom: 5,
     });
-
     // Crea el marcador en el mapa
     marker = new google.maps.Marker({
         position: { lat: -0.5, lng: 0.5 }, // Coordenadas iniciales de ejemplo
         map: map,
         title: "Mi Marcador"
     });
-
     // Inicializa una polilínea vacía en el mapa
     polyline = new google.maps.Polyline({
         path: [], // Inicialmente vacío
@@ -32,31 +31,26 @@ function initMap() {
         strokeWeight: 2,
         map: map,
     });
-
     // Configura el evento clic en el botón "polylineDraw" para iniciar o detener la polilínea
-    $("#adjustView").click(function () {
+   
+     $("#adjustView").click(function() {
         var markerCurrentPosition = marker.getPosition();
         map.setCenter(markerCurrentPosition);
         map.setZoom(18);
     });
-
-    $("#polylineErase").click(function () {
+    $("#polylineErase").click(function() {
         erasePolyline();
     });
-
     // Carga la tabla y actualiza el mapa
     reloadTable();
 }
-
 function initMap2() {
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
     };
-
     // Crea un nuevo mapa en el div "mapa-historicos"
-    map2 = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
-
+     map2 = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
     // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
     $.ajax({
         url: "/components", // Cambia la URL a la que debes hacer la solicitud AJAX
@@ -65,11 +59,12 @@ function initMap2() {
             if (Array.isArray(response) && response.length > 0) {
                 // Obtiene la última posición de la respuesta
                 var lastPosition = response[0];
-
                 // Obtiene las coordenadas de la última posición
                 var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
-
+                 // Crea un marcador en la última posición
+            
                 // Centra el mapa en la última posición
+                
                 map2.setCenter(latLng);
             }
         },
@@ -78,7 +73,7 @@ function initMap2() {
         }
     });
 }
-
+// Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
 function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
     if (fragment === '#home' || fragment === '') {
@@ -92,10 +87,10 @@ function mostrarSeccionDesdeFragmento() {
         initMap2();
     }
 }
-
+// Ejecutar la función al cargar la página
 window.onload = mostrarSeccionDesdeFragmento;
+// Manejar cambios en la URL (por ejemplo, cuando se hace clic en los enlaces de la barra de navegación)
 window.onhashchange = mostrarSeccionDesdeFragmento;
-
 function drawPolyline() {
     // Añade las coordenadas actuales del marcador a la polilínea
     polyline.setPath(markerCoordinates);
@@ -103,7 +98,6 @@ function drawPolyline() {
     // Actualiza la polilínea con las coordenadas suavizadas
     polyline.setPath(markerCoordinates);
 }
-
 function erasePolyline() {
     // Detiene la creación de la polilínea
     markerCoordinates = [];
@@ -113,8 +107,10 @@ function erasePolyline() {
     
     // Borra las polilíneas existentes
     polyline.setPath(markerCoordinates);
+    
+    
+    
 }
-
 function reloadTable() {
     $.ajax({
         url: "/components",
@@ -170,7 +166,7 @@ function reloadTable() {
     });
 }
 
-function actualizarHistoricosData(data, index) {
+function actualizarHistoricosData(data) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
@@ -180,107 +176,108 @@ function actualizarHistoricosData(data, index) {
     }
 
     // Elimina los marcadores anteriores
-    if (markers2.length > 0) {
+    if (markers2) {
         markers2.forEach(function (marker) {
             marker.setMap(null);
         });
     }
 
+    // Creamos un arreglo para almacenar las coordenadas de la polilínea
+    var polylineCoordinates = [];
+
     if (Array.isArray(data) && data.length > 0) {
-        if (index >= 0 && index < data.length) {
-            // Obtiene la coordenada actual
-            var coordenada = data[index];
+        // Creamos un arreglo para almacenar los nuevos marcadores
+        markers2 = [];
+
+        // Itera sobre los datos y agrega coordenadas a la polilínea y crea marcadores
+        data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
 
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
+                polylineCoordinates.push(latLng);
 
                 // Crea un nuevo marcador en esta coordenada
                 var newMarker = new google.maps.Marker({
                     position: latLng,
                     map: map2,
-                    title: "Marcador " + index,
+                    title: "Coordenada " + index,
                 });
 
                 // Agrega el nuevo marcador al arreglo de marcadores
                 markers2.push(newMarker);
-
-                // Actualiza la polilínea con todas las coordenadas hasta el índice actual
-                var polylineCoordinates = data.slice(0, index + 1).map(function (coordenada) {
-                    return new google.maps.LatLng(parseFloat(coordenada.Latitude), parseFloat(coordenada.Longitude));
-                });
-
-                // Crea una nueva polilínea en el mapa utilizando las coordenadas
-                polyline2 = new google.maps.Polyline({
-                    path: polylineCoordinates,
-                    geodesic: true,
-                    strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2,
-                    map: map2,
-                });
-
-                // Centra el mapa en la nueva ubicación del marcador
-                map2.setCenter(latLng);
             }
-        } else {
-            // Si el índice está fuera de rango, muestra un mensaje en el div
-            historicosDataDiv.text("Índice fuera de rango.");
+        });
+
+        // Crea una nueva polilínea en el mapa utilizando las coordenadas
+        polyline2 = new google.maps.Polyline({
+            path: polylineCoordinates,
+            geodesic: true,
+            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
+        });
+
+        // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
+        if (polylineCoordinates.length > 0) {
+            map2.setCenter(polylineCoordinates[0]);
         }
     } else {
         // Si no hay datos, muestra un mensaje en el div
-        historicosDataDiv.text("No se encontraron coordenadas válidas para mostrar.");
+        historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
 
+
+
+
+
 $(document).ready(function () {
+    
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
-
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 1000);
-    setInterval(drawPolyline, 1000);
-
+    setInterval( drawPolyline, 1000);
     $('#campo1, #campo2').daterangepicker({
-        singleDatePicker: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        timePickerSeconds: false,
+        singleDatePicker: true, // Habilita la selección de una sola fecha
+        timePicker: true, // Habilita la selección de hora
+        timePicker24Hour: true, // Utiliza el formato de 24 horas
+        timePickerSeconds: false, // Deshabilita la selección de segundos
         locale: {
-            format: 'YYYY-MM-DD HH:mm:00',
+            format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
-
-    $("#historicos-form").submit(function (event) {
-        event.preventDefault();
+    // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
+    // $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
+       // var input = $(this);
+       // input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
+   //  });
+      $("#historicos-form").submit(function (event) {
+        event.preventDefault(); // Evita que el formulario se envíe de forma estándar
         console.log("Formulario enviado");
-
+    
+        // Obtener los valores de los campos de fecha de inicio y fecha de fin
         var fechaInicio = $("#campo1").val();
         var fechaFin = $("#campo2").val();
-
+    
+        // Enviar los valores al servidor Flask utilizando AJAX
         $.ajax({
-            type: 'POST',
-            url: '/historicos',
-            data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin },
+            type: 'POST', // Utiliza el método POST para enviar datos al servidor
+            url: '/historicos', // La URL a la que enviar los datos
+            data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
             success: function (response) {
-                console.log(response);
-                currentIndex = 0; // Reinicia el índice al cargar nuevos datos
-                actualizarHistoricosData(response, currentIndex);
+                // Manejar la respuesta del servidor aquí
+                console.log(response); // Imprime la respuesta en la consola del navegador
+                actualizarHistoricosData(response);
+    
             },
             error: function (error) {
                 console.error(error);
             }
         });
-    });
-
-    // Configura el evento del slider para cambiar el marcador y mostrar la polilínea
-    $("#slider").on("input", function () {
-        var newIndex = parseInt($(this).val());
-        if (newIndex !== currentIndex) {
-            currentIndex = newIndex;
-            actualizarHistoricosData(data, currentIndex);
-        }
-    });
+         }); 
 });
