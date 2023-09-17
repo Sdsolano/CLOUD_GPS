@@ -166,7 +166,7 @@ function reloadTable() {
     });
 }
 
-function actualizarHistoricosData(data) {
+function actualizarHistoricosData(data, markerIndex) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
 
@@ -208,6 +208,11 @@ function actualizarHistoricosData(data) {
 
                 // Agrega el nuevo marcador al arreglo de marcadores
                 markers2.push(newMarker);
+
+                // Oculta el marcador si no coincide con el índice actual
+                if (index !== markerIndex) {
+                    newMarker.setMap(null);
+                }
             }
         });
 
@@ -280,4 +285,9 @@ $(document).ready(function () {
             }
         });
          }); 
+            $("#slider").on("input", function () {
+            var markerIndex = parseInt($(this).val());
+            actualizarHistoricosData(data, markerIndex);
+        });
+
 });
