@@ -239,14 +239,21 @@ function actualizarHistoricosData(data) {
                 markers.push(marker);
                 infoWindows.push(infoWindow);
 
-                // Agrega un evento clic al marcador para mostrar el infoWindow y ocultar los demás
+                // Agrega un evento clic al marcador para mostrar el infoWindow
                 marker.addListener("click", function () {
-                    infoWindows.forEach(function (iw) {
-                        iw.close(); // Cierra todos los infoWindows
-                    });
-                    infoWindow.open(map2, marker); // Abre el infoWindow del marcador clicado
+                    infoWindow.open(map2, marker);
                 });
             }
+        });
+
+        // Crea una polilínea en el mapa utilizando las coordenadas
+        var polyline = new google.maps.Polyline({
+            path: polylineCoordinates,
+            geodesic: true,
+            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
         });
 
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
@@ -258,6 +265,7 @@ function actualizarHistoricosData(data) {
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
     }
 }
+
 
 
         // Crea una polilínea en el mapa utilizando las coordenadas
