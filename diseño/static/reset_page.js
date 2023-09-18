@@ -170,6 +170,7 @@ function reloadTable() {
 function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
+    map2.setZoom(18);
 
     // Elimina la polilínea existente si hay una
     if (polyline2) {
