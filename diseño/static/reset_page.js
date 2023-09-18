@@ -170,13 +170,12 @@ function reloadTable() {
 function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
-    
 
     // Elimina la polilínea existente si hay una
     if (polyline2) {
         polyline2.setMap(null);
     }
-      if (firstMarker) {
+    if (firstMarker) {
         firstMarker.setMap(null);
     }
 
@@ -188,6 +187,7 @@ function actualizarHistoricosData(data, indexCenter) {
         data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
+            var timestamp = coordenada.Time_stamp; // Suponiendo que Time_stamp contiene el tiempo
 
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
@@ -202,6 +202,21 @@ function actualizarHistoricosData(data, indexCenter) {
                         title: "Primera Coordenada",
                     });
                 }
+
+                // Crea contenido personalizado para la InfoWindow (incluyendo el tiempo)
+                var infoContent = '<div>' +
+                    '<p> Posición: ' + (indexCenter+1) + ' de la ruta</p>' +
+                    '<p>Coordenadas: ' + latitude + ', ' + longitude + '</p>' +
+                    '<p>Tiempo: ' + timestamp + '</p>' +
+                    '</div>';
+
+                // Crea un info window para el marcador
+                var infowindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                // Abre el info window en el marcador
+                infowindow.open(map2, firstMarker);
             }
         });
 
@@ -218,20 +233,7 @@ function actualizarHistoricosData(data, indexCenter) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (firstMarker) {
             map2.setCenter(firstMarker.getPosition());
-            var infoContent = '<div>' +
-            '<p> Posición: ' + (indexCenter+1) + ' de la ruta</p>' +
-            '<p>Coordenadas: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
-            '</div>';
-    
-        // Crea un info window para el marcador
-        var infowindow = new google.maps.InfoWindow({
-            content: infoContent
-        });
-    
-        // Abre el info window en el marcador
-        infowindow.open(map2, firstMarker);
         }
-
     } else {
         // Si no hay datos, muestra un mensaje en el div
         historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
