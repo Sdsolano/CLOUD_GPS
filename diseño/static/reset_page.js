@@ -150,11 +150,9 @@ function reloadTable() {
                         
                         if (!markerPosition.equals(newMarkerPosition)) {
                             // Actualiza la posición del marcador con las coordenadas de la primera fila
-                            marker.setPosition(newMarkerPosition);
-                            // Centra el mapa en la nueva ubicación del marcador
-                            map.setCenter(newMarkerPosition);
-                           
+                            marker.setPosition(newMarkerPosition);   
                         }
+                        map.setCenter(newMarkerPosition);
                     } else {
                         console.error("Las coordenadas de la primera fila no son números válidos.");
                     }
