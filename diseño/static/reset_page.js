@@ -288,25 +288,6 @@ $(document).ready(function () {
         }
     });
 
-    // Agregar un manejador de eventos 'blur' para validar cuando se cambia el enfoque
-    $('#campo1, #campo2').on('blur', function() {
-        var startDateStr = $("#campo1").val();
-        var endDateStr = $("#campo2").val();
-
-        // Parsea las cadenas de texto en objetos de fecha y hora
-        var startDate = moment(startDateStr, 'YYYY-MM-DD HH:mm:00');
-        var endDate = moment(endDateStr, 'YYYY-MM-DD HH:mm:00');
-
-        // Compara las fechas
-        if (startDate.isAfter(endDate)) {
-            alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
-            // Restaura la fecha de inicio a la fecha anterior válida
-            $(this).val($(this).data('previous-value'));
-        } else {
-            // Actualiza el valor anterior válido
-            $(this).data('previous-value', $(this).val());
-        }
-    });
         
 
     // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
@@ -315,6 +296,25 @@ $(document).ready(function () {
        // input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
    //  });
       $("#historicos-form").submit(function (event) {
+
+        var startDateStr = $("#campo1").val();
+        var endDateStr = $("#campo2").val();
+    
+        // Parsea las cadenas de texto en objetos de fecha y hora
+        var startDate = moment(startDateStr, 'YYYY-MM-DD HH:mm:00');
+        var endDate = moment(endDateStr, 'YYYY-MM-DD HH:mm:00');
+    
+        // Compara las fechas
+        if (startDate.isAfter(endDate)) {
+            alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            // Restaura la fecha de inicio a la fecha anterior válida
+            $("#campo1").val($("#campo1").data('previous-value'));
+        } else {
+            // Actualiza el valor anterior válido
+            $("#campo1").data('previous-value', startDateStr);
+        }
+
+
         event.preventDefault(); // Evita que el formulario se envíe de forma estándar
         console.log("Formulario enviado");
     
