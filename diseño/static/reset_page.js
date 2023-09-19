@@ -234,7 +234,7 @@ function actualizarHistoricosData(data, indexCenter) {
 
     } else {
         // Si no hay datos, muestra un mensaje en el div
-        historicosDataDiv.text("No se encontraron coordenadas en el rango de fechas proporcionado.");
+        historicosDataDiv.text("Couldn't find data records for this time range");
     }
 }
 
