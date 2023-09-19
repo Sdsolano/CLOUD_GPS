@@ -266,6 +266,22 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+
+    $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
+        var startDate = picker.startDate;
+        var endDate = picker.endDate;
+    
+        // Verificar si la fecha y hora de inicio es mayor que la fecha y hora de fin
+        if (startDate.isAfter(endDate)) {
+            alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            // Restaurar la fecha y hora de inicio a la fecha y hora anterior válida
+            $(this).val($(this).data('previous-value'));
+        } else {
+            // Actualizar el valor anterior válido
+            $(this).data('previous-value', $(this).val());
+        }
+    });
+
     // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
     // $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
        // var input = $(this);
