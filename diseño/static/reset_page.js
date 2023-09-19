@@ -219,8 +219,8 @@ function actualizarHistoricosData(data, indexCenter) {
         if (firstMarker) {
             map2.setCenter(firstMarker.getPosition());
             var infoContent = '<div>' +
-            '<p> Ubicación ' + (indexCenter+1) + ' de la ruta</p>' +
-            '<p>Coordenadas: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
+            '<p> Location number ' + (indexCenter+1) + ' </p>' +
+            '<p>Coordinates: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
             '</div>';
     
         // Crea un info window para el marcador
