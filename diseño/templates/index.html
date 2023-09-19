@@ -74,25 +74,28 @@
 
   <div id="historicos" class="tab-content">
     <h1><b>GPS Tracker</b></h1>
-
-    <form id="historicos-form" method="POST">
-
-
-      <form id="historicos-form" method="POST">
-        <label for="campo1">Fecha de inicio:</label>
-        <input type="text" id="campo1" name="fecha_inicio" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
-        
-      <label for="campo2">Fecha de fin:</label>
-      <input type="text" id="campo2" name="fecha_fin" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
-
-
-      <input type="submit" id="enviar" value="Enviar">
-    </form>
-    <button id="anteriorBtn" class="btn btn-primary">Anterior</button>
-    <button id="siguienteBtn" class="btn btn-primary">Siguiente</button>
-
-    <div id="mapa-historicos" style="height: 400px;" class="container2"></div>
+    <div class="container">
+          <form id="historicos-form" method="POST">
+      
+      
+            <form id="historicos-form" method="POST">
+              <label for="campo1">Fecha de inicio:</label>
+              <input type="text" id="campo1" name="fecha_inicio" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
+              
+            <label for="campo2">Fecha de fin:</label>
+            <input type="text" id="campo2" name="fecha_fin" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
+      
+      
+            <input type="submit" id="enviar" value="Enviar">
+          </form>
+      </div>
+      <div class="container"> 
+         <button id="anteriorBtn" class="btn btn-primary">Anterior</button>
+        <button id="siguienteBtn" class="btn btn-primary">Siguiente</button>
+      </div>
     <div id="historicos-data"></div>
+    <div id="mapa-historicos" style="height: 400px;" class="container2"></div>
+    
   </div>
 
 </body>
