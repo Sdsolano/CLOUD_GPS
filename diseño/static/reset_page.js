@@ -268,19 +268,20 @@ $(document).ready(function () {
     });
 
     $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
-        var startDate = picker.startDate;
-        var endDate = picker.endDate;
+        var startDate = $("#campo1").val();
+        var endDate = $("#campo2").val();
+    
         console.log(startDate);
         console.log(endDate);
         // Verificar si la fecha y hora de inicio es mayor que la fecha y hora de fin
-        if (startDate.isAfter(endDate)) {
+        // if (startDate.isAfter(endDate)) {
             
-            // Restaurar la fecha y hora de inicio a la fecha y hora anterior válida
-            $(this).val($(this).data('previous-value'));
-        } else {
-            // Actualizar el valor anterior válido
-            $(this).data('previous-value', $(this).val());
-        }
+        //     // Restaurar la fecha y hora de inicio a la fecha y hora anterior válida
+        //     $(this).val($(this).data('previous-value'));
+        // } else {
+        //     // Actualizar el valor anterior válido
+        //     $(this).data('previous-value', $(this).val());
+        // }
     });
 
     // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
