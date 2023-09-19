@@ -266,7 +266,7 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
-    
+
     $('#campo1, #campo2').prop('readonly', true);
 
     $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
@@ -287,7 +287,27 @@ $(document).ready(function () {
             $("#campo1").data('previous-value', startDateStr);
         }
     });
-    
+
+    // Agregar un manejador de eventos 'blur' para validar cuando se cambia el enfoque
+    $('#campo1, #campo2').on('blur', function() {
+        var startDateStr = $("#campo1").val();
+        var endDateStr = $("#campo2").val();
+
+        // Parsea las cadenas de texto en objetos de fecha y hora
+        var startDate = moment(startDateStr, 'YYYY-MM-DD HH:mm:00');
+        var endDate = moment(endDateStr, 'YYYY-MM-DD HH:mm:00');
+
+        // Compara las fechas
+        if (startDate.isAfter(endDate)) {
+            alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            // Restaura la fecha de inicio a la fecha anterior válida
+            $(this).val($(this).data('previous-value'));
+        } else {
+            // Actualiza el valor anterior válido
+            $(this).data('previous-value', $(this).val());
+        }
+    });
+        
 
     // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
     // $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
