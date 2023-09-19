@@ -42,7 +42,7 @@
             <a class="nav-link active" aria-current="page" href='#home'> Home </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href='#historicos'>Históricos</a>
+            <a class="nav-link" href='#historicos'>Record</a>
           </li>
       </div>
     </div>
@@ -79,10 +79,10 @@
       
       
             <form id="historicos-form" method="POST">
-              <label for="campo1">Fecha de inicio:</label>
+              <label for="campo1">Start date:</label>
               <input type="text" id="campo1" name="fecha_inicio" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
               
-            <label for="campo2">Fecha de fin:</label>
+            <label for="campo2">End date:</label>
             <input type="text" id="campo2" name="fecha_fin" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
       
       
@@ -90,8 +90,8 @@
           </form>
       </div>
       <div class="container"> 
-         <button id="anteriorBtn" class="btn btn-primary">Anterior</button>
-        <button id="siguienteBtn" class="btn btn-primary">Siguiente</button>
+         <button id="anteriorBtn" class="btn btn-primary">Previous</button>
+        <button id="siguienteBtn" class="btn btn-primary">Next</button>
       </div>
     <div id="historicos-data" class="container"></div>
     <div id="mapa-historicos" style="height: 400px;" class="container2"></div>
