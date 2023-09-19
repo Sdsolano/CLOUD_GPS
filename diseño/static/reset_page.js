@@ -279,7 +279,7 @@ $(document).ready(function () {
     
         // Compara las fechas
         if (startDate.isAfter(endDate)) {
-            alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            alert("Start date cannot be after End date.");
             // Restaura la fecha de inicio a la fecha anterior válida
             $("#campo1").val($("#campo1").data('previous-value'));
         } else {
@@ -306,7 +306,7 @@ $(document).ready(function () {
     
         // Compara las fechas
         if (startDate.isAfter(endDate)) {
-            alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            alert("Start date cannot be after End date");
             // Restaura la fecha de inicio a la fecha anterior válida
             $("#campo1").val($("#campo1").data('previous-value'));
         } else {
