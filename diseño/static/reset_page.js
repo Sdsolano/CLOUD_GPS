@@ -273,7 +273,7 @@ $(document).ready(function () {
     
         // Verificar si la fecha y hora de inicio es mayor que la fecha y hora de fin
         if (startDate.isAfter(endDate)) {
-            console.error("error, La fecha de inicio no puede ser mayor que la fecha de fin.");
+            console.log("error, La fecha de inicio no puede ser mayor que la fecha de fin.");
             // Restaurar la fecha y hora de inicio a la fecha y hora anterior válida
             $(this).val($(this).data('previous-value'));
         } else {
