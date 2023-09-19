@@ -234,7 +234,7 @@ function actualizarHistoricosData(data, indexCenter) {
 
     } else {
         // Si no hay datos, muestra un mensaje en el div
-        alert("Couldn't find data records for this time range");
+        alert("no data could be found in this time period");
     }
 }
 
@@ -279,7 +279,7 @@ $(document).ready(function () {
     
         // Compara las fechas
         if (startDate.isAfter(endDate)) {
-            alert("Start date cannot be after End date.");
+            alert("The Start date cannot be greater than the End date");
             // Restaura la fecha de inicio a la fecha anterior válida
             $("#campo1").val($("#campo1").data('previous-value'));
         } else {
@@ -306,7 +306,7 @@ $(document).ready(function () {
     
         // Compara las fechas
         if (startDate.isAfter(endDate)) {
-            alert("Start date cannot be after End date");
+            alert("The Start date cannot be greater than the End date");
             // Restaura la fecha de inicio a la fecha anterior válida
             $("#campo1").val($("#campo1").data('previous-value'));
         } else {
