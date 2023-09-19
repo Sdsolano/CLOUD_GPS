@@ -266,6 +266,8 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+    
+    $('#campo1, #campo2').prop('readonly', true);
 
     $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
         var startDateStr = $("#campo1").val();
