@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for, render_template_string
 import mysql.connector
 from mysql.connector import Error
+import time
 import datetime
 import pytz
 import sys
@@ -19,12 +20,12 @@ def database_connect():
         connection = mysql.connector.connect(**db_config)
         return connection
     except Error as e:
-        print("Database unreachable, " +e)
+        print("Database unreachable, " + e)
         return None
 
 @app.route('/components', methods=['GET'])
 def data():
-    try: 
+    try:
         connect = database_connect()
         if connect:
             cursor = connect.cursor(dictionary=True)
@@ -49,6 +50,70 @@ def data():
             return "Database unreachable"
     except Exception as e:
         return "Error " + str(e)
+
+
+
+
+@app.route('/historicos', methods=['POST'])
+def obtener_valores_historicos():
+    if request.method == 'POST':
+        fecha_inicio = request.form.get('fecha_inicio')
+        fecha_fin = request.form.get('fecha_fin')
+
+        print("Fecha de inicio recibida:", fecha_inicio)
+        print("Fecha de fin recibida:", fecha_fin)
+
+        # Convierte las fechas al formato Unix Epoch Time en milisegundos
+        try:
+            # Define la zona horaria de Bogotá
+            bogota_timezone = pytz.timezone('America/Bogota')
+
+            # Convierte las fechas de entrada a objetos datetime con la zona horaria de Bogotá
+            fecha_inicio_datetime = bogota_timezone.localize(datetime.datetime.strptime(fecha_inicio, "%Y-%m-%d %H:%M:%S"))
+            fecha_fin_datetime = bogota_timezone.localize(datetime.datetime.strptime(fecha_fin, "%Y-%m-%d %H:%M:%S"))
+
+            # Convierte las fechas a segundos Unix Epoch Time
+            fecha_inicio_unix_s = int(fecha_inicio_datetime.timestamp())
+            fecha_fin_unix_s = int(fecha_fin_datetime.timestamp())
+            
+            # Multiplica por 1000 para obtener milisegundos
+            fecha_inicio_unix_ms = fecha_inicio_unix_s * 1000
+            fecha_fin_unix_ms = fecha_fin_unix_s * 1000
+        except Exception as e:
+            return jsonify({'error': 'Error al convertir las fechas: ' + str(e)}), 400
+
+        print("Fecha de inicio (Unix Epoch Time en milisegundos): " + str(fecha_inicio_unix_ms) + "\n")
+        print("Fecha de fin (Unix Epoch Time en milisegundos): " + str(fecha_fin_unix_ms) + "\n")
+
+        try:
+            connect = database_connect()
+            if connect:
+                cursor = connect.cursor(dictionary=True)
+                
+                # Sentencia SQL para seleccionar las coordenadas entre las dos fechas en formato Unix Epoch Time en milisegundos
+                sql = """
+                SELECT Latitude, Longitude
+                FROM datos
+                WHERE Time_stamp >= %s AND Time_stamp <= %s
+                """
+                cursor.execute(sql, (fecha_inicio_unix_ms, fecha_fin_unix_ms))
+                result = cursor.fetchall()
+                
+                cursor.close()
+                connect.close()
+               
+                
+                # Devuelve un arreglo de coordenadas en formato JSON
+                return jsonify(result)
+            else:
+                return "Database unreachable"
+        except Exception as e:
+            return jsonify({'error': 'Error al obtener coordenadas: ' + str(e)}), 500
+
+
+
+
+
 
 @app.route('/')
 def index():

@@ -1,8 +1,14 @@
 h1{
     padding: 10px auto;
     text-align: center;
+    margin: 30px 30px;
+}
+
+
+p{
     margin: 10px 10px;
 }
+
 
 #tabla-contenido {
     display: flex;
@@ -34,3 +40,23 @@ h6{
     margin: 10px auto;
     text-align: center;
 }
+
+#center_text {
+    text-align: center; /* Centra el texto horizontalmente */
+
+    transform: translateY(-50%);
+}
+
+/* funcionamiento básico del sistema de pestañas */
+.tab-content {
+  display: none;
+}
+
+.tab:target .tab-content, .tab:last-of-type .tab-content {
+  display: block;
+}
+
+.tab:target ~ .tab:last-of-type .tab-content {
+  display: none;
+}
+
