@@ -438,7 +438,7 @@ $(document).ready(function () {
             var lat = markerDates.getPosition().lat();
             var lng = markerDates.getPosition().lng();
 
-            console.log(lat, lng);
+            console.log(lat, lng, radius);
 
             // Realizar la solicitud AJAX al servidor
             $.ajax({
@@ -455,7 +455,7 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.error("AJAX request failed", error);
-                    console.log(data);
+                    
                 }
             });
         } else {
