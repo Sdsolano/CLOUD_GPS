@@ -332,32 +332,36 @@ $(document).ready(function () {
     
         // Enviar los valores al servidor Flask utilizando AJAX
         $.ajax({
-            type: 'POST', // Utiliza el método POST para enviar datos al servidor
-            url: '/historicos', // La URL a la que enviar los datos
-            data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin }, // Los datos que se envían al servidor
+            type: 'POST',
+            url: '/historicos',
+            data: { fecha_inicio: fechaInicio, fecha_fin: fechaFin },
             success: function (response) {
-                currentIndex=0;
-                infoArray = response;
-                // Manejar la respuesta del servidor aquí
-                console.log(response); // Imprime la respuesta en la consola del navegador
-                map2.setZoom(18);
-                actualizarHistoricosData(response, currentIndex);
+                currentIndex = 0;
+                infoArray = response.coordenadas; // Obtenemos las coordenadas
+                timeStampsArray = response.time_stamps; // Obtenemos los Time_stamp
                 
-            $("#slider").slider({
-                min: 0,
-                max: infoArray.length - 1,
-                value: currentIndex,
-                slide: function (event, ui) {
-                    currentIndex = ui.value;
-                    actualizarHistoricosData(infoArray, currentIndex);
-                }
-            });
-    
+                // Manejar la respuesta del servidor aquí
+                console.log(infoArray); // Imprime las coordenadas en la consola del navegador
+                console.log(timeStampsArray); // Imprime los Time_stamp en la consola
+                
+                map2.setZoom(18);
+                actualizarHistoricosData(infoArray, currentIndex);
+                
+                $("#slider").slider({
+                    min: 0,
+                    max: infoArray.length - 1,
+                    value: currentIndex,
+                    slide: function (event, ui) {
+                        currentIndex = ui.value;
+                        actualizarHistoricosData(infoArray, currentIndex);
+                    }
+                });
             },
             error: function (error) {
                 console.error(error);
             }
         });
+        
 
     });
         
