@@ -141,8 +141,10 @@ def buscar_fechas():
             lng = float(request.args.get('lng'))
             radius = float(request.args.get('radius'))
             print(lat, lng, radius)
-
-            # Intenta establecer una conexión a la base de datos
+        except Exception as e:
+            return jsonify({'error': 'Error en los datos entregados: ' + str(e)}), 400
+   
+        try:
             connect = database_connect()
             if connect:
                 cursor = connect.cursor(dictionary=True)
@@ -168,7 +170,7 @@ def buscar_fechas():
                 return jsonify({'time_stamps': time_stamps})
             else:
                 return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
-            
+        
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
