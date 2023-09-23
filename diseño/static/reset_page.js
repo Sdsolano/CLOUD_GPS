@@ -120,8 +120,8 @@ function initMap3() {
         }
     });
 
-    // Variable global para el marcador
-    var markerDates = null;
+    
+    markerDates = null;
 
    
     google.maps.event.addListener(map3, 'rightclick', function (event) {
