@@ -130,9 +130,6 @@ def obtener_valores_historicos():
 
 
 
-
-
-
 @app.route('/fechas', methods=['GET'])
 def buscar_fechas():
     if request.method == 'GET':
@@ -152,7 +149,7 @@ def buscar_fechas():
                 # Consulta SQL para buscar los Time_stamps dentro del área circular
                 sql = """
                 SELECT Time_stamp
-                FROM ubicaciones
+                FROM datos
                 WHERE
                     SQRT(POW(Latitude - %s, 2) + POW(Longitude - %s, 2)) <= %s
                 """
