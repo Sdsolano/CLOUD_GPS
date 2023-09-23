@@ -227,21 +227,10 @@ function actualizarHistoricosData(data, indexCenter) {
         // Opcionalmente, puedes centrar el mapa en el primer punto de la polilínea
         if (firstMarker) {
             map2.setCenter(firstMarker.getPosition());
-            var infoContent = '<div>' +
-            '<p> Location number ' + (indexCenter+1) + ' </p>' +
-            '<p>Coordinates: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
-            '</div>';
-    
-        // Crea un info window para el marcador
-        var infowindow = new google.maps.InfoWindow({
-            content: infoContent
-        });
-    
-        // Abre el info window en el marcador
-        infowindow.open(map2, firstMarker);
+       
         infoWindowContent = '<div class="container" style="margin-top: 10px;">' +
         '<ul style="list-style-type:none; padding: 0; display: flex; flex-direction: row;">' +
-        '<li style="margin-right: 20px;"> <b> Location number </b> ' + (indexCenter + 1) + '</li>' +
+        '<li style="margin-right: 20px;"> <b> Location number: </b> ' + (indexCenter + 1) + '</li>' +
         '<li style="margin-right: 20px;"> <b> Coordinates: </b> ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</li>' +
         '<li> <b> Location date: </b>' + timeStampsArray[indexCenter] + '</li>' +
         '</ul>' +
