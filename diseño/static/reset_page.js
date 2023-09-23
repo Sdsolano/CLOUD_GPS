@@ -343,13 +343,20 @@ $(document).ready(function () {
          }); 
 
 
-         $("#slider").slider({
-            min: 0,
-            max: infoArray.length - 1,
-            value: currentIndex,
-            slide: function (event, ui) {
-                currentIndex = ui.value;
-                actualizarHistoricosData(infoArray, currentIndex);
-            }
-        });
+         if (infoArray.length > 0) {
+            $("#slider").slider({
+                min: 0,
+                max: infoArray.length - 1,
+                value: currentIndex,
+                slide: function (event, ui) {
+                    currentIndex = ui.value;
+                    actualizarHistoricosData(infoArray, currentIndex);
+                }
+            });
+        } else {
+            // Maneja el caso en que infoArray está vacío o sin datos
+            // Puedes deshabilitar el slider o mostrar un mensaje de error, por ejemplo.
+            console.log("infoArray está vacío. No se puede crear el slider.");
+        }
+        
 });
