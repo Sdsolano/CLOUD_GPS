@@ -118,12 +118,12 @@ function initMap3() {
     });
 
     
-  var  markerDates = null;
+    markerDates = null;
 
     
     google.maps.event.addListener(map3, 'dblclick', function (event) {
         
-        event.preventDefault();
+    
 
        
         if (markerDates) {
