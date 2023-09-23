@@ -242,7 +242,7 @@ function actualizarHistoricosData(data, indexCenter) {
         infoWindowContent =  '<div>' +
         '<p>Location number ' + (indexCenter + 1) + '</p>' +
         '<p>Coordinates: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
-        '<p> Location date: ' + timeStampsArray[indexCenter] + '>/p>' +
+        '<p> Location date: ' + timeStampsArray[indexCenter] + '</p>' +
         '</div>';
         }
 
