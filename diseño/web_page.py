@@ -151,7 +151,7 @@ def buscar_fechas():
                 SELECT Time_stamp
                 FROM ubicaciones
                 WHERE
-                    SQRT(POW(latitud - %s, 2) + POW(longitud - %s, 2)) <= %s
+                    SQRT(POW(Latitude - %s, 2) + POW(Longitude - %s, 2)) <= %s
                 """
                 cursor.execute(sql, (lat, lng, radius))
                 results = cursor.fetchall()

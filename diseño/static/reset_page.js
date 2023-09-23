@@ -431,7 +431,7 @@ $(document).ready(function () {
 
     $("#buscar").on("click", function () {
        
-         radius = 200;
+         radius = 0.018;
 
         if (markerDates) {
             // Obtener las coordenadas del marcador
