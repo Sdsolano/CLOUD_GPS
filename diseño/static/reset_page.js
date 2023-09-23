@@ -249,8 +249,8 @@ function actualizarHistoricosData(data, indexCenter) {
             alert("no data could be found in this time period");
         }
         
-        
     }
+    $("#info-window-content").html(infoWindowContent);
 }
 
 
