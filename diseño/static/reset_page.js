@@ -118,7 +118,7 @@ function initMap3() {
     });
 
     
-    markerDates = null;
+  var  markerDates = null;
 
     
     google.maps.event.addListener(map3, 'dblclick', function (event) {
