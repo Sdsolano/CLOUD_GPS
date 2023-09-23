@@ -290,11 +290,7 @@ $(document).ready(function () {
 
         
 
-    // Opcional: Establece la hora predeterminada en "00:00:00" cuando se selecciona una fecha
-    // $('#campo1, #campo2').on('apply.daterangepicker', function (ev, picker) {
-       // var input = $(this);
-       // input.val(picker.startDate.format('YYYY-MM-DD 00:00:00'));
-   //  });
+  
       $("#historicos-form").submit(function (event) {
 
         var startDateStr = $("#campo1").val();
@@ -334,14 +330,7 @@ $(document).ready(function () {
                 console.log(response); // Imprime la respuesta en la consola del navegador
                 map2.setZoom(18);
                 actualizarHistoricosData(response, currentIndex);
-    
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        });
-
-        
+                
             $("#slider").slider({
                 min: 0,
                 max: infoArray.length - 1,
@@ -351,10 +340,13 @@ $(document).ready(function () {
                     actualizarHistoricosData(infoArray, currentIndex);
                 }
             });
-       
-         }); 
+    
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
 
-
-        
+    });
         
 });
