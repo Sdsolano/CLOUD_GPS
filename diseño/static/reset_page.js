@@ -351,6 +351,9 @@ $(document).ready(function () {
                     min: 0,
                     max: infoArray.length - 1,
                     value: currentIndex,
+                    create: function (event, ui) {
+                        $("#slider-text").show(); 
+                    },
                     slide: function (event, ui) {
                         currentIndex = ui.value;
                         actualizarHistoricosData(infoArray, currentIndex);
