@@ -133,7 +133,6 @@ def obtener_valores_historicos():
 
 
 
-
 @app.route('/fechas', methods=['GET'])
 def buscar_fechas():
     if request.method == 'GET':
@@ -142,6 +141,7 @@ def buscar_fechas():
             lng = float(request.args.get('lng'))
             radius = float(request.args.get('radius'))
 
+            # Intenta establecer una conexión a la base de datos
             connect = database_connect()
             if connect:
                 cursor = connect.cursor(dictionary=True)
@@ -159,17 +159,16 @@ def buscar_fechas():
                 cursor.close()
                 connect.close()
 
-            # Crea una lista de Time_stamps a partir de los resultados
+                # Crea una lista de Time_stamps a partir de los resultados
                 time_stamps = [result[0] for result in results]
 
                 # Devuelve los Time_stamps como respuesta en formato JSON
                 return jsonify({'time_stamps': time_stamps})
             else:
-              return "Database unreachable"
+                return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
             
         except Exception as e:
             return jsonify({'error': str(e)}), 500
-
 
 
 
