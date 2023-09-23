@@ -343,17 +343,12 @@ $(document).ready(function () {
          }); 
 
 
-         $("#anteriorBtn").click(function () {
-            if (currentIndex > 0) {
-                currentIndex--;
-                actualizarHistoricosData(infoArray, currentIndex);
-            }
-        });
-        
-        
-        $("#siguienteBtn").click(function () {
-            if (currentIndex < infoArray.length - 1) {
-                currentIndex++;
+         $("#slider").slider({
+            min: 0,
+            max: infoArray.length - 1,
+            value: currentIndex,
+            slide: function (event, ui) {
+                currentIndex = ui.value;
                 actualizarHistoricosData(infoArray, currentIndex);
             }
         });
