@@ -443,7 +443,7 @@ $(document).ready(function () {
             // Realizar la solicitud AJAX al servidor
             $.ajax({
                 url: "/fechas", 
-                method: "POST", 
+                method: "GET", 
                 data: {
                     lat: lat,
                     lng: lng,

@@ -134,13 +134,13 @@ def obtener_valores_historicos():
 
 
 
-@app.route('/fechas', methods=['POST'])
+@app.route('/fechas', methods=['GET'])
 def buscar_fechas():
-    if request.method == 'POST':
+    if request.method == 'GET':
         try:
-            lat = float(request.form.get('lat'))
-            lng = float(request.form.get('lng'))
-            radius = float(request.form.get('radius'))
+            lat = float(request.args.get('lat'))
+            lng = float(request.args.get('lng'))
+            radius = float(request.args.get('radius'))
 
             connect = database_connect()
             if connect:
