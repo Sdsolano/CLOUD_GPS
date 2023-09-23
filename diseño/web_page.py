@@ -140,6 +140,7 @@ def buscar_fechas():
             lat = float(request.args.get('lat'))
             lng = float(request.args.get('lng'))
             radius = float(request.args.get('radius'))
+            print(lat, lng, radius)
 
             # Intenta establecer una conexión a la base de datos
             connect = database_connect()
@@ -161,6 +162,7 @@ def buscar_fechas():
 
                 # Crea una lista de Time_stamps a partir de los resultados
                 time_stamps = [result[0] for result in results]
+                print(time_stamps)
 
                 # Devuelve los Time_stamps como respuesta en formato JSON
                 return jsonify({'time_stamps': time_stamps})
