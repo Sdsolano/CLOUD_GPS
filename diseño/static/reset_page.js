@@ -341,7 +341,7 @@ $(document).ready(function () {
             }
         });
 
-        if (infoArray.length > 0) {
+        
             $("#slider").slider({
                 min: 0,
                 max: infoArray.length - 1,
@@ -351,11 +351,7 @@ $(document).ready(function () {
                     actualizarHistoricosData(infoArray, currentIndex);
                 }
             });
-        } else {
-            // Maneja el caso en que infoArray está vacío o sin datos
-            // Puedes deshabilitar el slider o mostrar un mensaje de error, por ejemplo.
-            console.log("infoArray está vacío. No se puede crear el slider.");
-        }
+       
          }); 
 
 
