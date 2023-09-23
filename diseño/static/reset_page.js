@@ -438,6 +438,8 @@ $(document).ready(function () {
             var lat = markerDates.getPosition().lat();
             var lng = markerDates.getPosition().lng();
 
+            print(lat, lng);
+
             // Realizar la solicitud AJAX al servidor
             $.ajax({
                 url: "/fechas", 
