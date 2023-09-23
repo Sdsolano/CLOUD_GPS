@@ -455,12 +455,12 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.error("AJAX request failed", error);
-                    
+                    console.log(xhr.responseText); 
                 }
             });
         } else {
             console.log("No hay marcador para buscar.");
-            console.log(xhr.responseText); 
+          
         }
     });
         
