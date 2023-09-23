@@ -101,7 +101,7 @@ def obtener_valores_historicos():
                 
                 cursor.close()
                 connect.close()
-                
+
                 for row in result:
                     timestamp_ms = row['Time_stamp']
                     if timestamp_ms is not None:
@@ -127,6 +127,50 @@ def obtener_valores_historicos():
                 return "Database unreachable"
         except Exception as e:
             return jsonify({'error': 'Error al obtener coordenadas y Time_stamp: ' + str(e)}), 500
+
+
+
+
+
+
+
+@app.route('/fechas', methods=['POST'])
+def buscar_fechas():
+    try:
+       
+        lat = float(request.form.get('lat'))
+        lng = float(request.form.get('lng'))
+        radius = int(request.form.get('radius'))
+
+        # Realiza una conexión a la base de datos
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
+
+        # Consulta SQL para buscar los Time_stamps dentro del área circular
+        sql = """
+        SELECT Time_stamp
+        FROM ubicaciones
+        WHERE
+            SQRT(POW(latitud - %s, 2) + POW(longitud - %s, 2)) <= %s
+        """
+        cursor.execute(sql, (lat, lng, radius))
+
+        # Obtiene los resultados de la consulta
+        results = cursor.fetchall()
+
+        # Cierra la conexión a la base de datos
+        cursor.close()
+        connection.close()
+
+        # Crea una lista de Time_stamps a partir de los resultados
+        time_stamps = [result[0] for result in results]
+
+        # Devuelve los Time_stamps como respuesta en formato JSON
+        return jsonify({'time_stamps': time_stamps})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 
 

@@ -8,6 +8,8 @@ let markerHis;
 
 let markerDates;
 
+let radius;
+
 let firstMarker;
 let currentIndex;
 let polyline; 
@@ -425,6 +427,37 @@ $(document).ready(function () {
         });
         
         initMap3();
+    });
+
+    $("#buscar").on("click", function () {
+       
+         radius = 0.0018;
+
+        if (markerDates) {
+            // Obtener las coordenadas del marcador
+            var lat = markerDates.getPosition().lat();
+            var lng = markerDates.getPosition().lng();
+
+            // Realizar la solicitud AJAX al servidor
+            $.ajax({
+                url: "/fechas", 
+                method: "POST", 
+                data: {
+                    lat: lat,
+                    lng: lng,
+                    radius: radius
+                },
+                success: function (response) {
+                    // Manejar la respuesta del servidor aquí
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX request failed", error);
+                }
+            });
+        } else {
+            console.log("No hay marcador para buscar.");
+        }
     });
         
 });
