@@ -210,10 +210,6 @@ function actualizarHistoricosData(data, indexCenter) {
                         title: "Primera Coordenada",
                     });
                 }
-                infoWindowContent =  '<div>' +
-                '<p>Location number ' + (indexCenter + 1) + '</p>' +
-                '<p>Coordinates: ' + latitude + ', ' + longitude + '</p>' +
-                '</div>';
                 
             }
         });
@@ -243,6 +239,10 @@ function actualizarHistoricosData(data, indexCenter) {
     
         // Abre el info window en el marcador
         infowindow.open(map2, firstMarker);
+        infoWindowContent =  '<div>' +
+        '<p>Location number ' + (indexCenter + 1) + '</p>' +
+        '<p>Coordinates: ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</p>' +
+        '</div>';
         }
 
     } else {
