@@ -90,7 +90,7 @@ function initMap2() {
 
 function initMap3() {
     var mapOptions = {
-        zoom: 18,
+        zoom: 15,
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
     $("#parrafo-fechas").html("Right-click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
