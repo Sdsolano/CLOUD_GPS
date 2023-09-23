@@ -160,11 +160,13 @@ def buscar_fechas():
                 connect.close()
 
             # Crea una lista de Time_stamps a partir de los resultados
-            time_stamps = [result[0] for result in results]
+                time_stamps = [result[0] for result in results]
 
-            # Devuelve los Time_stamps como respuesta en formato JSON
-            return jsonify({'time_stamps': time_stamps})
-
+                # Devuelve los Time_stamps como respuesta en formato JSON
+                return jsonify({'time_stamps': time_stamps})
+            else:
+              return "Database unreachable"
+            
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
