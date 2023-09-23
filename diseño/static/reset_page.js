@@ -455,6 +455,7 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     console.error("AJAX request failed", error);
+                    console.log(data);
                 }
             });
         } else {
