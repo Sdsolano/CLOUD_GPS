@@ -92,7 +92,7 @@ function initMap3() {
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
     $("#parrafo-fechas").html("Double click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
-     map2 = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
+     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
     // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
     $.ajax({
         url: "/components", // Cambia la URL a la que debes hacer la solicitud AJAX
