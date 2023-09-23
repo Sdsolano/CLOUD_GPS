@@ -137,10 +137,10 @@ def obtener_valores_historicos():
 def buscar_fechas():
     if request.method == 'GET':
         try:
-            lat = float(request.args.get('lat'))
-            lng = float(request.args.get('lng'))
-            radius = float(request.args.get('radius'))
-            print(lat, lng, radius)
+            lat = request.args.get('lat')
+            lng = request.args.get('lng')
+            radius = request.args.get('radius')
+            print(lat + " "+ lng + " " + radius)
         except Exception as e:
             return jsonify({'error': 'Error en los datos entregados: ' + str(e)}), 400
    
