@@ -189,7 +189,7 @@ function actualizarHistoricosData(data, indexCenter) {
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
-    var infowindowContent = "";
+    var infoWindowContent = "";
 
     if (Array.isArray(data) && data.length > 0) {
         // Itera sobre los datos y agrega coordenadas a la polilínea
