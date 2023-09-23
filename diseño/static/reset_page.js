@@ -123,14 +123,13 @@ function initMap3() {
     
     google.maps.event.addListener(map3, 'dblclick', function (event) {
         
-    
+        event.preventDefault();
 
        
         if (markerDates) {
             markerDates.setMap(null);
         }
 
-       ic
         markerDates = new google.maps.Marker({
             position: event.latLng,
             map: map3,
@@ -138,6 +137,7 @@ function initMap3() {
         });
     });
 }
+
 
 
 // Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
