@@ -117,21 +117,7 @@ function initMap3() {
             console.error("AJAX request failed", error);
         }
     });
-    google.maps.event.addListener(map3, 'dblclick', function(event) {
-        // Eliminar cualquier marcador existente
-        if (markerDates) {
-            markerDates.setMap(null);
-        }
-
-        // Crear un nuevo marcador en la posición del doble clic
-        markerDates = new google.maps.Marker({
-            position: event.latLng,
-            map: map3,
-            title: "Doble Clic Marker", // Cambia el título según tus preferencias
-        });
-
-        map3.setCenter(event.latLng);
-    });
+    
 }
 
 
