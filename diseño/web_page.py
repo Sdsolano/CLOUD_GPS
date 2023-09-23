@@ -136,37 +136,37 @@ def obtener_valores_historicos():
 
 @app.route('/fechas', methods=['POST'])
 def buscar_fechas():
-    try:
-       
-        lat = float(request.form.get('lat'))
-        lng = float(request.form.get('lng'))
-        radius = int(request.form.get('radius'))
+    if request.method == 'POST':
+        try:
+            lat = float(request.form.get('lat'))
+            lng = float(request.form.get('lng'))
+            radius = float(request.form.get('radius'))
 
-        connect = database_connect()
-        if connect:
-            cursor = connect.cursor(dictionary=True)
-            
-            # Consulta SQL para buscar los Time_stamps dentro del área circular
-            sql = """
-            SELECT Time_stamp
-            FROM ubicaciones
-            WHERE
-                SQRT(POW(latitud - %s, 2) + POW(longitud - %s, 2)) <= %s
-            """
-            cursor.execute(sql, (lat, lng, radius))
-            results = cursor.fetchall()
-            
-            cursor.close()
-            connect.close()
+            connect = database_connect()
+            if connect:
+                cursor = connect.cursor(dictionary=True)
+                
+                # Consulta SQL para buscar los Time_stamps dentro del área circular
+                sql = """
+                SELECT Time_stamp
+                FROM ubicaciones
+                WHERE
+                    SQRT(POW(latitud - %s, 2) + POW(longitud - %s, 2)) <= %s
+                """
+                cursor.execute(sql, (lat, lng, radius))
+                results = cursor.fetchall()
+                
+                cursor.close()
+                connect.close()
 
-        # Crea una lista de Time_stamps a partir de los resultados
-        time_stamps = [result[0] for result in results]
+            # Crea una lista de Time_stamps a partir de los resultados
+            time_stamps = [result[0] for result in results]
 
-        # Devuelve los Time_stamps como respuesta en formato JSON
-        return jsonify({'time_stamps': time_stamps})
+            # Devuelve los Time_stamps como respuesta en formato JSON
+            return jsonify({'time_stamps': time_stamps})
 
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
 
 
