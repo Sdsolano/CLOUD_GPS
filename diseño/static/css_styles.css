@@ -60,3 +60,19 @@ h6{
   display: none;
 }
 
+
+
+
+.ui-slider {
+    background: #3498db; /* Cambia el color de fondo a azul (#3498db) */
+    border: 1px solid #3498db; /* Cambia el color del borde a azul (#3498db) */
+  }
+
+  .ui-slider .ui-slider-handle {
+    background: #2980b9; /* Cambia el color del control deslizante a azul más oscuro (#2980b9) */
+    border: 2px solid #2980b9; /* Cambia el color del borde del control deslizante a azul más oscuro (#2980b9) */
+  }
+ 
+  
+  
+  
