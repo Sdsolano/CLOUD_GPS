@@ -102,6 +102,15 @@ def obtener_valores_historicos():
                 cursor.close()
                 connect.close()
                 
+                for row in result:
+                    timestamp_ms = row['Time_stamp']
+                    if timestamp_ms is not None:
+                        timestamp_s = timestamp_ms / 1000.0  # Convierte milisegundos a segundos
+                        timestamp = datetime.datetime.fromtimestamp(timestamp_s, pytz.utc)
+                        timestamp = timestamp.astimezone(bogota_timezone)
+                        # Elimina la diferencia horaria en el formato de cadena
+                        row['Time_stamp'] = timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                
                 # Crear listas separadas para coordenadas y Time_stamp
                 coordenadas = [{"Latitude": row["Latitude"], "Longitude": row["Longitude"]} for row in result]
                 time_stamps = [row["Time_stamp"] for row in result]
