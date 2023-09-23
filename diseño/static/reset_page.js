@@ -1,5 +1,6 @@
 let map;
 let map2;
+let map3;
 let marker;
 let marker2;
 let markers2;
@@ -83,6 +84,39 @@ function initMap2() {
         }
     });
 }
+
+function initMap3() {
+    
+    var mapOptions = {
+        zoom: 18, 
+    };
+    $("#titulo-fechas").html("When did my vehicle pass through here?")
+    $("#parrafo-fechas").html("Double click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
+     map2 = new google.maps.Map(document.getElementById('mapa-historicos'), mapOptions);
+    // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
+    $.ajax({
+        url: "/components", // Cambia la URL a la que debes hacer la solicitud AJAX
+        method: "GET",
+        success: function (response) {
+            if (Array.isArray(response) && response.length > 0) {
+                
+                var lastPosition = response[0];
+                // Obtiene las coordenadas de la última posición
+                var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
+                 // Crea un marcador en la última posición
+            
+                // Centra el mapa en la última posición
+                
+                map3.setCenter(latLng);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX request failed", error);
+        }
+    });
+}
+
+
 // Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
 function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
@@ -366,7 +400,7 @@ $(document).ready(function () {
             }
         });
         
-
+        initMap3();
     });
         
 });
