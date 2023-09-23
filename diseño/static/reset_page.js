@@ -10,6 +10,9 @@ let polyline;
 let polyline2;
 let infoArray;
 
+
+let timeStampsArray;
+
 let inDate;
 let finDate;
 
@@ -186,6 +189,7 @@ function actualizarHistoricosData(data, indexCenter) {
 
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
+    var infowindowContent = "";
 
     if (Array.isArray(data) && data.length > 0) {
         // Itera sobre los datos y agrega coordenadas a la polilínea
@@ -206,6 +210,8 @@ function actualizarHistoricosData(data, indexCenter) {
                         title: "Primera Coordenada",
                     });
                 }
+                infoWindowContent += '<p>Location number ' + (index + 1) + '</p>';
+                infoWindowContent += '<p>Coordinates: ' + latitude + ', ' + longitude + '</p>';
             }
         });
 
