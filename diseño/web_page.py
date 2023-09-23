@@ -142,25 +142,22 @@ def buscar_fechas():
         lng = float(request.form.get('lng'))
         radius = int(request.form.get('radius'))
 
-        # Realiza una conexión a la base de datos
-        connection = mysql.connector.connect(**db_config)
-        cursor = connection.cursor()
-
-        # Consulta SQL para buscar los Time_stamps dentro del área circular
-        sql = """
-        SELECT Time_stamp
-        FROM ubicaciones
-        WHERE
-            SQRT(POW(latitud - %s, 2) + POW(longitud - %s, 2)) <= %s
-        """
-        cursor.execute(sql, (lat, lng, radius))
-
-        # Obtiene los resultados de la consulta
-        results = cursor.fetchall()
-
-        # Cierra la conexión a la base de datos
-        cursor.close()
-        connection.close()
+        connect = database_connect()
+        if connect:
+            cursor = connect.cursor(dictionary=True)
+            
+            # Consulta SQL para buscar los Time_stamps dentro del área circular
+            sql = """
+            SELECT Time_stamp
+            FROM ubicaciones
+            WHERE
+                SQRT(POW(latitud - %s, 2) + POW(longitud - %s, 2)) <= %s
+            """
+            cursor.execute(sql, (lat, lng, radius))
+            results = cursor.fetchall()
+            
+            cursor.close()
+            connect.close()
 
         # Crea una lista de Time_stamps a partir de los resultados
         time_stamps = [result[0] for result in results]
