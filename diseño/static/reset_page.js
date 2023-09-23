@@ -96,15 +96,15 @@ function initMap3() {
     $("#parrafo-fechas").html("Double click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
-
+    // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
     $.ajax({
-        url: "/components", 
+        url: "/components", // Cambia la URL a la que debes hacer la solicitud AJAX
         method: "GET",
         success: function (response) {
             if (Array.isArray(response) && response.length > 0) {
 
                 var lastPosition = response[0];
-              
+                // Obtiene las coordenadas de la última posición
                 var latLng = new google.maps.LatLng(parseFloat(lastPosition.Latitude), parseFloat(lastPosition.Longitude));
                 // Crea un marcador en la última posición
 
@@ -117,26 +117,25 @@ function initMap3() {
         }
     });
 
-    
+   
     markerDates = null;
 
-    
+   
     google.maps.event.addListener(map3, 'dblclick', function (event) {
-        
-        event.preventDefault();
-
-       
+        // Verificar si ya existe un marcador y eliminarlo
         if (markerDates) {
             markerDates.setMap(null);
         }
 
+        // Crear un nuevo marcador en la posición del doble clic
         markerDates = new google.maps.Marker({
             position: event.latLng,
             map: map3,
-            title: "Doble Clic Marker", 
+            title: "Doble Clic Marker", // Cambia el título según tus preferencias
         });
     });
 }
+
 
 
 
