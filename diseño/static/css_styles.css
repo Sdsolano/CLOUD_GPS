@@ -64,7 +64,7 @@ h6{
 
 
 .ui-slider {
-    background: #3498db; /* Cambia el color de fondo a azul (#3498db) */
+    background: rgba(52, 152, 219, 0.5); /* Cambia el color de fondo a azul (#3498db) */
     border: 1px solid #3498db; /* Cambia el color del borde a azul (#3498db) */
   }
 
