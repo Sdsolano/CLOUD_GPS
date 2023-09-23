@@ -239,7 +239,7 @@ function actualizarHistoricosData(data, indexCenter) {
     
         // Abre el info window en el marcador
         infowindow.open(map2, firstMarker);
-        infoWindowContent = '<div class="container">' +
+        infoWindowContent = '<div class="container" style="margin-top: 10px;">' +
         '<ul style="list-style-type:none; padding: 0; display: flex; flex-direction: row;">' +
         '<li style="margin-right: 20px;"> <b> Location number </b> ' + (indexCenter + 1) + '</li>' +
         '<li style="margin-right: 20px;"> <b> Coordinates: </b> ' + firstMarker.getPosition().lat() + ', ' + firstMarker.getPosition().lng() + '</li>' +
