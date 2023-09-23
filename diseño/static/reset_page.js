@@ -460,6 +460,7 @@ $(document).ready(function () {
             });
         } else {
             console.log("No hay marcador para buscar.");
+            console.log(xhr.responseText); 
         }
     });
         
