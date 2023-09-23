@@ -210,8 +210,11 @@ function actualizarHistoricosData(data, indexCenter) {
                         title: "Primera Coordenada",
                     });
                 }
-                infoWindowContent += '<p>Location number ' + (index + 1) + '</p>';
-                infoWindowContent += '<p>Coordinates: ' + latitude + ', ' + longitude + '</p>';
+                infoWindowContent =  '<div>' +
+                '<p>Location number ' + (indexCenter + 1) + '</p>' +
+                '<p>Coordinates: ' + latitude + ', ' + longitude + '</p>' +
+                '</div>';
+                
             }
         });
 
