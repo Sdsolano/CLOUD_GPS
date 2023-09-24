@@ -1,0 +1,78 @@
+h1{
+    padding: 10px auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+p{
+    margin: 10px 10px;
+}
+
+
+#tabla-contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    width: 100%;
+    
+   
+}
+#tabla-contenido table td,
+#tabla-contenido table th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+
+
+
+ .container2{
+    text-align: center;
+    justify-content: center;
+    margin: 30px 30px;
+}
+
+
+h6{
+    margin: 10px auto;
+    text-align: center;
+}
+
+#center_text {
+    text-align: center; /* Centra el texto horizontalmente */
+
+    transform: translateY(-50%);
+}
+
+/* funcionamiento básico del sistema de pestañas */
+.tab-content {
+  display: none;
+}
+
+.tab:target .tab-content, .tab:last-of-type .tab-content {
+  display: block;
+}
+
+.tab:target ~ .tab:last-of-type .tab-content {
+  display: none;
+}
+
+
+
+
+.ui-slider {
+    background: rgba(52, 152, 219, 0.5); /* Cambia el color de fondo a azul (#3498db) */
+    border: 1px solid #3498db; /* Cambia el color del borde a azul (#3498db) */
+  }
+
+  .ui-slider .ui-slider-handle {
+    background: #2980b9; /* Cambia el color del control deslizante a azul más oscuro (#2980b9) */
+    border: 2px solid #2980b9; /* Cambia el color del borde del control deslizante a azul más oscuro (#2980b9) */
+  }
+ 
+  
+  
+  

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title> GPS tracker </title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+    
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css"
+    rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css_styles.css')}}" />
+  <script src="{{ url_for('static', filename='reset_page.js')}}"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async
+    defer></script>
+
+
+
+</head>
+
+<body> 
+
+  <nav class="navbar navbar-expand bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand">GPS TRACKER </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href='#home'> Home </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href='#historicos'>Record</a>
+          </li>
+      </div>
+    </div>
+  </nav>
+
+  <div id="home" class="tab-content">
+    <h1> <b>GPS Tracker</b></h1>
+    <div class="texto" id="center_text">
+      <p>Welcome to GPS Tracker, a real time gps tracking application. </p>
+    
+    </div>
+      <div class="container" style="text-align: center;" id="actionButtons">
+         <button id="polylineErase" class="btn btn-danger"> Erase polyline </button> 
+         <button id="adjustView" class="btn btn-primary">Adjust View </button> 
+      </div>
+ 
+
+    <div id="map" style="height: 400px;" class="container2"></div> <!-- Map container -->
+
+
+    <div class="container2">
+      <h3><b> Last Locations </b></h3>
+    </div>
+    <div id="tabla-contenido" class="container2">
+      <!-- Aquí no colocamos nada para que sea reemplazado por AJAX -->
+    </div>
+
+  </div>
+
+  <div id="historicos" class="tab-content">
+    <h1><b>GPS Tracker</b></h1>
+    <div class="container">
+          <form id="historicos-form" method="POST">
+      
+      
+            <form id="historicos-form" method="POST">
+              <label for="campo1">Start date:</label>
+              <input type="text" id="campo1" name="fecha_inicio" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
+              
+            <label for="campo2">End date:</label>
+            <input type="text" id="campo2" name="fecha_fin" data-datetimepicker='{"format":"Y-m-d H:i:00"}'>
+      
+      
+            <input type="submit" id="enviar" value="Send">
+          </form>
+      </div>
+      <div class="container"> 
+        <p id="slider-text" style="display: none;">Move the slider to see all the locations</p>
+    
+          <div id="slider"></div>    
+      </div>
+    <div id="historicos-data" class="container"></div>
+
+    <div id="info-window-content"></div>
+
+    <div id="mapa-historicos" style="height: 400px;" class="container2"></div>
+
+
+    <div class="container">
+      <h3 id="titulo-fechas" style="text-align: center;"> </h3>
+      <p id="parrafo-fechas"> </p>
+      <p id="parrafo2-fechas"> </p>
+      <button class="btn btn-primary" style="display: none;" id="buscar">Search</button>
+
+      
+    </div>
+    <div id="mapa-fechas" style="height: 400px;" class="container2"></div>
+
+
+
+    
+  </div>
+
+
+ 
+</body>
+
+
+</html>
