@@ -494,14 +494,15 @@ $(document).ready(function () {
             return circleBounds.contains(coordinateLatLng);
         }
     
+        // Remove old markers from the map
+        if (markersWithinCircle) {
+            for (var i = 0; i < markersWithinCircle.length; i++) {
+                markersWithinCircle[i].setMap(null);
+            }
+        }
+    
         // Define an array to store the markers for coordinates within the circle
         var markersWithinCircle = [];
-    
-        // Remove old markers from the map
-        for (var i = 0; i < markersWithinCircle.length; i++) {
-            markersWithinCircle[i].setMap(null);
-        }
-        markersWithinCircle = []; // Clear the array
     
         // Iterate through infoArray and check if each coordinate is within the circle
         for (var i = 0; i < infoArray.length; i++) {
@@ -523,6 +524,7 @@ $(document).ready(function () {
             console.log("No coordinates found within the circle.");
         }
     });
+    
     
         
 });
