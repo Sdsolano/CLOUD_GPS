@@ -482,7 +482,7 @@ $(document).ready(function () {
     });
 
     $("#buscar").on("click", function () {
-        initMap3();
+        
         if (!circle) {
             alert("Please set the circle on the map first.");
             return;
