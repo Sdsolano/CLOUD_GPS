@@ -62,6 +62,9 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
+    var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
+    // Hide the slider initially
+   sliderContainer.style.display = 'none';
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -167,10 +170,6 @@ function initMap3() {
             radius: radius,
         });
 
-        // Show the slider and set its initial value to the default radius (e.g., 100 meters)
-        sliderContainer.style.display = 'block';
-        radiusSlider.value = 100;
-        radiusValue.textContent = "100 meters"; // Set the default value label
     });
 }
 
@@ -397,6 +396,7 @@ $(document).ready(function () {
 
   
       $("#historicos-form").submit(function (event) {
+
 
         var startDateStr = $("#campo1").val();
         var endDateStr = $("#campo2").val();
