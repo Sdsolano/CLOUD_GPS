@@ -483,6 +483,8 @@ $(document).ready(function () {
     });
 
     $("#buscar").on("click", function () {
+         
+        
 
         if (!circle) {
             alert("Please set the circle on the map first.");
@@ -520,7 +522,7 @@ $(document).ready(function () {
         slider.min = 0; // Minimum value (0)
         slider.max = Area_search_coordinates.length - 1; // Maximum value (length of the array minus one)
         slider.value = 0; // Initial value (0)
-        
+
         // Initialize the slider with the default value (e.g., 0 for the first marker)
         document.getElementById('markerSlider').value = 0;
         updateMarker(0); // Initialize the marker with the first coordinate
