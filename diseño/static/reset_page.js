@@ -102,7 +102,7 @@ function initMap3() {
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
     $("#parrafo-fechas").html("Right-click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
-    $("#parrafo2-fechas").html("Select a radius between 100 and 1000 meters");
+    
     $("#buscar").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
@@ -158,6 +158,7 @@ function initMap3() {
             map: map3,
             title: "Right-Click Marker",
         });
+        $("#parrafo2-fechas").html("Select a radius between 100 and 1000 meters");
 
         // Create the circle with the specified radius from the slider
         var radius = parseInt(radiusSlider.value);
