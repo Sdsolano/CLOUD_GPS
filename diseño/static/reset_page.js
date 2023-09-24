@@ -25,7 +25,7 @@ let finDate;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; 
 var circle = null;
-
+var markersWithinCircle = [];
 
 function initMap() {
     // Inicializa el mapa
