@@ -25,6 +25,9 @@ let finDate;
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; 
 var circle;
+var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
+// Hide the slider initially
+sliderContainer.style.display = 'none';
 
 function initMap() {
     // Inicializa el mapa
@@ -62,9 +65,7 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
-    var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
-    // Hide the slider initially
-   sliderContainer.style.display = 'none';
+
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
