@@ -1,23 +1,23 @@
 let map;
 let map2;
-let map3;
+let map3;    //mapa de busqueda 2
 let marker;
 let marker2;
 let markers2;
 let markerHis;
 
-let markerDates;
+let markerDates;  //marker de la busqueda 2
 
-let radius;
+let radius;      //radio busq. 2
 
 let firstMarker;
 let currentIndex;
 let polyline; 
 let polyline2;
-let infoArray;
+let infoArray; //vector de coordenadas
 
 
-let timeStampsArray;
+let timeStampsArray;  //vector de fechas
 
 let inDate;
 let finDate;
@@ -431,37 +431,7 @@ $(document).ready(function () {
 
     $("#buscar").on("click", function () {
        
-         radius = 0.018;
-
-        if (markerDates) {
-            // Obtener las coordenadas del marcador
-            var lat = markerDates.getPosition().lat();
-            var lng = markerDates.getPosition().lng();
-
-            console.log(lat, lng, radius);
-
-            // Realizar la solicitud AJAX al servidor
-            $.ajax({
-                url: "/fechas", 
-                method: "GET", 
-                data: {
-                    lat: lat,
-                    lng: lng,
-                    radius: radius
-                },
-                success: function (response) {
-                    // Manejar la respuesta del servidor aquí
-                    console.log(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX request failed", error);
-                    console.log(xhr.responseText); 
-                }
-            });
-        } else {
-            console.log("No hay marcador para buscar.");
-          
-        }
+         
     });
         
 });

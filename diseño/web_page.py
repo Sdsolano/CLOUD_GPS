@@ -130,52 +130,6 @@ def obtener_valores_historicos():
 
 
 
-@app.route('/fechas', methods=['GET'])
-def buscar_fechas():
-    if request.method == 'GET':
-        try:
-            lat = request.args.get('lat')
-            lng = request.args.get('lng')
-            radius = request.args.get('radius')
-            print(lat + " "+ lng + " " + radius)
-        except Exception as e:
-            return jsonify({'error': 'Error en los datos entregados: ' + str(e)}), 400
-   
-        try:
-            connect = database_connect()
-            if connect:
-                cursor = connect.cursor(dictionary=True)
-                
-                # Consulta SQL para buscar los Time_stamps dentro del área circular
-                sql = """
-                SELECT Time_stamp
-                FROM datos
-                WHERE
-                    SQRT(POW(Latitude - %s, 2) + POW(Longitude - %s, 2)) <= %s
-                """
-                cursor.execute(sql, (lat, lng, radius))
-                results = cursor.fetchall()
-                
-                cursor.close()
-                connect.close()
-
-                # Crea una lista de Time_stamps a partir de los resultados
-                time_stamps = [result[0] for result in results]
-                print(time_stamps)
-
-                # Devuelve los Time_stamps como respuesta en formato JSON
-                return jsonify({'time_stamps': time_stamps})
-            else:
-                return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
-        
-        except Exception as e:
-            return jsonify({'error': str(e)}), 500
-
-
-
-
-
-
 @app.route('/')
 def index():
     return render_template("index.html", google_maps_api_key=GOOGLE_MAPS_API_KEY)
