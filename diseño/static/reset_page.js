@@ -129,6 +129,11 @@ function initMap3() {
     // Add a slider control for selecting the circle radius
     var radiusSlider = document.getElementById('radiusSlider');
     var radiusValue = document.getElementById('radiusValue');
+    var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
+
+    // Hide the slider initially
+    sliderContainer.style.display = 'none';
+
     radiusSlider.addEventListener('input', function () {
         var radius = parseInt(radiusSlider.value);
         radiusValue.textContent = radius + " meters";
@@ -161,6 +166,11 @@ function initMap3() {
             center: event.latLng,
             radius: radius,
         });
+
+        // Show the slider and set its initial value to the default radius (e.g., 100 meters)
+        sliderContainer.style.display = 'block';
+        radiusSlider.value = 100;
+        radiusValue.textContent = "100 meters"; // Set the default value label
     });
 }
 
