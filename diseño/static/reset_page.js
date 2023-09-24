@@ -494,32 +494,35 @@ $(document).ready(function () {
             return circleBounds.contains(coordinateLatLng);
         }
     
-        // Define an array to store the coordinates within the circle
-        var coordinatesWithinCircle = [];
+        // Define an array to store the markers for coordinates within the circle
+        var markersWithinCircle = [];
+    
+        // Remove old markers from the map
+        for (var i = 0; i < markersWithinCircle.length; i++) {
+            markersWithinCircle[i].setMap(null);
+        }
+        markersWithinCircle = []; // Clear the array
     
         // Iterate through infoArray and check if each coordinate is within the circle
         for (var i = 0; i < infoArray.length; i++) {
             if (isCoordinateInCircle(infoArray[i])) {
-                coordinatesWithinCircle.push(infoArray[i]);
-            }
-        }
-    
-        // Now you can do something with the coordinatesWithinCircle array
-        if (coordinatesWithinCircle.length > 0) {
-            console.log("Coordinates within the circle:", coordinatesWithinCircle);
-            
-            // You can update the map to show these coordinates, e.g., by adding markers
-            for (var j = 0; j < coordinatesWithinCircle.length; j++) {
-                var coordinateLatLng = new google.maps.LatLng(coordinatesWithinCircle[j].Latitude, coordinatesWithinCircle[j].Longitude);
+                var coordinateLatLng = new google.maps.LatLng(infoArray[i].Latitude, infoArray[i].Longitude);
                 var marker = new google.maps.Marker({
                     position: coordinateLatLng,
                     map: map3, // Assuming map3 is your Google Map object
-                    title: "Coordinate " + j
+                    title: "Coordinate " + i
                 });
+                markersWithinCircle.push(marker); // Add the marker to the array
             }
+        }
+    
+        // Now you can do something with the markersWithinCircle array
+        if (markersWithinCircle.length > 0) {
+            console.log("Coordinates within the circle:", markersWithinCircle);
         } else {
             console.log("No coordinates found within the circle.");
         }
     });
+    
         
 });
