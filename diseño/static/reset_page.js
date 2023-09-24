@@ -24,7 +24,7 @@ let finDate;
 
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; 
-var circle;
+var circle = null;
 
 
 function initMap() {
@@ -128,7 +128,7 @@ function initMap3() {
 
     
     var markerDates = null;
-    var circle = null;
+    
 
    
     // Add a slider control for selecting the circle radius
