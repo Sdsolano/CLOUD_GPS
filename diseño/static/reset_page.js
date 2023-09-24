@@ -494,12 +494,8 @@ $(document).ready(function () {
             return circleBounds.contains(coordinateLatLng);
         }
     
-        // Remove old markers from the map
-        if (markersWithinCircle) {
-            for (var i = 0; i < markersWithinCircle.length; i++) {
-                markersWithinCircle[i].setMap(null);
-            }
-        }
+        // Clear all existing markers from the map
+        clearMarkers();
     
         // Define an array to store the markers for coordinates within the circle
         var markersWithinCircle = [];
@@ -524,6 +520,17 @@ $(document).ready(function () {
             console.log("No coordinates found within the circle.");
         }
     });
+    
+    // Function to clear all markers from the map
+    function clearMarkers() {
+        if (markersWithinCircle) {
+            for (var i = 0; i < markersWithinCircle.length; i++) {
+                markersWithinCircle[i].setMap(null);
+            }
+            markersWithinCircle = []; // Clear the array
+        }
+    }
+    
     
     
         
