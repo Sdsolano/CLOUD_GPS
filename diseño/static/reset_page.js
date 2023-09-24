@@ -63,7 +63,10 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
+    var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
 
+    // Hide the slider initially
+    sliderContainer.style.display = 'none';
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -168,6 +171,7 @@ function initMap3() {
             center: event.latLng,
             radius: radius,
         });
+        sliderContainer.style.display = 'block';
 
     });
 }
