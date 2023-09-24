@@ -15,8 +15,8 @@ let currentIndex;
 let polyline; 
 let polyline2;
 let infoArray; //vector de coordenadas
-
-
+let Area_search_coordinates;
+let Time_ASC;
 let timeStampsArray;  //vector de fechas
 
 let inDate;
@@ -26,6 +26,7 @@ let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; 
 var circle = null;
 var markersWithinCircle = [];
+var currentMarker = null;
 
 function initMap() {
     // Inicializa el mapa
@@ -482,7 +483,7 @@ $(document).ready(function () {
     });
 
     $("#buscar").on("click", function () {
-        markersWithinCircle = []; 
+
         if (!circle) {
             alert("Please set the circle on the map first.");
             return;
@@ -494,44 +495,70 @@ $(document).ready(function () {
             var coordinateLatLng = new google.maps.LatLng(coordinate.Latitude, coordinate.Longitude);
             return circleBounds.contains(coordinateLatLng);
         }
-    
-        // Clear all existing markers from the map
-        clearMarkers();
-    
-        // Define an array to store the markers for coordinates within the circle
-        var markersWithinCircle = [];
+
+        // Clear the existing data in the arrays
+        Area_search_coordinates = [];
+        Time_ASC = [];
     
         // Iterate through infoArray and check if each coordinate is within the circle
-        for (var i = 0; i < infoArray.length; i++) {
+        for (var i = 0, j = 0; i < infoArray.length; i++) {
             if (isCoordinateInCircle(infoArray[i])) {
-                var coordinateLatLng = new google.maps.LatLng(infoArray[i].Latitude, infoArray[i].Longitude);
-                var marker = new google.maps.Marker({
-                    position: coordinateLatLng,
-                    map: map3, // Assuming map3 is your Google Map object
-                    title: "Coordinate " + i
-                });
-                markersWithinCircle.push(marker); // Add the marker to the array
+                Area_search_coordinates[j]=infoArray[i];
+                Time_ASC[j] = timeStampsArray[i];
+                j +=1;
             }
         }
     
         // Now you can do something with the markersWithinCircle array
-        if (markersWithinCircle.length > 0) {
-            console.log("Coordinates within the circle:", markersWithinCircle);
+        if (Area_search_coordinates.length > 0) {
+            console.log("Coordinates within the circle:", Area_search_coordinates);
         } else {
             console.log("No coordinates found within the circle.");
         }
+
+        // Initialize the slider with the default value (e.g., 0 for the first marker)
+        document.getElementById('markerSlider').value = 0;
+        updateMarker(0); // Initialize the marker with the first coordinate
+
+                // Add an event listener to the slider input
+        document.getElementById('markerSlider').addEventListener('input', function () {
+            var sliderValue = parseInt(this.value);
+            updateMarker(sliderValue);
+        });
+
+
     });
+
     
-    // Function to clear all markers from the map
-    function clearMarkers() {
-        if (markersWithinCircle) {
-            for (var i = 0; i < markersWithinCircle.length; i++) {
-                markersWithinCircle[i].setMap(null);
-            }
-            markersWithinCircle = []; // Clear the array
+    
+    function updateMarker(index) {
+        // Remove the existing marker if present
+        if (currentMarker) {
+            currentMarker.setMap(null);
+        }
+    
+        if (index >= 0 && index < Area_search_coordinates.length) {
+            var coordinate = Area_search_coordinates[index];
+            var timestamp = Time_ASC[index];
+    
+            var coordinateLatLng = new google.maps.LatLng(coordinate.Latitude, coordinate.Longitude);
+            currentMarker = new google.maps.Marker({
+                position: coordinateLatLng,
+                map: map3,
+                title: "Coordinate " + index,
+                // You can add more information to the marker, e.g., timestamp
+                label: timestamp,
+            });
+    
+            // Center the map on the current marker
+            map3.setCenter(coordinateLatLng);
         }
     }
-    
+
+
+
+
+
     
     
         
