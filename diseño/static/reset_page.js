@@ -126,38 +126,41 @@ function initMap3() {
     var circle = null;
 
    
+    // Add a slider control for selecting the circle radius
+    var radiusSlider = document.getElementById('radiusSlider');
+    var radiusValue = document.getElementById('radiusValue');
+    radiusSlider.addEventListener('input', function () {
+        var radius = parseInt(radiusSlider.value);
+        radiusValue.textContent = radius + " meters";
+    });
+
     google.maps.event.addListener(map3, 'rightclick', function (event) {
         if (markerDates) {
             markerDates.setMap(null);
         }
-    
+
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
         }
-    
+
         markerDates = new google.maps.Marker({
             position: event.latLng,
             map: map3,
             title: "Right-Click Marker",
         });
-    
-        // Prompt the user to enter the radius for the circle
-        var radius = prompt("Enter the radius (in meters) for the circle:");
-        if (radius) {
-            radius = parseFloat(radius);
-    
-            // Create the circle with the specified radius
-            circle = new google.maps.Circle({
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35,
-                map: map3,
-                center: event.latLng,
-                radius: radius,
-            });
-        }
+
+        // Create the circle with the specified radius from the slider
+        var radius = parseInt(radiusSlider.value);
+        circle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map3,
+            center: event.latLng,
+            radius: radius,
+        });
     });
 }
 
