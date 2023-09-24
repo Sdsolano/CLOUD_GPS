@@ -102,7 +102,7 @@ function initMap3() {
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
     $("#parrafo-fechas").html("Right-click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
-    $("#parrafo2-fechas").html("Select a radius between xx and xx");
+    $("#parrafo2-fechas").html("Select a radius between 100 and 1000 meters");
     $("#buscar").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
@@ -136,7 +136,7 @@ function initMap3() {
     var radiusValue = document.getElementById('radiusValue');
     var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
 
-    // Hide the slider initially
+    // Hide the slider and "Update Circle" button initially
     sliderContainer.style.display = 'none';
 
     radiusSlider.addEventListener('input', function () {
@@ -171,8 +171,21 @@ function initMap3() {
             center: event.latLng,
             radius: radius,
         });
-        sliderContainer.style.display = 'block';
 
+        // Show the slider and "Update Circle" button
+        sliderContainer.style.display = 'block';
+        document.getElementById('updateCircle').style.display = 'block';
+    });
+
+    // Add a listener for the "Update Circle" button click event
+    document.getElementById('updateCircle').addEventListener('click', function () {
+        // Get the new radius value from the slider
+        var newRadius = parseInt(radiusSlider.value);
+
+        // Update the circle's radius
+        if (circle) {
+            circle.setRadius(newRadius);
+        }
     });
 }
 
