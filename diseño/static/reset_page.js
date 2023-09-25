@@ -566,8 +566,8 @@ $(document).ready(function () {
         '<li> <b> Location date: </b>' + Time_ASC[index] + '</li>' +
         '</ul>' +
         '</div>';
-        
-        $("#info-window-content2").html(infoWindowContent);
+
+        $("#info-window-content2").html(infoWindowContent2);
 
     }
 
