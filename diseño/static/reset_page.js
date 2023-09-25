@@ -539,7 +539,6 @@ $(document).ready(function () {
     
     
     function updateMarker(index) {
-        var infoWindowContent2 = "";
         // Remove the existing marker if present
         if (currentMarker) {
             currentMarker.setMap(null);
@@ -561,13 +560,6 @@ $(document).ready(function () {
             // Center the map on the current marker
             map3.setCenter(coordinateLatLng);
         }
-        infoWindowContent2 = '<div class="container" style="margin-top: 10px;">' +
-        '<ul style="list-style-type:none; padding: 0; display: flex; flex-direction: row;">' +
-        '<li> <b> Location date: </b>' + Time_ASC[index] + '</li>' +
-        '</ul>' +
-        '</div>';
-
-        $("#info-window-content2").html(infoWindowContent2);
 
     }
 
