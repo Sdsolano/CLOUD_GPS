@@ -317,7 +317,7 @@ function actualizarHistoricosData(data, indexCenter) {
         fillOpacity: 1,
         scale: 0.6,
         strokeColor: 'black',
-        strokeWeight: 1,
+        strokeWeight: 2,
         anchor: new google.maps.Point(23, 0),
         rotation: 90
     };
