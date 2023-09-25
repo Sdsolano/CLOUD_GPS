@@ -575,8 +575,9 @@ $(document).ready(function () {
                 position: coordinateLatLng,
                 map: map3,
                 title: "Coordinate " + index,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
                 // You can add more information to the marker, e.g., timestamp
-                label: timestamp,
+                //label: timestamp,
             });
     
             // Center the map on the current marker
