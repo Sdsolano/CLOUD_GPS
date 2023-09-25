@@ -166,7 +166,7 @@ function initMap3() {
         // Create the circle with the specified radius from the slider
         var radius = parseInt(radiusSlider.value);
         circle = new google.maps.Circle({
-            strokeColor: '#101C30',
+            strokeColor: '#1C2F4F',
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: '#2A508C',
