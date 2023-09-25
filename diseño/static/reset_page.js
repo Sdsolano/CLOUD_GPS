@@ -319,6 +319,7 @@ function actualizarHistoricosData(data, indexCenter) {
         strokeColor: 'gray',
         strokeWeight: 0.3,
         anchor: new google.maps.Point(23, 0),
+        rotation: 90
     };
     
 
