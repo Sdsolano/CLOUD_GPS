@@ -203,17 +203,29 @@ function initMap3() {
 // Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
 function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
+    var homeLink = document.querySelector('a[href="#home"]');
+    var historicosLink = document.querySelector('a[href="#historicos"]');
+
     if (fragment === '#home' || fragment === '') {
         // Mostrar la sección Home
         document.getElementById('home').style.display = 'block';
         document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+        // Deshabilitar el enlace de Home
+        homeLink.classList.add('disabled');
+        historicosLink.classList.remove('disabled');
     } else if (fragment === '#historicos') {
         // Mostrar la sección Históricos
         document.getElementById('home').style.display = 'none'; // Ocultar Home
         document.getElementById('historicos').style.display = 'block';
         initMap2();
+        // Deshabilitar el enlace de Históricos
+        historicosLink.classList.add('disabled');
+        homeLink.classList.remove('disabled');
+    } else {
+        // Si el fragmento es desconocido, puedes manejarlo aquí
     }
 }
+
 // Ejecutar la función al cargar la página
 window.onload = mostrarSeccionDesdeFragmento;
 // Manejar cambios en la URL (por ejemplo, cuando se hace clic en los enlaces de la barra de navegación)
