@@ -79,6 +79,10 @@ h6{
     width: 100%;
   }
   
+  .nav-item {
+    border-right: 1px solid #fff;
+  }
+  
   .nav-link.active {
     background-color: #2980b9;
     color: #fff;
@@ -88,7 +92,6 @@ h6{
   
   .nav-link {
     color: #fff;
-    margin-right: 10px;
     padding: 10px 15px;
   }
   
