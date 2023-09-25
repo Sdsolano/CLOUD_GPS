@@ -72,6 +72,35 @@ h6{
     background: #2980b9; /* Cambia el color del control deslizante a azul más oscuro (#2980b9) */
     border: 2px solid #2980b9; /* Cambia el color del borde del control deslizante a azul más oscuro (#2980b9) */
   }
+
+
+  .navbar {
+    background-color: #3498db;
+    width: 100%;
+  }
+  
+  .nav-link.active {
+    background-color: #2980b9;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 15px;
+  }
+  
+  .nav-link {
+    color: #fff;
+    margin-right: 10px;
+    padding: 10px 15px;
+  }
+  
+  .navbar-toggler-icon {
+    background-color: #fff;
+    border-radius: 3px;
+  }
+  
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    background-color: #2980b9;
+  }
+  
  
   
   
