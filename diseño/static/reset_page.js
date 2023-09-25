@@ -15,8 +15,8 @@ let currentIndex;
 let polyline; 
 let polyline2;
 let infoArray; //vector de coordenadas
-
-
+let Area_search_coordinates;
+let Time_ASC;
 let timeStampsArray;  //vector de fechas
 
 let inDate;
@@ -24,6 +24,9 @@ let finDate;
 
 let markerCoordinates = []; // Almacena las coordenadas del marcador
 let isDrawingPolyline = false; 
+var circle = null;
+var markersWithinCircle = [];
+var currentMarker = null;
 
 function initMap() {
     // Inicializa el mapa
@@ -61,6 +64,12 @@ function initMap() {
     reloadTable();
 }
 function initMap2() {
+    var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
+
+    // Hide the slider initially
+    sliderContainer.style.display = 'none';
+    document.getElementById('markerSlider').style.display = 'none';
+    document.getElementById('Mslider-text').style.display = 'none';
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -96,7 +105,7 @@ function initMap3() {
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
     $("#parrafo-fechas").html("Right-click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
-    $("#parrafo2-fechas").html("Select a radius between xx and xx");
+    
     $("#buscar").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
@@ -121,21 +130,66 @@ function initMap3() {
     });
 
     
-    markerDates = null;
+    var markerDates = null;
+    
 
    
+    // Add a slider control for selecting the circle radius
+    var radiusSlider = document.getElementById('radiusSlider');
+    var radiusValue = document.getElementById('radiusValue');
+    var sliderContainer = document.querySelector('.slider-container'); // Get the slider container
+
+    // Hide the slider and "Update Circle" button initially
+    sliderContainer.style.display = 'none';
+
+    radiusSlider.addEventListener('input', function () {
+        var radius = parseInt(radiusSlider.value);
+        radiusValue.textContent = radius + " meters";
+    });
+
     google.maps.event.addListener(map3, 'rightclick', function (event) {
-       
         if (markerDates) {
             markerDates.setMap(null);
         }
 
-       
+        if (circle) {
+            circle.setMap(null); // Remove the existing circle if any
+        }
+
         markerDates = new google.maps.Marker({
             position: event.latLng,
             map: map3,
-            title: "Right-Click Marker", // Cambia el título según tus preferencias
+            title: "Right-Click Marker",
         });
+        $("#parrafo2-fechas").html("Select a radius between 100 and 1000 meters");
+
+        // Create the circle with the specified radius from the slider
+        var radius = parseInt(radiusSlider.value);
+        circle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map3,
+            center: event.latLng,
+            radius: radius,
+        });
+
+        // Show the slider and "Update Circle" button
+        sliderContainer.style.display = 'block';
+        document.getElementById('updateCircle').style.display = 'block';
+    });
+
+    // Add a listener for the "Update Circle" button click event
+    document.getElementById('updateCircle').addEventListener('click', function () {
+        // Get the new radius value from the slider
+        var newRadius = parseInt(radiusSlider.value);
+
+        // Update the circle's radius
+        if (circle) {
+            circle.setRadius(newRadius);
+        }
     });
 }
 
@@ -363,6 +417,7 @@ $(document).ready(function () {
   
       $("#historicos-form").submit(function (event) {
 
+
         var startDateStr = $("#campo1").val();
         var endDateStr = $("#campo2").val();
     
@@ -430,8 +485,94 @@ $(document).ready(function () {
     });
 
     $("#buscar").on("click", function () {
-       
          
+        
+
+        if (!circle) {
+            alert("Please set the circle on the map first.");
+            return;
+        }
+    
+        // Define a function to check if a coordinate is within the circle
+        function isCoordinateInCircle(coordinate) {
+            var circleBounds = circle.getBounds();
+            var coordinateLatLng = new google.maps.LatLng(coordinate.Latitude, coordinate.Longitude);
+            return circleBounds.contains(coordinateLatLng);
+        }
+
+        // Clear the existing data in the arrays
+        Area_search_coordinates = [];
+        Time_ASC = [];
+    
+        // Iterate through infoArray and check if each coordinate is within the circle
+        for (var i = 0, j = 0; i < infoArray.length; i++) {
+            if (isCoordinateInCircle(infoArray[i])) {
+                Area_search_coordinates[j]=infoArray[i];
+                Time_ASC[j] = timeStampsArray[i];
+                j +=1;
+            }
+        }
+    
+        // Now you can do something with the markersWithinCircle array
+        if (Area_search_coordinates.length > 0) {
+            console.log("Coordinates within the circle:", Area_search_coordinates);
+        } else {
+            console.log("No coordinates found within the circle.");
+        }
+        // Initialize the slider with the correct range
+        var slider = document.getElementById('markerSlider');
+        slider.min = 0; // Minimum value (0)
+        slider.max = Area_search_coordinates.length - 1; // Maximum value (length of the array minus one)
+        slider.value = 0; // Initial value (0)
+        document.getElementById('markerSlider').style.display = 'block';
+        document.getElementById('Mslider-text').style.display = 'block';
+        // Initialize the slider with the default value (e.g., 0 for the first marker)
+        document.getElementById('markerSlider').value = 0;
+        updateMarker(0); // Initialize the marker with the first coordinate
+
+                // Add an event listener to the slider input
+        document.getElementById('markerSlider').addEventListener('input', function () {
+            var sliderValue = parseInt(this.value);
+            updateMarker(sliderValue);
+        });
+
+
     });
+
+    
+    
+    function updateMarker(index) {
+        // Remove the existing marker if present
+        if (currentMarker) {
+            currentMarker.setMap(null);
+        }
+    
+        if (index >= 0 && index < Area_search_coordinates.length) {
+            var coordinate = Area_search_coordinates[index];
+            var timestamp = Time_ASC[index];
+    
+            var coordinateLatLng = new google.maps.LatLng(coordinate.Latitude, coordinate.Longitude);
+            currentMarker = new google.maps.Marker({
+                position: coordinateLatLng,
+                map: map3,
+                title: "Coordinate " + index,
+                // You can add more information to the marker, e.g., timestamp
+                label: timestamp,
+            });
+    
+            // Center the map on the current marker
+            map3.setCenter(coordinateLatLng);
+
+            $("#Location-date").html("Location date: "+Time_ASC[index])
+        }
+
+    }
+
+
+
+
+
+    
+    
         
 });
