@@ -640,7 +640,7 @@ $(document).ready(function () {
             // Center the map on the current marker
             map3.setCenter(coordinateLatLng);
 
-            $("#Location-date").html("Location date: "+Time_ASC[index])
+            $("#Location-date").html("<b> Location date: </b>"+Time_ASC[index])
         }
 
     }
