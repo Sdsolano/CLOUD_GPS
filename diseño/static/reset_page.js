@@ -202,11 +202,7 @@ function circlechanger (){
         var newRadius = parseInt(this.value);
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
-        }
-        // if (circle2){
-        //     circle2.setMap(null); // Remove the existing circle if any
-        // }
-            circle2 = new google.maps.Circle({
+            circle = new google.maps.Circle({
                 strokeColor: '#1C2F4F',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -216,6 +212,11 @@ function circlechanger (){
                 center: position,
                 radius: newRadius,
             });
+        }
+        // if (circle2){
+        //     circle2.setMap(null); // Remove the existing circle if any
+        // }
+            
         
 
     });
