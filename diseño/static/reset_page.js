@@ -197,9 +197,8 @@ function initMap3() {
     // });
 }
 
-function circlechanger (){
-    document.getElementById('radiusSlider').addEventListener('input', function () {
-        var newRadius = parseInt(this.value);
+function circlechanger (radius){
+
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
             circle = new google.maps.Circle({
@@ -210,16 +209,9 @@ function circlechanger (){
                 fillOpacity: 0.35,
                 map: map3,
                 center: position,
-                radius: newRadius,
+                radius: radius,
             });
         }
-        // if (circle2){
-        //     circle2.setMap(null); // Remove the existing circle if any
-        // }
-            
-        
-
-    });
 }
 
 
@@ -540,7 +532,10 @@ $(document).ready(function () {
         });
         
         initMap3();
-        circlechanger();
+        document.getElementById('radiusSlider').addEventListener('input', function () {
+            var newRadius = parseInt(this.value);
+            circlechanger(newRadius);
+        });
     });
 
 
