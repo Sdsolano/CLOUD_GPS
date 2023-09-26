@@ -185,9 +185,19 @@ function initMap3() {
     });
     document.getElementById('markerSlider').addEventListener('input', function () {
         var newRadius = parseInt(this.value);
-        if (circle) {
-            circle.setRadius(newRadius);
-        }
+        
+        
+            circle = new google.maps.Circle({
+                strokeColor: '#1C2F4F',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#2A508C',
+                fillOpacity: 0.35,
+                map: map3,
+                center: event.latLng,
+                radius: newRadius,
+            });
+        
 
     });
 
