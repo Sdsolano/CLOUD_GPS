@@ -127,5 +127,22 @@ h6{
   background-color: rgba(52, 152, 219, 1); /* Cambio de color suave en hover */
 }
 
+
+#enviar {
+  background-color: #5f7aba;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+#enviar:hover {
+  background-color: #0080ff;
+}
+
+
   
   
