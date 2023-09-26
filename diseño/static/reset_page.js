@@ -28,7 +28,7 @@ var circle = null;
 var markersWithinCircle = [];
 var currentMarker = null;
 var position;
-
+var circle2 = null;
 
 
 function initMap() {
@@ -203,7 +203,10 @@ function circlechanger (){
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
         }
-            circle = new google.maps.Circle({
+        // if (circle2){
+        //     circle2.setMap(null); // Remove the existing circle if any
+        // }
+            circle2 = new google.maps.Circle({
                 strokeColor: '#1C2F4F',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
