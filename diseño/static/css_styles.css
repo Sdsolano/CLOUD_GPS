@@ -103,7 +103,7 @@ h6{
 
 /* Estilo para la barra de navegación */
 .navbar {
-  background-color: rgba(52, 152, 219, 0.9); /* Azul suave y transparente */
+  background-color: rgba(52, 152, 219, 0.5); /* Azul suave y transparente */
   width: 100%;
   border-bottom: 2px solid #2980b9; /* Línea inferior */
   transition: background-color 0.3s ease; /* Transición de color suave */
