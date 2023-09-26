@@ -103,7 +103,7 @@ h6{
 
 /* Estilo para la barra de navegación */
 .navbar {
-  background: linear-gradient(to right,  #00d0ff, #ff0051fd); /* Degradado de rojo a azul */
+  background: linear-gradient(to right,  #00d0ff, #ffffff); /* Degradado de rojo a azul */
   width: 100%;
   transition: background-color 0.3s ease; /* Transición de color suave */
 }
