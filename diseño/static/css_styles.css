@@ -146,10 +146,7 @@ h6{
   color: #fff; /* Texto en blanco en hover */
 }
 
-/* Estilo para la transición suave del fondo al hacer hover */
-.navbar:hover {
-  background-color: rgba(52, 152, 219, 1); /* Cambio de color suave en hover */
-}
+
 
 
 #enviar {
