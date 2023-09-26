@@ -336,16 +336,20 @@ function actualizarHistoricosData(data, indexCenter) {
     
 
     if (Array.isArray(data) && data.length > 0) {
+        var i = 0;
+        var cor;
         // Itera sobre los datos y agrega coordenadas a la polilínea
         data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
-
+            
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
-
+                
+                cor[i]=latLng;
+                i +=1;
                 // Agrega un marcador en la primera posición
                 if (index === indexCenter) {
                      firstMarker = new google.maps.Marker({
@@ -358,6 +362,7 @@ function actualizarHistoricosData(data, indexCenter) {
                 
             }
         });
+        console.log(cor);
 
         // Siempre crea una nueva polilínea, incluso si hay una existente, ya que eliminamos la existente arriba
         polyline2 = new google.maps.Polyline({
