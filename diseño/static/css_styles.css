@@ -144,7 +144,15 @@ h6{
 .nav-link:hover {
   background-color: #2980b9; /* Cambio de color en hover */
   color: #fff; /* Texto en blanco en hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave en hover */
 }
+
+/* Estilo para el enlace del botón de hamburguesa en hover */
+.navbar-toggler:hover .navbar-toggler-icon {
+  background-color: #5f7aba; /* Cambio de color en hover */
+  transition: background-color 0.3s ease; /* Transición de color suave en hover */
+}
+
 
 
 
