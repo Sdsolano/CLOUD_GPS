@@ -205,7 +205,7 @@ function circlechanger (radius){
                 strokeColor: '#1C2F4F',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: '#2A508C',
+                fillColor: 'red',
                 fillOpacity: 0.35,
                 map: map3,
                 center: position,
