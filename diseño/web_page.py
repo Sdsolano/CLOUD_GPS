@@ -11,7 +11,7 @@ from config import db_config
 from config import GOOGLE_MAPS_API_KEY
 
 app = Flask(__name__)
-
+#holi
 # Define la zona horaria de Bogotá
 bogota_timezone = pytz.timezone('America/Bogota')
 
@@ -90,9 +90,9 @@ def obtener_valores_historicos():
             if connect:
                 cursor = connect.cursor(dictionary=True)
                 
-                # Sentencia SQL para seleccionar las coordenadas entre las dos fechas en formato Unix Epoch Time en milisegundos
+                # Sentencia SQL para seleccionar las coordenadas y Time_stamp entre las dos fechas en formato Unix Epoch Time en milisegundos
                 sql = """
-                SELECT Latitude, Longitude
+                SELECT Latitude, Longitude, Time_stamp
                 FROM datos
                 WHERE Time_stamp >= %s AND Time_stamp <= %s
                 """
@@ -101,17 +101,32 @@ def obtener_valores_historicos():
                 
                 cursor.close()
                 connect.close()
-               
+
+                for row in result:
+                    timestamp_ms = row['Time_stamp']
+                    if timestamp_ms is not None:
+                        timestamp_s = timestamp_ms / 1000.0  # Convierte milisegundos a segundos
+                        timestamp = datetime.datetime.fromtimestamp(timestamp_s, pytz.utc)
+                        timestamp = timestamp.astimezone(bogota_timezone)
+                        # Elimina la diferencia horaria en el formato de cadena
+                        row['Time_stamp'] = timestamp.strftime('%Y-%m-%d %H:%M:%S')
                 
-                # Devuelve un arreglo de coordenadas en formato JSON
-                return jsonify(result)
+                # Crear listas separadas para coordenadas y Time_stamp
+                coordenadas = [{"Latitude": row["Latitude"], "Longitude": row["Longitude"]} for row in result]
+                time_stamps = [row["Time_stamp"] for row in result]
+
+                # Crear un diccionario de respuesta
+                response_data = {
+                    "coordenadas": coordenadas,
+                    "time_stamps": time_stamps
+                }
+
+                # Devuelve la respuesta en formato JSON
+                return jsonify(response_data)
             else:
                 return "Database unreachable"
         except Exception as e:
-            return jsonify({'error': 'Error al obtener coordenadas: ' + str(e)}), 500
-
-
-
+            return jsonify({'error': 'Error al obtener coordenadas y Time_stamp: ' + str(e)}), 500
 
 
 
