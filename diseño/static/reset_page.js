@@ -200,6 +200,9 @@ function initMap3() {
 function circlechanger (){
     document.getElementById('radiusSlider').addEventListener('input', function () {
         var newRadius = parseInt(this.value);
+        if (circle) {
+            circle.setMap(null); // Remove the existing circle if any
+        }
             circle = new google.maps.Circle({
                 strokeColor: '#1C2F4F',
                 strokeOpacity: 0.8,
