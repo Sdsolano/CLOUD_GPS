@@ -198,12 +198,12 @@ function initMap3() {
 }
 
 function circlechanger (radius){
-
+        position = markerDates.getPosition();
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
         }
-        position = markerDates.getPosition();
         
+
         circle2 = new google.maps.Circle({
             strokeColor: '#1C2F4F',
             strokeOpacity: 0.8,
