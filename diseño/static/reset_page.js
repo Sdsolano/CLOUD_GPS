@@ -17,7 +17,7 @@ let infoArray; //vector de coordenadas
 let Area_search_coordinates;
 let Time_ASC;
 let timeStampsArray;  //vector de fechas
-
+let counter;
 let inDate;
 let finDate;
 
@@ -564,13 +564,14 @@ $(document).ready(function () {
         // Clear the existing data in the arrays
         Area_search_coordinates = [];
         Time_ASC = [];
-    
+        counter = 0;
         // Iterate through infoArray and check if each coordinate is within the circle
         for (var i = 0, j = 0; i < infoArray.length; i++) {
             if (isCoordinateInCircle(infoArray[i])) {
                 Area_search_coordinates[j]=infoArray[i];
                 Time_ASC[j] = timeStampsArray[i];
                 j +=1;
+                counter = counter + 1
             }
         }
     
@@ -641,6 +642,7 @@ $(document).ready(function () {
             map3.setCenter(coordinateLatLng);
 
             $("#Location-date").html("<b> Location date: </b>"+Time_ASC[index])
+            $("#count").html("<b> We have found </b>"+ Time_ASC[index] + "<b> location records located in the provided area. </b>")
         }
 
     }
