@@ -208,7 +208,7 @@ function circlechanger (radio){
             strokeColor: '#1C2F4F',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: 'red',
+            fillColor: '#2A508C',
             fillOpacity: 0.35,
             map: map3,
             center: position,
