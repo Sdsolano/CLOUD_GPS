@@ -348,7 +348,7 @@ function actualizarHistoricosData(data, indexCenter) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
                 
-                cor[i]=latLng;
+                cor[i]=coordenada;
                 i = i+ 1;
                 // Agrega un marcador en la primera posición
                 if (index === indexCenter) {
