@@ -165,7 +165,7 @@ function initMap3() {
             title: "Right-Click Marker",
         });
         $("#parrafo2-fechas").html("Select a radius between 100 and 1000 meters");
-
+        
         // Create the circle with the specified radius from the slider
         var radius = parseInt(radiusSlider.value);
         circle = new google.maps.Circle({
@@ -198,7 +198,7 @@ function initMap3() {
 }
 
 function circlechanger (radius){
-
+        position = markerDates.getPosition();
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
             circle = new google.maps.Circle({
