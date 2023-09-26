@@ -151,6 +151,10 @@ function initMap3() {
     });
     
     google.maps.event.addListener(map3, 'rightclick', function (event) {
+  
+         if (currentMarker) {
+            currentMarker.setMap(null);
+        }
         if (markerDates) {
             markerDates.setMap(null);
         }
