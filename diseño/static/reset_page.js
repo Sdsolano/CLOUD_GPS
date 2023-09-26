@@ -149,7 +149,7 @@ function initMap3() {
         var radius = parseInt(radiusSlider.value);
         radiusValue.textContent = radius + " meters";
     });
-
+    var position;
     google.maps.event.addListener(map3, 'rightclick', function (event) {
         if (markerDates) {
             markerDates.setMap(null);
@@ -183,9 +183,9 @@ function initMap3() {
         sliderContainer.style.display = 'block';
         document.getElementById('updateCircle').style.display = 'none';
     });
-    document.getElementById('markerSlider').addEventListener('input', function () {
+    document.getElementById('radiusSlider').addEventListener('input', function () {
         var newRadius = parseInt(this.value);
-        
+
         
             circle = new google.maps.Circle({
                 strokeColor: '#1C2F4F',
@@ -194,7 +194,7 @@ function initMap3() {
                 fillColor: '#2A508C',
                 fillOpacity: 0.35,
                 map: map3,
-                center: event.latLng,
+                center: position,
                 radius: newRadius,
             });
         
