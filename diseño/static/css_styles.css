@@ -131,6 +131,7 @@ h6{
 #enviar {
   background-color: #5f7aba;
   color: #fff;
+  padding: 5px 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
