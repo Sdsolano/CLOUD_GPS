@@ -347,7 +347,7 @@ function actualizarHistoricosData(data, indexCenter) {
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
-                cor.push(coordenada);
+                
                 // Agrega un marcador en la primera posición
                 if (index === indexCenter) {
                      firstMarker = new google.maps.Marker({
@@ -363,7 +363,7 @@ function actualizarHistoricosData(data, indexCenter) {
         
 
 
-       console.log("hola ", cor);
+       //console.log("hola ", cor);
 
         // Siempre crea una nueva polilínea, incluso si hay una existente, ya que eliminamos la existente arriba
         polyline2 = new google.maps.Polyline({
