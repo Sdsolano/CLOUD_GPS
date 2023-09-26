@@ -548,6 +548,7 @@ $(document).ready(function () {
         if (Area_search_coordinates.length > 0) {
             console.log("Coordinates within the circle:", Area_search_coordinates);
         } else {
+            alert("No position records found within the area.");
             console.log("No coordinates found within the circle.");
         }
         // Initialize the slider with the correct range
