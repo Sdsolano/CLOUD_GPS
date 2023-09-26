@@ -183,23 +183,7 @@ function initMap3() {
         sliderContainer.style.display = 'block';
         document.getElementById('updateCircle').style.display = 'none';
     });
-    document.getElementById('radiusSlider').addEventListener('input', function () {
-        var newRadius = parseInt(this.value);
-
-        
-            circle = new google.maps.Circle({
-                strokeColor: '#1C2F4F',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#2A508C',
-                fillOpacity: 0.35,
-                map: map3,
-                center: position,
-                radius: newRadius,
-            });
-        
-
-    });
+    
 
     // // Add a listener for the "Update Circle" button click event
     // document.getElementById('updateCircle').addEventListener('click', function () {
@@ -213,7 +197,23 @@ function initMap3() {
     // });
 }
 
+function circlechanger (){
+    document.getElementById('radiusSlider').addEventListener('input', function () {
+        var newRadius = parseInt(this.value);
+            circle = new google.maps.Circle({
+                strokeColor: '#1C2F4F',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#2A508C',
+                fillOpacity: 0.35,
+                map: map3,
+                center: position,
+                radius: newRadius,
+            });
+        
 
+    });
+}
 
 
 
@@ -533,7 +533,9 @@ $(document).ready(function () {
         });
         
         initMap3();
+        circlechanger();
     });
+
 
     $("#buscar").on("click", function () {
          
