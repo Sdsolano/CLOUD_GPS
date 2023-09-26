@@ -642,7 +642,7 @@ $(document).ready(function () {
             map3.setCenter(coordinateLatLng);
 
             $("#Location-date").html("<b> Location date: </b>"+Time_ASC[index])
-            $("#count").html("<b> We have found </b>"+ Time_ASC[index] + "<b> location records located in the provided area. </b>")
+            $("#count").html("<b> We have found </b>"+ counter + "<b> location records located in the provided area. </b>")
         }
 
     }
