@@ -336,8 +336,6 @@ function actualizarHistoricosData(data, indexCenter) {
     
 
     if (Array.isArray(data) && data.length > 0) {
-        var i = 0;
-        var cor;
         // Itera sobre los datos y agrega coordenadas a la polilínea
         data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
@@ -361,9 +359,6 @@ function actualizarHistoricosData(data, indexCenter) {
             }
         });
         
-
-
-       //console.log("hola ", cor);
 
         // Siempre crea una nueva polilínea, incluso si hay una existente, ya que eliminamos la existente arriba
         polyline2 = new google.maps.Polyline({
