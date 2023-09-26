@@ -28,6 +28,9 @@ var circle = null;
 var markersWithinCircle = [];
 var currentMarker = null;
 
+
+
+
 function initMap() {
     // Inicializa el mapa
     map = new google.maps.Map(document.getElementById('map'), {
@@ -166,10 +169,10 @@ function initMap3() {
         // Create the circle with the specified radius from the slider
         var radius = parseInt(radiusSlider.value);
         circle = new google.maps.Circle({
-            strokeColor: '#FF0000',
+            strokeColor: '#1C2F4F',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#FF0000',
+            fillColor: '#2A508C',
             fillOpacity: 0.35,
             map: map3,
             center: event.latLng,
@@ -200,17 +203,29 @@ function initMap3() {
 // Función para mostrar la sección correspondiente según el fragmento de URL o por defecto
 function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
+    var homeLink = document.querySelector('a[href="#home"]');
+    var historicosLink = document.querySelector('a[href="#historicos"]');
+
     if (fragment === '#home' || fragment === '') {
         // Mostrar la sección Home
         document.getElementById('home').style.display = 'block';
         document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+        // Deshabilitar el enlace de Home
+        homeLink.classList.add('disabled');
+        historicosLink.classList.remove('disabled');
     } else if (fragment === '#historicos') {
         // Mostrar la sección Históricos
         document.getElementById('home').style.display = 'none'; // Ocultar Home
         document.getElementById('historicos').style.display = 'block';
         initMap2();
+        // Deshabilitar el enlace de Históricos
+        historicosLink.classList.add('disabled');
+        homeLink.classList.remove('disabled');
+    } else {
+        // Si el fragmento es desconocido, puedes manejarlo aquí
     }
 }
+
 // Ejecutar la función al cargar la página
 window.onload = mostrarSeccionDesdeFragmento;
 // Manejar cambios en la URL (por ejemplo, cuando se hace clic en los enlaces de la barra de navegación)
@@ -304,29 +319,46 @@ function actualizarHistoricosData(data, indexCenter) {
     // Creamos un arreglo para almacenar las coordenadas de la polilínea
     var polylineCoordinates = [];
     var infoWindowContent = "";
+    var iconSettings = {
+        path: 'M25.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759' +
+            'c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z' +
+            'M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713' +
+            'v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336' +
+            'h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805z',
+        fillColor: '#FFC02B',
+        fillOpacity: 1,
+        scale: 0.6,
+        strokeColor: 'black',
+        strokeWeight: 1.5,
+        anchor: new google.maps.Point(23, 0),
+        rotation: 90
+    };
+    
 
     if (Array.isArray(data) && data.length > 0) {
         // Itera sobre los datos y agrega coordenadas a la polilínea
         data.forEach(function (coordenada, index) {
             var latitude = parseFloat(coordenada.Latitude);
             var longitude = parseFloat(coordenada.Longitude);
-
+            
             // Verifica si las coordenadas son números válidos
             if (!isNaN(latitude) && !isNaN(longitude)) {
                 var latLng = new google.maps.LatLng(latitude, longitude);
                 polylineCoordinates.push(latLng);
-
+                
                 // Agrega un marcador en la primera posición
                 if (index === indexCenter) {
                      firstMarker = new google.maps.Marker({
                         position: latLng,
                         map: map2,
                         title: "Primera Coordenada",
+                        icon: iconSettings, // Set the custom icon
                     });
                 }
                 
             }
         });
+        
 
         // Siempre crea una nueva polilínea, incluso si hay una existente, ya que eliminamos la existente arriba
         polyline2 = new google.maps.Polyline({
@@ -462,19 +494,21 @@ $(document).ready(function () {
                 
                 map2.setZoom(18);
                 actualizarHistoricosData(infoArray, currentIndex);
-                
-                $("#slider").slider({
-                    min: 0,
-                    max: infoArray.length - 1,
-                    value: currentIndex,
-                    create: function (event, ui) {
-                        $("#slider-text").show(); 
-                    },
-                    slide: function (event, ui) {
-                        currentIndex = ui.value;
-                        actualizarHistoricosData(infoArray, currentIndex);
-                    }
-                });
+
+                if (infoArray.length > 0 ){
+                            $("#slider").slider({
+                                min: 0,
+                                max: infoArray.length - 1,
+                                value: currentIndex,
+                                create: function (event, ui) {
+                                    $("#slider-text").show(); 
+                                },
+                                slide: function (event, ui) {
+                                    currentIndex = ui.value;
+                                    actualizarHistoricosData(infoArray, currentIndex);
+                                }
+                            });
+                }
             },
             error: function (error) {
                 console.error(error);
@@ -517,6 +551,7 @@ $(document).ready(function () {
         if (Area_search_coordinates.length > 0) {
             console.log("Coordinates within the circle:", Area_search_coordinates);
         } else {
+            alert("No position records found within the area.");
             console.log("No coordinates found within the circle.");
         }
         // Initialize the slider with the correct range
@@ -542,6 +577,20 @@ $(document).ready(function () {
     
     
     function updateMarker(index) {
+        var iconSettings = {
+            path: 'M25.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759' +
+                'c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z' +
+                'M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713' +
+                'v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336' +
+                'h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805z',
+            fillColor: '#FFC02B',
+            fillOpacity: 1,
+            scale: 0.6,
+            strokeColor: 'black',
+            strokeWeight: 1.5,
+            anchor: new google.maps.Point(23, 0),
+            rotation: 90
+        };
         // Remove the existing marker if present
         if (currentMarker) {
             currentMarker.setMap(null);
@@ -556,8 +605,9 @@ $(document).ready(function () {
                 position: coordinateLatLng,
                 map: map3,
                 title: "Coordinate " + index,
+                icon: iconSettings,
                 // You can add more information to the marker, e.g., timestamp
-                label: timestamp,
+                //label: timestamp,
             });
     
             // Center the map on the current marker
