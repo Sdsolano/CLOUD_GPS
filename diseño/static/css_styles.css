@@ -131,7 +131,7 @@ h6{
 #enviar {
   background-color: #5f7aba;
   color: #fff;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -140,8 +140,9 @@ h6{
 }
 
 #enviar:hover {
-  background-color: #0066cc; /* Un tono más oscuro para oscurecer ligeramente */
+  background-color: #4a6ea8; /* Un tono más oscuro para oscurecer ligeramente en hover */
 }
+
 
 
 
