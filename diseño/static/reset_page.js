@@ -197,7 +197,7 @@ function initMap3() {
     // });
 }
 
-function circlechanger (radius){
+function circlechanger (radio){
         position = markerDates.getPosition();
         if (circle) {
             circle.setMap(null); // Remove the existing circle if any
@@ -212,7 +212,7 @@ function circlechanger (radius){
             fillOpacity: 0.35,
             map: map3,
             center: position,
-            radius: radius,
+            radius: radio,
         });
 }
 
@@ -535,7 +535,7 @@ $(document).ready(function () {
         
         initMap3();
         document.getElementById('radiusSlider').addEventListener('input', function () {
-            var newRadius = parseInt(this.value);
+            var newRadius = parseInt(radiusSlider.value);
             circlechanger(newRadius);
         });
     });
