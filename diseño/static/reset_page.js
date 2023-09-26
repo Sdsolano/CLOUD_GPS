@@ -6,7 +6,6 @@ let marker2;
 let markers2;
 let markerHis;
 
-let markerDates;  //marker de la busqueda 2
 
 let radius;      //radio busq. 2
 
@@ -29,6 +28,7 @@ var markersWithinCircle = [];
 var currentMarker = null;
 var position;
 var circle2 = null;
+var markerDates = null;
 
 
 function initMap() {
@@ -133,7 +133,7 @@ function initMap3() {
     });
 
     
-    var markerDates = null;
+
     
 
    
