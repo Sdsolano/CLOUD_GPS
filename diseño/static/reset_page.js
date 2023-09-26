@@ -27,7 +27,7 @@ let isDrawingPolyline = false;
 var circle = null;
 var markersWithinCircle = [];
 var currentMarker = null;
-
+var position;
 
 
 
@@ -149,7 +149,7 @@ function initMap3() {
         var radius = parseInt(radiusSlider.value);
         radiusValue.textContent = radius + " meters";
     });
-    var position;
+    
     google.maps.event.addListener(map3, 'rightclick', function (event) {
         if (markerDates) {
             markerDates.setMap(null);
