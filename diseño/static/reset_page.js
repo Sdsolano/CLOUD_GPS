@@ -204,7 +204,7 @@ function circlechanger (radius){
         }
         
 
-        circle2 = new google.maps.Circle({
+        circle = new google.maps.Circle({
             strokeColor: '#1C2F4F',
             strokeOpacity: 0.8,
             strokeWeight: 2,
