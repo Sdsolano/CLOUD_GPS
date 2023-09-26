@@ -116,24 +116,29 @@
       <h3 id="titulo-fechas" style="text-align: center;"> </h3>
       <p id="parrafo-fechas"> </p>
       <p id="parrafo2-fechas"> </p>
-  
-      <div class="slider-container">
-          <p id="slider-text" style="display: none;">Adjust the radius using the slider:</p>
-          <div class="slider-and-button">
-              <input type="range" id="radiusSlider" min="100" max="1000" step="10" value="100" class="slider-samuel"> <!-- Slider -->
-              <span id="radiusValue">100 meters</span>
-              <button id="updateCircle" class="btn btn-primary">Update Circle</button>
-          </div>
+      <div>
+            <div class="slider-container">
+                <p id="slider-text" style="display: none;">Adjust the radius using the slider:</p>
+                <div class="slider-and-button">
+                    <input type="range" id="radiusSlider" min="100" max="1000" step="10" value="100" class="slider-samuel"> <!-- Slider -->
+                    <span id="radiusValue">100 meters</span>
+                    <button id="updateCircle" class="btn btn-primary">Update Circle</button>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="display: none;" id="buscar">Search</button>
+            
+          
+            
+            <div class="slider-M">
+              <p id="Location-date"> </p>
+              <p id="Mslider-text" >Adjust the marker using the slider:</p>
+              <input type="range" id="markerSlider" min="0" step="1" class="slider-samuel">
+              <p id="parrafo-fechas"> </p>
+            </div> 
       </div>
-      <button class="btn btn-primary" style="display: none;" id="buscar">Search</button>
-      <div id="mapa-fechas" style="height: 400px;" class="container2"></div>
-     
-      <p id="Location-date"> </p>
-      <div class="slider-M">
-        <p id="Mslider-text" >Adjust the marker using the slider:</p>
-        <input type="range" id="markerSlider" min="0" step="1" class="slider-samuel">
-        <p id="parrafo-fechas"> </p>
-      </div>
+    </div>
+
+    <div id="mapa-fechas" style="height: 400px;" class="container2"></div>
   </div>
   
   
