@@ -501,19 +501,21 @@ $(document).ready(function () {
                 
                 map2.setZoom(18);
                 actualizarHistoricosData(infoArray, currentIndex);
-                
-                $("#slider").slider({
-                    min: 0,
-                    max: infoArray.length - 1,
-                    value: currentIndex,
-                    create: function (event, ui) {
-                        $("#slider-text").show(); 
-                    },
-                    slide: function (event, ui) {
-                        currentIndex = ui.value;
-                        actualizarHistoricosData(infoArray, currentIndex);
-                    }
-                });
+
+                if (infoArray.length > 0 ){
+                            $("#slider").slider({
+                                min: 0,
+                                max: infoArray.length - 1,
+                                value: currentIndex,
+                                create: function (event, ui) {
+                                    $("#slider-text").show(); 
+                                },
+                                slide: function (event, ui) {
+                                    currentIndex = ui.value;
+                                    actualizarHistoricosData(infoArray, currentIndex);
+                                }
+                            });
+                }
             },
             error: function (error) {
                 console.error(error);
