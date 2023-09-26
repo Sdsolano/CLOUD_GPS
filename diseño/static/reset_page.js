@@ -181,19 +181,26 @@ function initMap3() {
 
         // Show the slider and "Update Circle" button
         sliderContainer.style.display = 'block';
-        document.getElementById('updateCircle').style.display = 'block';
+        document.getElementById('updateCircle').style.display = 'none';
     });
-
-    // Add a listener for the "Update Circle" button click event
-    document.getElementById('updateCircle').addEventListener('click', function () {
-        // Get the new radius value from the slider
-        var newRadius = parseInt(radiusSlider.value);
-
-        // Update the circle's radius
+    document.getElementById('markerSlider').addEventListener('input', function () {
+        var newRadius = parseInt(this.value);
         if (circle) {
             circle.setRadius(newRadius);
         }
+
     });
+
+    // // Add a listener for the "Update Circle" button click event
+    // document.getElementById('updateCircle').addEventListener('click', function () {
+    //     // Get the new radius value from the slider
+    //     var newRadius = parseInt(radiusSlider.value);
+
+    //     // Update the circle's radius
+    //     if (circle) {
+    //         circle.setRadius(newRadius);
+    //     }
+    // });
 }
 
 
