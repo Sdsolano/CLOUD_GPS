@@ -107,7 +107,7 @@ function initMap3() {
         zoom: 15,
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
-    $("#parrafo-fechas").html("Right-click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
+    $("#parrafo-fechas").html("Click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
     
     $("#buscar").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
@@ -150,7 +150,7 @@ function initMap3() {
         radiusValue.textContent = radius + " meters";
     });
     
-    google.maps.event.addListener(map3, 'rightclick', function (event) {
+    google.maps.event.addListener(map3, 'click', function (event) {
   
          if (currentMarker) {
             currentMarker.setMap(null);
