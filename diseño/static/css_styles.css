@@ -88,11 +88,11 @@ h6{
 .slider-samuel::-webkit-slider-thumb {
   background: #2980b9;
   border: 2px solid #2980b9;
-  width: 20px;
-  height: 20px;
-  border-radius: 10%;
+  width: 20px; /* Ancho cuadrado */
+  height: 20px; /* Altura cuadrada */
   cursor: pointer;
 }
+
 
   
 
