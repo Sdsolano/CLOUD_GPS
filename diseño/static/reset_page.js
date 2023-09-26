@@ -386,7 +386,7 @@ function actualizarHistoricosData(data, indexCenter) {
         polyline2 = new google.maps.Polyline({
             path: polylineCoordinates,
             geodesic: true,
-            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeColor: '#FF0000', // Color de la línea (verde en este ejemplo)
             strokeOpacity: 1.0,
             strokeWeight: 2,
             map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
