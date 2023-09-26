@@ -77,10 +77,12 @@ h6{
   
 
 
- /* Estilo para la barra de navegación */
+/* Estilo para la barra de navegación */
 .navbar {
-  background-color: #3498db;
+  background-color: rgba(52, 152, 219, 0.9); /* Azul suave y transparente */
   width: 100%;
+  border-bottom: 2px solid #2980b9; /* Línea inferior */
+  transition: background-color 0.3s ease; /* Transición de color suave */
 }
 
 /* Estilo para los elementos de la lista (cada sección) */
@@ -93,6 +95,7 @@ h6{
   color: #fff;
   padding: 10px 15px;
   border-radius: 0; /* Eliminar los bordes redondeados */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave */
 }
 
 /* Estilo para el enlace activo (Home) */
@@ -113,7 +116,16 @@ h6{
   background-color: #2980b9;
 }
 
- 
-  
+/* Estilo para el cambio de color al hacer hover en los enlaces */
+.nav-link:hover {
+  background-color: #2980b9; /* Cambio de color en hover */
+  color: #fff; /* Texto en blanco en hover */
+}
+
+/* Estilo para la transición suave del fondo al hacer hover */
+.navbar:hover {
+  background-color: rgba(52, 152, 219, 1); /* Cambio de color suave en hover */
+}
+
   
   
