@@ -328,7 +328,8 @@ function reloadTable() {
 function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
-    
+    document.getElementById('markerSlider').style.display = 'none';
+    document.getElementById('Mslider-text').style.display = 'none';
 
     // Elimina la polilínea existente si hay una
     if (polyline2) {
