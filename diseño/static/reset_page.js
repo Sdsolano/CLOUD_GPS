@@ -587,8 +587,10 @@ $(document).ready(function () {
         slider.min = 0; // Minimum value (0)
         slider.max = Area_search_coordinates.length - 1; // Maximum value (length of the array minus one)
         slider.value = 0; // Initial value (0)
-        document.getElementById('markerSlider').style.display = 'block';
-        document.getElementById('Mslider-text').style.display = 'block';
+        $("#Mslider-text").show(); 
+        $("#markerSlider").show(); 
+        // document.getElementById('markerSlider').style.display = 'block';
+        // document.getElementById('Mslider-text').style.display = 'block';
         // Initialize the slider with the default value (e.g., 0 for the first marker)
         document.getElementById('markerSlider').value = 0;
         updateMarker(0); // Initialize the marker with the first coordinate
