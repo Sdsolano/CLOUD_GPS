@@ -71,8 +71,10 @@ function initMap2() {
 
     // Hide the slider initially
     sliderContainer.style.display = 'none';
-    document.getElementById('markerSlider').style.display = 'none';
-    document.getElementById('Mslider-text').style.display = 'none';
+    $("#Mslider-text").hide(); 
+    $("#markerSlider").hide();
+    $("#count").hide(); 
+    $("#Location-date").hide(); 
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -328,6 +330,11 @@ function reloadTable() {
 function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
+    $("#Mslider-text").hide(); 
+    $("#markerSlider").hide();
+    $("#count").hide(); 
+    $("#Location-date").hide(); 
+
     
 
     // Elimina la polilínea existente si hay una
@@ -587,8 +594,12 @@ $(document).ready(function () {
         slider.min = 0; // Minimum value (0)
         slider.max = Area_search_coordinates.length - 1; // Maximum value (length of the array minus one)
         slider.value = 0; // Initial value (0)
-        document.getElementById('markerSlider').style.display = 'block';
-        document.getElementById('Mslider-text').style.display = 'block';
+        $("#Mslider-text").show(); 
+        $("#markerSlider").show(); 
+        $("#count").show(); 
+        $("#Location-date").show(); 
+        // document.getElementById('markerSlider').style.display = 'block';
+        // document.getElementById('Mslider-text').style.display = 'block';
         // Initialize the slider with the default value (e.g., 0 for the first marker)
         document.getElementById('markerSlider').value = 0;
         updateMarker(0); // Initialize the marker with the first coordinate
