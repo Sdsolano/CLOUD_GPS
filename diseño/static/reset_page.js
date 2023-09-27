@@ -72,7 +72,7 @@ function initMap2() {
     // Hide the slider initially
     sliderContainer.style.display = 'none';
     document.getElementById('markerSlider').style.display = 'none';
-    document.getElementById('Mslider-text').style.display = 'none';
+    //document.getElementById('Mslider-text').style.display = 'none';
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
