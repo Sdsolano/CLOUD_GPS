@@ -328,8 +328,12 @@ function reloadTable() {
 function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
-    document.getElementById('markerSlider').style.display = 'none';
-    document.getElementById('Mslider-text').style.display = 'none';
+    $("#Mslider-text").hide(); 
+    $("#markerSlider").hide();
+    $("#count").hide(); 
+    $("#Location-date").hide(); 
+
+    
 
     // Elimina la polilínea existente si hay una
     if (polyline2) {
@@ -590,6 +594,8 @@ $(document).ready(function () {
         slider.value = 0; // Initial value (0)
         $("#Mslider-text").show(); 
         $("#markerSlider").show(); 
+        $("#count").show(); 
+        $("#Location-date").show(); 
         // document.getElementById('markerSlider').style.display = 'block';
         // document.getElementById('Mslider-text').style.display = 'block';
         // Initialize the slider with the default value (e.g., 0 for the first marker)
