@@ -113,6 +113,7 @@ function initMap3() {
     $("#parrafo-fechas").html("Click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
     
     $("#buscar").show(); 
+    $("#scrollToBottom").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
     // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
@@ -566,7 +567,7 @@ $(document).ready(function () {
 
 
     $("#buscar").on("click", function () {
-         
+        $("#scrollToBottom").show(); 
         
 
         if (!circle) {
@@ -622,7 +623,7 @@ $(document).ready(function () {
             var sliderValue = parseInt(this.value);
             updateMarker(sliderValue);
         });
-        $("#scrollToBottom").show(); 
+        
 
     });
 
