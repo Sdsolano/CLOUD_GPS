@@ -650,7 +650,7 @@ $(document).ready(function () {
             });
     
             // Center the map on the current marker
-            map3.setCenter(coordinateLatLng);
+            //map3.setCenter(coordinateLatLng);
 
             $("#Location-date").html("<b> Location date: </b>"+Time_ASC[index])
             $("#count").html("<b> We have found </b> <b>"+ counter + "</b><b> location records in the provided area. </b>")
