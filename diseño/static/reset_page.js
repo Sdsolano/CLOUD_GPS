@@ -551,6 +551,23 @@ $(document).ready(function () {
         });
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get a reference to the "Scroll Down" button
+        const scrollToBottomButton = document.getElementById('scrollToBottom');
+    
+        // Add a click event listener to the button
+        scrollToBottomButton.addEventListener('click', function() {
+            // Calculate the distance to scroll
+            const scrollDistance = document.body.scrollHeight - window.innerHeight;
+    
+            // Scroll to the bottom of the page smoothly
+            window.scrollTo({
+                top: scrollDistance,
+                behavior: 'smooth'
+            });
+        });
+    });
+
 
     $("#buscar").on("click", function () {
          
@@ -666,3 +683,5 @@ $(document).ready(function () {
     
         
 });
+
+
