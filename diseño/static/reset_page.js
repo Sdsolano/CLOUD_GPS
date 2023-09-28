@@ -551,12 +551,7 @@ $(document).ready(function () {
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get a reference to the "Scroll Down" button
-        const scrollToBottomButton = document.getElementById('scrollToBottom');
-    
-        // Add a click event listener to the button
-        scrollToBottomButton.addEventListener('click', function() {
+    $("#scrollToBottom").on("click", function () {
             // Calculate the distance to scroll
             const scrollDistance = document.body.scrollHeight - window.innerHeight;
     
@@ -566,7 +561,7 @@ $(document).ready(function () {
                 behavior: 'smooth'
             });
         });
-    });
+
 
 
     $("#buscar").on("click", function () {
