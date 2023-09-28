@@ -75,6 +75,7 @@ function initMap2() {
     $("#markerSlider").hide();
     $("#count").hide(); 
     $("#Location-date").hide(); 
+    $("#scrollToBottom").hide(); 
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -621,7 +622,7 @@ $(document).ready(function () {
             var sliderValue = parseInt(this.value);
             updateMarker(sliderValue);
         });
-
+        $("#scrollToBottom").show(); 
 
     });
 
