@@ -1,205 +1,113 @@
-h1{
-    padding: 10px auto;
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 15px;
+/* Apply a consistent font family and size for better readability */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
-
-p{
-    margin: 10px 10px;
+/* Improve heading styles for hierarchy and readability */
+h1 {
+  font-size: 24px;
+  margin: 20px 0;
 }
 
+/* Add spacing to paragraphs for better readability */
+p {
+  margin: 10px 0;
+}
 
+/* Style the table for better presentation */
 #tabla-contenido {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-collapse: collapse;
-    width: 100%;
-    
-   
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
 }
+
+#tabla-contenido table {
+  width: 100%;
+  border: 1px solid #ddd; /* Add a light border to the table */
+}
+
 #tabla-contenido table td,
 #tabla-contenido table th {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: left;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
 
-
-
-
- .container2{
-    text-align: center;
-    justify-content: center;
-    margin: 30px 30px;
+/* Center the container2 content both horizontally and vertically */
+.container2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
 }
 
-
-h6{
-    margin: 10px auto;
-    text-align: center;
-}
-
-#center_text {
-    text-align: center; /* Centra el texto horizontalmente */
-
-    transform: translateY(-50%);
-}
-
-/* funcionamiento básico del sistema de pestañas */
-.tab-content {
-  display: none;
-}
-
-.tab:target .tab-content, .tab:last-of-type .tab-content {
-  display: block;
-}
-
-.tab:target ~ .tab:last-of-type .tab-content {
-  display: none;
-}
-
-
-
-
-.ui-slider {
-    background: rgba(52, 152, 219, 0.5); /* Cambia el color de fondo a azul (#3498db) */
-    border: 1px solid #3498db; /* Cambia el color del borde a azul (#3498db) */
-  }
-
-  .ui-slider .ui-slider-handle {
-    background: #2980b9; /* Cambia el color del control deslizante a azul más oscuro (#2980b9) */
-    border: 2px solid #2980b9; /* Cambia el color del borde del control deslizante a azul más oscuro (#2980b9) */
-  }
-
-/* Estilo para el control deslizante personalizado */
-.slider-samuel {
-  background: rgba(52, 152, 219, 0.5);
-  border: 1px solid #3498db;
-  width: 100%;
-  height: 10px;
+/* Style the submit button */
+#enviar {
+  background-color: #2980b9; /* Change the button color */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
 }
 
-/* Estilo para el control deslizante (manija) */
-.slider-samuel::-webkit-slider-thumb {
-  background: #2980b9;
-  border: 2px solid #2980b9;
-  width: 20px; /* Ancho cuadrado */
-  height: 20px; /* Altura cuadrada */
+/* On hover, make the button slightly darker */
+#enviar:hover {
+  background-color: #2166a1;
+}
+
+/* Style the scrollToBottom button */
+#scrollToBottom {
+  background: none;
+  color: #2980b9; /* Set the text color to a contrasting color */
+  border: none;
+  padding: 0;
   cursor: pointer;
+  font-size: inherit;
+  text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
-.div-contenedor{
-  display: flex;
-  justify-content: left; 
+/* On hover, change the color to a different shade */
+#scrollToBottom:hover {
+  color: #ff0000;
 }
 
-  
-
-
-/* Estilo para la barra de navegación */
+/* Style the navigation bar */
 .navbar {
-  background: linear-gradient(to right,  #548df8, #a6b8e2); /* Degradado de rojo a azul */
+  background: #2980b9;
   width: 100%;
-  transition: background-color 0.3s ease; /* Transición de color suave */
 }
 
-/* Resto de estilos para los elementos de la barra de navegación */
-
-
-/* Estilo para los elementos de la lista (cada sección) */
-.nav-item {
-  border-right: 1px solid #fff; /* Línea divisoria entre secciones */
-}
-
-/* Estilo para los enlaces de navegación */
+/* Style navigation links */
 .nav-link {
   color: #fff;
   padding: 10px 15px;
-  border-radius: 0; /* Eliminar los bordes redondeados */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave */
+  border-radius: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Estilo para el enlace activo (Home) */
+/* Style the active link */
 .nav-link.active {
-  background-color: transparent; /* Fondo transparente para el enlace activo */
-  color: #fff;
-  border-radius: 0; /* Eliminar los bordes redondeados */
+  background-color: #2166a1;
 }
 
-/* Estilo para el botón del menú desplegable (hamburguesa) */
+/* Style the navigation toggler icon */
 .navbar-toggler-icon {
   background-color: #fff;
   border-radius: 3px;
 }
 
-/* Estilo para el enlace del botón de hamburguesa cuando se abre el menú desplegable */
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  background-color: #2980b9;
-}
-
-/* Estilo para el cambio de color al hacer hover en los enlaces */
-.nav-link:hover {
-  background-color: #2980b9; /* Cambio de color en hover */
-  color: #fff; /* Texto en blanco en hover */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave en hover */
-}
-
-/* Estilo para el enlace del botón de hamburguesa en hover */
+/* Style the toggler icon on hover */
 .navbar-toggler:hover .navbar-toggler-icon {
-  background-color: #5f7aba; /* Cambio de color en hover */
-  transition: background-color 0.3s ease; /* Transición de color suave en hover */
+  background-color: #2166a1;
 }
 
-
-
-
-
-#enviar {
-  background-color:  #7392c5;
+/* Change the color of links on hover */
+.nav-link:hover {
+  background-color: #2166a1;
   color: #fff;
-  padding: 3px 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: inherit; /* Mantener el tamaño original */
-  transition: background-color 0.3s ease;
 }
-
-#scrollToBottom {
-  background: none; /* Remove background color */
-  color: #000000; /* Set the text color */
-  border: none;
-  padding: 0; /* Remove padding */
-  cursor: pointer;
-  font-size: inherit;
-  text-decoration: underline; /* Add underline to make it look like a link or label */
-  transition: color 0.3s ease; /* Add a transition effect for the color */
-}
-
-/* On hover, you can change the color if you want */
-#scrollToBottom:hover {
-  color: #ff0000; /* Change the color on hover */
-}
-With this CSS, the button will look like a label or link. It removes the background color, sets the text color to your desired color, removes padding, and adds an underline to the text to make it look like a label. Additionally, it provides a color transition on hover to give it a subtle interactive effect. You can adjust the colors and styles to fit your design preferences.
-
-
-
-
-
-
-
-
-#enviar:hover {
-  background-color:  #4a6ea8 ; /* Un tono más oscuro para oscurecer ligeramente en hover */
-}
-
-
-
-
-  
-  
