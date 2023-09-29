@@ -1,43 +1,29 @@
-h1{
-  padding: 10px auto;
-  text-align: center;
-  margin-bottom: 20px;
-  margin-top: 15px;
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-
-p{
-  margin: 10px 10px;
+h1 {
+  font-size: 2em;
+  background-color: #3498db;
+  padding: 10px 0;
 }
 
-
-#tabla-contenido {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-collapse: collapse;
-  width: 100%;
-  
- 
-}
-#tabla-contenido table td,
-#tabla-contenido table th {
-  border: 1px solid black;
-  padding: 10px;
-  text-align: left;
+p {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin: 10px 0;
 }
 
-
-
-
-.container2{
+.container2 {
   text-align: center;
   justify-content: center;
   margin: 30px 30px;
 }
 
-
-h6{
+h6 {
+  font-size: 1.5em;
   margin: 10px auto;
   text-align: center;
 }
@@ -60,7 +46,6 @@ display: block;
 .tab:target ~ .tab:last-of-type .tab-content {
 display: none;
 }
-
 
 
 
@@ -108,67 +93,33 @@ width: 100%;
 transition: background-color 0.3s ease; /* Transición de color suave */
 }
 
+.navbar-brand {
+  font-size: 1.5em;
+  margin-left: 10px;
+}
+
+.nav-link {
+  font-size: 1.2em;
+  margin-right: 10px;
+}
+
 /* Resto de estilos para los elementos de la barra de navegación */
 
-
-/* Estilo para los elementos de la lista (cada sección) */
-.nav-item {
-border-right: 1px solid #fff; /* Línea divisoria entre secciones */
-}
-
-/* Estilo para los enlaces de navegación */
-.nav-link {
-color: #fff;
-padding: 10px 15px;
-border-radius: 0; /* Eliminar los bordes redondeados */
-transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave */
-}
-
-/* Estilo para el enlace activo (Home) */
-.nav-link.active {
-background-color: transparent; /* Fondo transparente para el enlace activo */
-color: #fff;
-border-radius: 0; /* Eliminar los bordes redondeados */
-}
-
-/* Estilo para el botón del menú desplegable (hamburguesa) */
-.navbar-toggler-icon {
-background-color: #fff;
-border-radius: 3px;
-}
-
-/* Estilo para el enlace del botón de hamburguesa cuando se abre el menú desplegable */
-.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-background-color: #2980b9;
-}
-
-/* Estilo para el cambio de color al hacer hover en los enlaces */
-.nav-link:hover {
-background-color: #2980b9; /* Cambio de color en hover */
-color: #fff; /* Texto en blanco en hover */
-transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave en hover */
-}
-
-/* Estilo para el enlace del botón de hamburguesa en hover */
-.navbar-toggler:hover .navbar-toggler-icon {
-background-color: #5f7aba; /* Cambio de color en hover */
-transition: background-color 0.3s ease; /* Transición de color suave en hover */
-}
 
 
 
 
 
 #enviar {
-background-color:  #7392c5;
-color: #fff;
-padding: 3px 5px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-font-size: inherit; /* Mantener el tamaño original */
-transition: background-color 0.3s ease;
+  background-color: #7392c5;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.3em;
 }
+
 
 #scrollToBottom {
 background: none; /* Remove background color */
