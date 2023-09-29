@@ -1,87 +1,196 @@
-/* Reset default margin and padding for all elements */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+h1{
+  padding: 10px auto;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
-/* Apply a clean and modern font family */
-body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333;
+
+p{
+  margin: 10px 10px;
 }
 
-/* Style the page header for a clean and minimalistic look */
-header {
-  background-color: #2980b9;
-  color: #fff;
-  padding: 20px;
+
+#tabla-contenido {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-collapse: collapse;
+  width: 100%;
+  
+ 
+}
+#tabla-contenido table td,
+#tabla-contenido table th {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left;
+}
+
+
+
+
+.container2{
+  text-align: center;
+  justify-content: center;
+  margin: 30px 30px;
+}
+
+
+h6{
+  margin: 10px auto;
   text-align: center;
 }
 
-/* Improve heading styles for hierarchy and readability */
-h1 {
-  font-size: 32px;
-  margin: 20px 0;
+#center_text {
+  text-align: center; /* Centra el texto horizontalmente */
+
+  transform: translateY(-50%);
 }
 
-/* Add spacing to paragraphs for better readability */
-p {
-  margin: 10px 0;
+/* funcionamiento básico del sistema de pestañas */
+.tab-content {
+display: none;
 }
 
-/* Style the table for a clean presentation */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
+.tab:target .tab-content, .tab:last-of-type .tab-content {
+display: block;
 }
 
-table th,
-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
+.tab:target ~ .tab:last-of-type .tab-content {
+display: none;
 }
 
-/* Center the content within the container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+
+
+
+.ui-slider {
+  background: rgba(52, 152, 219, 0.5); /* Cambia el color de fondo a azul (#3498db) */
+  border: 1px solid #3498db; /* Cambia el color del borde a azul (#3498db) */
 }
 
-/* Style the submit button with a contrasting color */
-.button-primary {
-  background-color: #ff5722;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
+.ui-slider .ui-slider-handle {
+  background: #2980b9; /* Cambia el color del control deslizante a azul más oscuro (#2980b9) */
+  border: 2px solid #2980b9; /* Cambia el color del borde del control deslizante a azul más oscuro (#2980b9) */
 }
 
-/* On hover, make the primary button slightly darker */
-.button-primary:hover {
-  background-color: #e64a19;
+/* Estilo para el control deslizante personalizado */
+.slider-samuel {
+background: rgba(52, 152, 219, 0.5);
+border: 1px solid #3498db;
+width: 100%;
+height: 10px;
+border-radius: 5px;
+cursor: pointer;
 }
 
-/* Style links as buttons for consistency */
-.button-link {
-  background: none;
-  color: #2980b9;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-size: inherit;
-  text-decoration: underline;
-  transition: color 0.3s ease;
+/* Estilo para el control deslizante (manija) */
+.slider-samuel::-webkit-slider-thumb {
+background: #2980b9;
+border: 2px solid #2980b9;
+width: 20px; /* Ancho cuadrado */
+height: 20px; /* Altura cuadrada */
+cursor: pointer;
 }
 
-/* On hover, change the color of link buttons */
-.button-link:hover {
-  color: #ff0000;
+.div-contenedor{
+display: flex;
+justify-content: left; 
+}
+
+
+
+
+/* Estilo para la barra de navegación */
+.navbar {
+background: linear-gradient(to right,  #548df8, #a6b8e2); /* Degradado de rojo a azul */
+width: 100%;
+transition: background-color 0.3s ease; /* Transición de color suave */
+}
+
+/* Resto de estilos para los elementos de la barra de navegación */
+
+
+/* Estilo para los elementos de la lista (cada sección) */
+.nav-item {
+border-right: 1px solid #fff; /* Línea divisoria entre secciones */
+}
+
+/* Estilo para los enlaces de navegación */
+.nav-link {
+color: #fff;
+padding: 10px 15px;
+border-radius: 0; /* Eliminar los bordes redondeados */
+transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave */
+}
+
+/* Estilo para el enlace activo (Home) */
+.nav-link.active {
+background-color: transparent; /* Fondo transparente para el enlace activo */
+color: #fff;
+border-radius: 0; /* Eliminar los bordes redondeados */
+}
+
+/* Estilo para el botón del menú desplegable (hamburguesa) */
+.navbar-toggler-icon {
+background-color: #fff;
+border-radius: 3px;
+}
+
+/* Estilo para el enlace del botón de hamburguesa cuando se abre el menú desplegable */
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+background-color: #2980b9;
+}
+
+/* Estilo para el cambio de color al hacer hover en los enlaces */
+.nav-link:hover {
+background-color: #2980b9; /* Cambio de color en hover */
+color: #fff; /* Texto en blanco en hover */
+transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave en hover */
+}
+
+/* Estilo para el enlace del botón de hamburguesa en hover */
+.navbar-toggler:hover .navbar-toggler-icon {
+background-color: #5f7aba; /* Cambio de color en hover */
+transition: background-color 0.3s ease; /* Transición de color suave en hover */
+}
+
+
+
+
+
+#enviar {
+background-color:  #7392c5;
+color: #fff;
+padding: 3px 5px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: inherit; /* Mantener el tamaño original */
+transition: background-color 0.3s ease;
+}
+
+#scrollToBottom {
+background: none; /* Remove background color */
+color: #000000; /* Set the text color */
+border: none;
+padding: 0; /* Remove padding */
+cursor: pointer;
+font-size: inherit;
+text-decoration: underline; /* Add underline to make it look like a link or label */
+transition: color 0.3s ease; /* Add a transition effect for the color */
+}
+
+/* On hover, you can change the color if you want */
+#scrollToBottom:hover {
+color: #ff0000; /* Change the color on hover */
+}
+
+
+
+
+
+
+#enviar:hover {
+background-color:  #4a6ea8 ; /* Un tono más oscuro para oscurecer ligeramente en hover */
 }
