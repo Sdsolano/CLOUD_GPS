@@ -74,16 +74,42 @@ h6{
     border: 2px solid #2980b9; /* Cambia el color del borde del control deslizante a azul más oscuro (#2980b9) */
   }
 
+/* Estilo para el control deslizante personalizado */
+.slider-samuel {
+  background: rgba(52, 152, 219, 0.5);
+  border: 1px solid #3498db;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilo para el control deslizante (manija) */
+.slider-samuel::-webkit-slider-thumb {
+  background: #2980b9;
+  border: 2px solid #2980b9;
+  width: 20px; /* Ancho cuadrado */
+  height: 20px; /* Altura cuadrada */
+  cursor: pointer;
+}
+
+.div-contenedor{
+  display: flex;
+  justify-content: left; 
+}
+
   
 
 
 /* Estilo para la barra de navegación */
 .navbar {
-  background-color: rgba(52, 152, 219, 0.9); /* Azul suave y transparente */
+  background: linear-gradient(to right,  #548df8, #a6b8e2); /* Degradado de rojo a azul */
   width: 100%;
-  border-bottom: 2px solid #2980b9; /* Línea inferior */
   transition: background-color 0.3s ease; /* Transición de color suave */
 }
+
+/* Resto de estilos para los elementos de la barra de navegación */
+
 
 /* Estilo para los elementos de la lista (cada sección) */
 .nav-item {
@@ -120,12 +146,17 @@ h6{
 .nav-link:hover {
   background-color: #2980b9; /* Cambio de color en hover */
   color: #fff; /* Texto en blanco en hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición de color suave en hover */
 }
 
-/* Estilo para la transición suave del fondo al hacer hover */
-.navbar:hover {
-  background-color: rgba(52, 152, 219, 1); /* Cambio de color suave en hover */
+/* Estilo para el enlace del botón de hamburguesa en hover */
+.navbar-toggler:hover .navbar-toggler-icon {
+  background-color: #5f7aba; /* Cambio de color en hover */
+  transition: background-color 0.3s ease; /* Transición de color suave en hover */
 }
+
+
+
 
 
 #enviar {
@@ -138,6 +169,30 @@ h6{
   font-size: inherit; /* Mantener el tamaño original */
   transition: background-color 0.3s ease;
 }
+
+#scrollToBottom {
+  background: none; /* Remove background color */
+  color: #000000; /* Set the text color */
+  border: none;
+  padding: 0; /* Remove padding */
+  cursor: pointer;
+  font-size: inherit;
+  text-decoration: underline; /* Add underline to make it look like a link or label */
+  transition: color 0.3s ease; /* Add a transition effect for the color */
+}
+
+/* On hover, you can change the color if you want */
+#scrollToBottom:hover {
+  color: #ff0000; /* Change the color on hover */
+}
+With this CSS, the button will look like a label or link. It removes the background color, sets the text color to your desired color, removes padding, and adds an underline to the text to make it look like a label. Additionally, it provides a color transition on hover to give it a subtle interactive effect. You can adjust the colors and styles to fit your design preferences.
+
+
+
+
+
+
+
 
 #enviar:hover {
   background-color:  #4a6ea8 ; /* Un tono más oscuro para oscurecer ligeramente en hover */

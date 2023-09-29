@@ -6,7 +6,6 @@ let marker2;
 let markers2;
 let markerHis;
 
-let markerDates;  //marker de la busqueda 2
 
 let radius;      //radio busq. 2
 
@@ -18,7 +17,7 @@ let infoArray; //vector de coordenadas
 let Area_search_coordinates;
 let Time_ASC;
 let timeStampsArray;  //vector de fechas
-
+let counter;
 let inDate;
 let finDate;
 
@@ -27,8 +26,9 @@ let isDrawingPolyline = false;
 var circle = null;
 var markersWithinCircle = [];
 var currentMarker = null;
-
-
+var position;
+var circle2 = null;
+var markerDates = null;
 
 
 function initMap() {
@@ -71,8 +71,11 @@ function initMap2() {
 
     // Hide the slider initially
     sliderContainer.style.display = 'none';
-    document.getElementById('markerSlider').style.display = 'none';
-    document.getElementById('Mslider-text').style.display = 'none';
+    $("#Mslider-text").hide(); 
+    $("#markerSlider").hide();
+    $("#count").hide(); 
+    $("#Location-date").hide(); 
+    $("#scrollToBottom").hide(); 
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -107,9 +110,10 @@ function initMap3() {
         zoom: 15,
     };
     $("#titulo-fechas").html("When did my vehicle pass through here?")
-    $("#parrafo-fechas").html("Right-click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
+    $("#parrafo-fechas").html("Click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
     
     $("#buscar").show(); 
+    $("#scrollToBottom").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
     // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
@@ -133,7 +137,7 @@ function initMap3() {
     });
 
     
-    var markerDates = null;
+
     
 
    
@@ -149,8 +153,12 @@ function initMap3() {
         var radius = parseInt(radiusSlider.value);
         radiusValue.textContent = radius + " meters";
     });
-
-    google.maps.event.addListener(map3, 'rightclick', function (event) {
+    
+    google.maps.event.addListener(map3, 'click', function (event) {
+  
+         if (currentMarker) {
+            currentMarker.setMap(null);
+        }
         if (markerDates) {
             markerDates.setMap(null);
         }
@@ -165,7 +173,7 @@ function initMap3() {
             title: "Right-Click Marker",
         });
         $("#parrafo2-fechas").html("Select a radius between 100 and 1000 meters");
-
+        
         // Create the circle with the specified radius from the slider
         var radius = parseInt(radiusSlider.value);
         circle = new google.maps.Circle({
@@ -181,22 +189,40 @@ function initMap3() {
 
         // Show the slider and "Update Circle" button
         sliderContainer.style.display = 'block';
-        document.getElementById('updateCircle').style.display = 'block';
+        document.getElementById('updateCircle').style.display = 'none';
     });
+    
 
-    // Add a listener for the "Update Circle" button click event
-    document.getElementById('updateCircle').addEventListener('click', function () {
-        // Get the new radius value from the slider
-        var newRadius = parseInt(radiusSlider.value);
+    // // Add a listener for the "Update Circle" button click event
+    // document.getElementById('updateCircle').addEventListener('click', function () {
+    //     // Get the new radius value from the slider
+    //     var newRadius = parseInt(radiusSlider.value);
 
-        // Update the circle's radius
-        if (circle) {
-            circle.setRadius(newRadius);
-        }
-    });
+    //     // Update the circle's radius
+    //     if (circle) {
+    //         circle.setRadius(newRadius);
+    //     }
+    // });
 }
 
+function circlechanger (radio){
+        position = markerDates.getPosition();
+        if (circle) {
+            circle.setMap(null); // Remove the existing circle if any
+        }
+        
 
+        circle = new google.maps.Circle({
+            strokeColor: '#1C2F4F',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#2A508C',
+            fillOpacity: 0.35,
+            map: map3,
+            center: position,
+            radius: radio,
+        });
+}
 
 
 
@@ -306,6 +332,11 @@ function reloadTable() {
 function actualizarHistoricosData(data, indexCenter) {
     var historicosDataDiv = $("#historicos-data");
     historicosDataDiv.empty(); // Limpia el contenido anterior
+    $("#Mslider-text").hide(); 
+    $("#markerSlider").hide();
+    $("#count").hide(); 
+    $("#Location-date").hide(); 
+
     
 
     // Elimina la polilínea existente si hay una
@@ -364,7 +395,7 @@ function actualizarHistoricosData(data, indexCenter) {
         polyline2 = new google.maps.Polyline({
             path: polylineCoordinates,
             geodesic: true,
-            strokeColor: '#00FF00', // Color de la línea (verde en este ejemplo)
+            strokeColor: '#FF0000', // Color de la línea (verde en este ejemplo)
             strokeOpacity: 1.0,
             strokeWeight: 2,
             map: map2, // Asigna el mapa en el que deseas dibujar la polilínea
@@ -516,10 +547,27 @@ $(document).ready(function () {
         });
         
         initMap3();
+        document.getElementById('radiusSlider').addEventListener('input', function () {
+            var newRadius = parseInt(radiusSlider.value);
+            circlechanger(newRadius);
+        });
     });
 
+    $("#scrollToBottom").on("click", function () {
+            // Calculate the distance to scroll
+            const scrollDistance = document.body.scrollHeight - window.innerHeight;
+    
+            // Scroll to the bottom of the page smoothly
+            window.scrollTo({
+                top: scrollDistance,
+                behavior: 'smooth'
+            });
+        });
+
+
+
     $("#buscar").on("click", function () {
-         
+        $("#scrollToBottom").show(); 
         
 
         if (!circle) {
@@ -537,13 +585,14 @@ $(document).ready(function () {
         // Clear the existing data in the arrays
         Area_search_coordinates = [];
         Time_ASC = [];
-    
+        counter = 0;
         // Iterate through infoArray and check if each coordinate is within the circle
         for (var i = 0, j = 0; i < infoArray.length; i++) {
             if (isCoordinateInCircle(infoArray[i])) {
                 Area_search_coordinates[j]=infoArray[i];
                 Time_ASC[j] = timeStampsArray[i];
                 j +=1;
+                counter = counter + 1
             }
         }
     
@@ -559,8 +608,12 @@ $(document).ready(function () {
         slider.min = 0; // Minimum value (0)
         slider.max = Area_search_coordinates.length - 1; // Maximum value (length of the array minus one)
         slider.value = 0; // Initial value (0)
-        document.getElementById('markerSlider').style.display = 'block';
-        document.getElementById('Mslider-text').style.display = 'block';
+        $("#Mslider-text").show(); 
+        $("#markerSlider").show(); 
+        $("#count").show(); 
+        $("#Location-date").show(); 
+        // document.getElementById('markerSlider').style.display = 'block';
+        // document.getElementById('Mslider-text').style.display = 'block';
         // Initialize the slider with the default value (e.g., 0 for the first marker)
         document.getElementById('markerSlider').value = 0;
         updateMarker(0); // Initialize the marker with the first coordinate
@@ -570,7 +623,7 @@ $(document).ready(function () {
             var sliderValue = parseInt(this.value);
             updateMarker(sliderValue);
         });
-
+        
 
     });
 
@@ -611,9 +664,10 @@ $(document).ready(function () {
             });
     
             // Center the map on the current marker
-            map3.setCenter(coordinateLatLng);
+            //map3.setCenter(coordinateLatLng);
 
-            $("#Location-date").html("Location date: "+Time_ASC[index])
+            $("#Location-date").html("<b> Location date: </b>"+Time_ASC[index])
+            $("#count").html("<b> We have found </b> <b>"+ counter + "</b><b> location records in the provided area. </b>")
         }
 
     }
@@ -626,3 +680,5 @@ $(document).ready(function () {
     
         
 });
+
+

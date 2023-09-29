@@ -5,7 +5,6 @@
 
   <title> GPS tracker </title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -31,6 +30,13 @@
   <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async
     defer></script>
 
+    <style>
+      body {
+          background-image: url('https://img.freepik.com/vector-gratis/fondo-abstracto-blanco_23-2148833155.jpg?w=826&t=st=1695756538~exp=1695757138~hmac=e3fad0dba261f9bd094c18ffaca8e382774599638ab0269156afe50f5e509bfc');
+          background-size: cover; /* Para ajustar la imagen al tamaño de la ventana del navegador */
+          /* Otras propiedades de estilo, como el color del texto, pueden ir aquí */
+      }
+  </style>
 
 
 </head>
@@ -98,6 +104,7 @@
       
       
             <input type="submit" id="enviar" value="Send">
+            <button id="scrollToBottom" class="btn btn-primary">Search by area</button>
           </form>
       </div>
       <div class="container"> 
@@ -115,35 +122,34 @@
     <div class="container">
       <h3 id="titulo-fechas" style="text-align: center;"> </h3>
       <p id="parrafo-fechas"> </p>
-      <p id="parrafo2-fechas"> </p>
-  
-      <div class="slider-container">
-          <p id="slider-text" style="display: none;">Adjust the radius using the slider:</p>
-          <div class="slider-and-button">
-              <input type="range" id="radiusSlider" min="100" max="1000" step="10" value="100">
-              <span id="radiusValue">100 meters</span>
-              <button id="updateCircle" class="btn btn-primary">Update Circle</button>
-          </div>
+      
+      <div class="div-contenedor" >
+            <div class="slider-container" >
+              <p id="parrafo2-fechas"> </p>
+                <div class="slider-and-button">
+                    <p id="slider-text" style="display: none;"></p>
+                    <input type="range" id="radiusSlider" min="100" max="1000" step="10" value="100" class="slider-samuel"> <!-- Slider -->
+                    <span id="radiusValue">100 meters</span>
+                    <button id="updateCircle" class="btn btn-primary">Update Circle</button>
+                </div>
+                <button class="btn btn-primary" style="display: none; margin-top: 10px;" id="buscar">Search</button>
+            </div>
+            
+            <div class="slider-M" style="margin: 0px 110px;">
+              <p id="count"> </p>
+              <p id="Location-date"> </p>
+              <p id="Mslider-text" >Drag the slider to explore different locations:</p>
+              <input type="range" id="markerSlider" min="0" step="1" class="slider-samuel">
+              <p id="parrafo-fechas"> </p>
+            </div> 
       </div>
-      <button class="btn btn-primary" style="display: none;" id="buscar">Search</button>
-  </div>
-    <div id="mapa-fechas" style="height: 400px;" class="container2"></div>
-     
-    <p id="Location-date"> </p>
-    <div class="slider-M">
-      <p id="Mslider-text" >Adjust the marker using the slider:</p>
-      <input type="range" id="markerSlider" min="0" step="1">
-      <p id="parrafo-fechas"> </p>
     </div>
-  
-  
 
-
-    
+    <div id="mapa-fechas" style="height: 400px;" class="container2"></div>
   </div>
-
-
- 
+  
+  
+  
 </body>
 
 
