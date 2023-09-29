@@ -172,7 +172,7 @@ transition: background-color 0.3s ease;
 
 #scrollToBottom {
 background: none; /* Remove background color */
-color: #000000; /* Set the text color */
+color: #1433bf; /* Set the text color */
 border: none;
 padding: 0; /* Remove padding */
 cursor: pointer;
