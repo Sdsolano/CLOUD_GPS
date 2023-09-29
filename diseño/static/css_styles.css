@@ -172,7 +172,7 @@ h6{
 
 #scrollToBottom {
   background: none; /* Remove background color */
-  color: #7392c5; /* Set the text color */
+  color: #000000; /* Set the text color */
   border: none;
   padding: 0; /* Remove padding */
   cursor: pointer;
