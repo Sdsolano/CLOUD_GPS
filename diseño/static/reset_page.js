@@ -75,6 +75,7 @@ function initMap2() {
     $("#markerSlider").hide();
     $("#count").hide(); 
     $("#Location-date").hide(); 
+    $("#scrollToBottom").hide(); 
     // Configura las opciones del mapa
     var mapOptions = {
         zoom: 10, // Establece el nivel de zoom inicial
@@ -112,6 +113,7 @@ function initMap3() {
     $("#parrafo-fechas").html("Click on the map over the place you want to know when your vehicle passed through. The dates are limited between the dates of the previous search.");
     
     $("#buscar").show(); 
+    $("#scrollToBottom").show(); 
     map3 = new google.maps.Map(document.getElementById('mapa-fechas'), mapOptions);
 
     // Realiza una solicitud AJAX para obtener la última posición desde la base de datos
@@ -551,9 +553,21 @@ $(document).ready(function () {
         });
     });
 
+    $("#scrollToBottom").on("click", function () {
+            // Calculate the distance to scroll
+            const scrollDistance = document.body.scrollHeight - window.innerHeight;
+    
+            // Scroll to the bottom of the page smoothly
+            window.scrollTo({
+                top: scrollDistance,
+                behavior: 'smooth'
+            });
+        });
+
+
 
     $("#buscar").on("click", function () {
-         
+        $("#scrollToBottom").show(); 
         
 
         if (!circle) {
@@ -609,7 +623,7 @@ $(document).ready(function () {
             var sliderValue = parseInt(this.value);
             updateMarker(sliderValue);
         });
-
+        
 
     });
 
@@ -650,7 +664,7 @@ $(document).ready(function () {
             });
     
             // Center the map on the current marker
-            map3.setCenter(coordinateLatLng);
+            //map3.setCenter(coordinateLatLng);
 
             $("#Location-date").html("<b> Location date: </b>"+Time_ASC[index])
             $("#count").html("<b> We have found </b> <b>"+ counter + "</b><b> location records in the provided area. </b>")
@@ -666,3 +680,5 @@ $(document).ready(function () {
     
         
 });
+
+
