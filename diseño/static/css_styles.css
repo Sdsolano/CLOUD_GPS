@@ -5,14 +5,15 @@
   box-sizing: border-box;
 }
 
-/* Apply a consistent font family, size, and line-height */
+/* Apply a clean and modern font family */
 body {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #333;
 }
 
-/* Style the page header for a clean and modern look */
+/* Style the page header for a clean and minimalistic look */
 header {
   background-color: #2980b9;
   color: #fff;
@@ -31,7 +32,7 @@ p {
   margin: 10px 0;
 }
 
-/* Style the table for better presentation */
+/* Style the table for a clean presentation */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -51,9 +52,9 @@ table td {
   padding: 20px;
 }
 
-/* Style the submit button with a more prominent color */
+/* Style the submit button with a contrasting color */
 .button-primary {
-  background-color: #ff5722; /* A bold and contrasting color */
+  background-color: #ff5722;
   color: #fff;
   padding: 12px 20px;
   border: none;
@@ -83,39 +84,4 @@ table td {
 /* On hover, change the color of link buttons */
 .button-link:hover {
   color: #ff0000;
-}
-
-/* Style the navigation bar */
-.navbar {
-  background: #2980b9;
-  color: #fff;
-  padding: 10px 0;
-}
-
-/* Style navigation links */
-.nav-link {
-  color: #fff;
-  margin: 0 15px;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-/* Style the active link */
-.nav-link.active {
-  border-bottom: 2px solid #fff; /* Add an underline to the active link */
-}
-
-/* Change the color of links on hover in the navbar */
-.nav-link:hover {
-  color: #ff5722;
-}
-
-/* Add a subtle box shadow to elements on hover for interactivity */
-.hover-effect {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.hover-effect:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
