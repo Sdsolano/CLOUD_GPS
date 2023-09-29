@@ -171,15 +171,26 @@ h6{
 }
 
 #scrollToBottom {
-  background-color:  #7392c5;
-  color: #fff;
-  padding: 3px 5px;
+  background: none; /* Remove background color */
+  color: #7392c5; /* Set the text color */
   border: none;
-  border-radius: 5px;
+  padding: 0; /* Remove padding */
   cursor: pointer;
-  font-size: inherit; /* Mantener el tamaño original */
-  transition: background-color 0.3s ease;
+  font-size: inherit;
+  text-decoration: underline; /* Add underline to make it look like a link or label */
+  transition: color 0.3s ease; /* Add a transition effect for the color */
 }
+
+/* On hover, you can change the color if you want */
+#scrollToBottom:hover {
+  color: #ff0000; /* Change the color on hover */
+}
+With this CSS, the button will look like a label or link. It removes the background color, sets the text color to your desired color, removes padding, and adds an underline to the text to make it look like a label. Additionally, it provides a color transition on hover to give it a subtle interactive effect. You can adjust the colors and styles to fit your design preferences.
+
+
+
+
+
 
 
 
