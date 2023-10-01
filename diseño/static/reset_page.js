@@ -231,26 +231,49 @@ function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
     var homeLink = document.querySelector('a[href="#home"]');
     var historicosLink = document.querySelector('a[href="#historicos"]');
+    var aboutLink = document.querySelector('a[href="#about"]');
 
     if (fragment === '#home' || fragment === '') {
         // Mostrar la sección Home
         document.getElementById('home').style.display = 'block';
         document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+        document.getElementById('about').style.display = 'none'; // Ocultar About
         // Deshabilitar el enlace de Home
         homeLink.classList.add('disabled');
         historicosLink.classList.remove('disabled');
+        aboutLink.classList.remove('disabled');
     } else if (fragment === '#historicos') {
         // Mostrar la sección Históricos
         document.getElementById('home').style.display = 'none'; // Ocultar Home
         document.getElementById('historicos').style.display = 'block';
+        document.getElementById('about').style.display = 'none'; // Ocultar About
         initMap2();
         // Deshabilitar el enlace de Históricos
         historicosLink.classList.add('disabled');
         homeLink.classList.remove('disabled');
+        aboutLink.classList.remove('disabled');
+    } else if (fragment === '#about') {
+        // Mostrar la sección About
+        document.getElementById('home').style.display = 'none'; // Ocultar Home
+        document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+        document.getElementById('about').style.display = 'block';
+        // Deshabilitar el enlace de About
+        aboutLink.classList.add('disabled');
+        homeLink.classList.remove('disabled');
+        historicosLink.classList.remove('disabled');
     } else {
         // Si el fragmento es desconocido, puedes manejarlo aquí
+        // Por ejemplo, puedes ocultar todas las secciones
+        document.getElementById('home').style.display = 'none';
+        document.getElementById('historicos').style.display = 'none';
+        document.getElementById('about').style.display = 'none';
+        // Y deshabilitar todos los enlaces
+        homeLink.classList.remove('disabled');
+        historicosLink.classList.remove('disabled');
+        aboutLink.classList.remove('disabled');
     }
 }
+
 
 // Ejecutar la función al cargar la página
 window.onload = mostrarSeccionDesdeFragmento;
