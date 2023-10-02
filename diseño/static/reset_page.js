@@ -462,7 +462,7 @@ $(document).ready(function () {
         fechaActual.setSeconds(0);
     
         // Formatea la fecha actual en el formato deseado ('YYYY-MM-DD HH:mm:00')
-        var fechaFormateada = fechaActual.toISOString().slice(0, 19).replace("T", " ");
+        var fechaFormateada = fechaActual.toISOString().slice(0, 16) + "00";
     
         // Establece el valor predeterminado en campo2
         $('#campo2').val(fechaFormateada);
@@ -476,6 +476,7 @@ $(document).ready(function () {
         timePicker: true, // Habilita la selección de hora
         timePicker24Hour: true, // Utiliza el formato de 24 horas
         timePickerSeconds: false, // Deshabilita la selección de segundos
+        startDate: fechaFormateada,
         locale: {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
