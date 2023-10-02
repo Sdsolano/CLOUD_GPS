@@ -193,16 +193,7 @@ function initMap3() {
     });
     
 
-    // // Add a listener for the "Update Circle" button click event
-    // document.getElementById('updateCircle').addEventListener('click', function () {
-    //     // Get the new radius value from the slider
-    //     var newRadius = parseInt(radiusSlider.value);
-
-    //     // Update the circle's radius
-    //     if (circle) {
-    //         circle.setRadius(newRadius);
-    //     }
-    // });
+  
 }
 
 function circlechanger (radio){
@@ -461,7 +452,16 @@ function actualizarHistoricosData(data, indexCenter) {
 
 
 $(document).ready(function () {
-    
+    var fechaActual = new Date();
+
+    // Establece la hora en 23 y el minuto en 59
+    fechaActual.setHours(23);
+    fechaActual.setMinutes(59);
+    fechaActual.setSeconds(0);
+
+    // Formatea la fecha actual en el formato deseado ('YYYY-MM-DD HH:mm:00')
+    var fechaFormateada = fechaActual.toISOString().slice(0, 19).replace("T", " ");
+    $('#campo2').val(fechaFormateada);
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
