@@ -458,7 +458,7 @@ $(document).ready(function () {
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
-    $('#campo1, #campo2').daterangepicker({
+    $('#campo1').daterangepicker({
         singleDatePicker: true, // Habilita la selección de una sola fecha
         timePicker: true, // Habilita la selección de hora
         timePicker24Hour: true, // Utiliza el formato de 24 horas
@@ -467,27 +467,18 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+    $('#campo2').daterangepicker({
+        singleDatePicker: true, // Habilita la selección de una sola fecha
+        timePicker: true, // Habilita la selección de hora
+        timePicker24Hour: true, // Utiliza el formato de 24 horas
+        timePickerSeconds: false, // Deshabilita la selección de segundos
+        locale: {
+            format: 'YYYY-MM-DD 23:59:00', // Define el formato deseado
+        },
+    });
     
-    var fechaCampo1Str = $("#campo1").val();
-
-    // Convierte la cadena de texto en un objeto Date
-    var fechaCampo1 = new Date(fechaCampo1Str);
-
-    // Establece la hora en 23 y el minuto en 59
-    fechaCampo1.setHours(23);
-    fechaCampo1.setMinutes(59);
-    fechaCampo1.setSeconds(0);
-
-    // Clona la fecha de campo1 y establece la hora en 23:59
-    var fechaCampo2 = new Date(fechaCampo1);
-    fechaCampo2.setHours(23);
-    fechaCampo2.setMinutes(59);
-
-    // Formatea la fecha y hora en el formato deseado ('YYYY-MM-DD HH:mm:00')
-    var fechaFormateada = fechaCampo2.toISOString().slice(0, 19).replace("T", " ");
-
-    // Establece el valor de campo2
-    $('#campo2').val(fechaFormateada);
+    
+  
 
     $('#campo1, #campo2').prop('readonly', true);
 
