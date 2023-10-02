@@ -170,7 +170,21 @@ font-size: inherit; /* Mantener el tamaño original */
 transition: background-color 0.3s ease;
 }
 
+#scrollToBottom {
+background: none; /* Remove background color */
+color: #1433bf; /* Set the text color */
+border: none;
+padding: 0; /* Remove padding */
+cursor: pointer;
+font-size: inherit;
+text-decoration: underline; /* Add underline to make it look like a link or label */
+transition: color 0.3s ease; /* Add a transition effect for the color */
+}
 
+/* On hover, you can change the color if you want */
+#scrollToBottom:hover {
+color: #ff0000; /* Change the color on hover */
+}
 
 
 
