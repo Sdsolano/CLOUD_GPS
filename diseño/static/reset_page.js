@@ -476,7 +476,7 @@ $(document).ready(function () {
         timePicker: true, // Habilita la selección de hora
         timePicker24Hour: true, // Utiliza el formato de 24 horas
         timePickerSeconds: false, // Deshabilita la selección de segundos
-        startDate: fechaFormateada,
+        
         locale: {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
@@ -486,6 +486,7 @@ $(document).ready(function () {
         timePicker: true, // Habilita la selección de hora
         timePicker24Hour: true, // Utiliza el formato de 24 horas
         timePickerSeconds: false, // Deshabilita la selección de segundos
+        startDate: fechaFormateada,
         locale: {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
