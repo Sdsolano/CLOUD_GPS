@@ -469,15 +469,18 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+    var fechaCampo1 = $('#campo1').data('daterangepicker').startDate;
 
-    var fechaCampo1Str = $("#campo1").val();
+    // Calcula el día siguiente y configura el startDate de campo2
+    var startDateCampo2 = fechaCampo1.clone().add(1, 'days');
 
+   
     $('#campo2').daterangepicker({
         singleDatePicker: true, // Habilita la selección de una sola fecha
         timePicker: true, // Habilita la selección de hora
         timePicker24Hour: true, // Utiliza el formato de 24 horas
-        timePickerSeconds: false, // Deshabilita la selección de segundos
-        startDate:  fechaCampo1Str + ' 23:59:00',
+        timePickerSeconds: false,
+        startDate: startDateCampo2, // Deshabilita la selección de segundos
         locale: {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
