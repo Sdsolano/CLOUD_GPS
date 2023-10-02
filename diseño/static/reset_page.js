@@ -452,16 +452,7 @@ function actualizarHistoricosData(data, indexCenter) {
 
 
 $(document).ready(function () {
-    var fechaActual = new Date();
-
-    // Establece la hora en 23 y el minuto en 59
-    fechaActual.setHours(23);
-    fechaActual.setMinutes(59);
-    fechaActual.setSeconds(0);
-
-    // Formatea la fecha actual en el formato deseado ('YYYY-MM-DD HH:mm:00')
-    var fechaFormateada = fechaActual.toISOString().slice(0, 19).replace("T", " ");
-    $('#campo2').val(fechaFormateada);
+   
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
@@ -476,6 +467,16 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+    var fechaActual =$("#campo1").val(); ;
+
+    // Establece la hora en 23 y el minuto en 59
+    fechaActual.setHours(23);
+    fechaActual.setMinutes(59);
+    fechaActual.setSeconds(0);
+
+    // Formatea la fecha actual en el formato deseado ('YYYY-MM-DD HH:mm:00')
+    var fechaFormateada = fechaActual.toISOString().slice(0, 19).replace("T", " ");
+    $('#campo2').val(fechaFormateada);
 
     $('#campo1, #campo2').prop('readonly', true);
 
