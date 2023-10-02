@@ -467,19 +467,25 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+    
     var fechaCampo1Str = $("#campo1").val();
 
     // Convierte la cadena de texto en un objeto Date
     var fechaCampo1 = new Date(fechaCampo1Str);
-    
+
     // Establece la hora en 23 y el minuto en 59
     fechaCampo1.setHours(23);
     fechaCampo1.setMinutes(59);
     fechaCampo1.setSeconds(0);
-    
+
+    // Clona la fecha de campo1 y establece la hora en 23:59
+    var fechaCampo2 = new Date(fechaCampo1);
+    fechaCampo2.setHours(23);
+    fechaCampo2.setMinutes(59);
+
     // Formatea la fecha y hora en el formato deseado ('YYYY-MM-DD HH:mm:00')
-    var fechaFormateada = fechaCampo1.toISOString().slice(0, 19).replace("T", " ");
-    
+    var fechaFormateada = fechaCampo2.toISOString().slice(0, 19).replace("T", " ");
+
     // Establece el valor de campo2
     $('#campo2').val(fechaFormateada);
 
