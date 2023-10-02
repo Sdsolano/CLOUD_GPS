@@ -203,7 +203,7 @@ background-color:  #4a6ea8 ; /* Un tono más oscuro para oscurecer ligeramente e
 .container_about {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   border-bottom: 1px solid #ccc; /* Línea horizontal entre secciones */
   padding-bottom: 20px; /* Espacio entre las secciones y la línea horizontal */
   margin-bottom: 20px; /* Espacio entre las secciones */
@@ -214,8 +214,5 @@ background-color:  #4a6ea8 ; /* Un tono más oscuro para oscurecer ligeramente e
 }
 
 .container_about .container {
-  flex: 1; /* Hacer que los divs con clase 'container' ocupen el mismo espacio horizontal */
-}
-.container_about .container .parrafo_column {
   flex: 1; /* Hacer que los divs con clase 'container' ocupen el mismo espacio horizontal */
 }
