@@ -707,6 +707,28 @@ $(document).ready(function () {
 
     }
 
+               
+            var images = document.querySelectorAll(".zoomable-image");
+
+            images.forEach(function(image) {
+            image.addEventListener("click", function() {
+                var modal = document.createElement("div");
+                modal.classList.add("image-modal");
+
+                var modalImage = new Image();
+                modalImage.src = this.src;
+                modalImage.classList.add("modal-content");
+
+                modal.appendChild(modalImage);
+
+                modal.addEventListener("click", function() {
+                modal.remove();
+                });
+
+                document.body.appendChild(modal);
+            });
+});
+
 
 
 
