@@ -193,16 +193,7 @@ function initMap3() {
     });
     
 
-    // // Add a listener for the "Update Circle" button click event
-    // document.getElementById('updateCircle').addEventListener('click', function () {
-    //     // Get the new radius value from the slider
-    //     var newRadius = parseInt(radiusSlider.value);
-
-    //     // Update the circle's radius
-    //     if (circle) {
-    //         circle.setRadius(newRadius);
-    //     }
-    // });
+  
 }
 
 function circlechanger (radio){
@@ -231,26 +222,49 @@ function mostrarSeccionDesdeFragmento() {
     var fragment = window.location.hash;
     var homeLink = document.querySelector('a[href="#home"]');
     var historicosLink = document.querySelector('a[href="#historicos"]');
+    var aboutLink = document.querySelector('a[href="#about"]');
 
     if (fragment === '#home' || fragment === '') {
         // Mostrar la sección Home
         document.getElementById('home').style.display = 'block';
         document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+        document.getElementById('about').style.display = 'none'; // Ocultar About
         // Deshabilitar el enlace de Home
         homeLink.classList.add('disabled');
         historicosLink.classList.remove('disabled');
+        aboutLink.classList.remove('disabled');
     } else if (fragment === '#historicos') {
         // Mostrar la sección Históricos
         document.getElementById('home').style.display = 'none'; // Ocultar Home
         document.getElementById('historicos').style.display = 'block';
+        document.getElementById('about').style.display = 'none'; // Ocultar About
         initMap2();
         // Deshabilitar el enlace de Históricos
         historicosLink.classList.add('disabled');
         homeLink.classList.remove('disabled');
+        aboutLink.classList.remove('disabled');
+    } else if (fragment === '#about') {
+        // Mostrar la sección About
+        document.getElementById('home').style.display = 'none'; // Ocultar Home
+        document.getElementById('historicos').style.display = 'none'; // Ocultar Históricos
+        document.getElementById('about').style.display = 'block';
+        // Deshabilitar el enlace de About
+        aboutLink.classList.add('disabled');
+        homeLink.classList.remove('disabled');
+        historicosLink.classList.remove('disabled');
     } else {
         // Si el fragmento es desconocido, puedes manejarlo aquí
+        // Por ejemplo, puedes ocultar todas las secciones
+        document.getElementById('home').style.display = 'none';
+        document.getElementById('historicos').style.display = 'none';
+        document.getElementById('about').style.display = 'none';
+        // Y deshabilitar todos los enlaces
+        homeLink.classList.remove('disabled');
+        historicosLink.classList.remove('disabled');
+        aboutLink.classList.remove('disabled');
     }
 }
+
 
 // Ejecutar la función al cargar la página
 window.onload = mostrarSeccionDesdeFragmento;
@@ -438,21 +452,42 @@ function actualizarHistoricosData(data, indexCenter) {
 
 
 $(document).ready(function () {
-    
+   
+   
     // Carga la tabla y actualiza el mapa cuando se carga la página
     reloadTable();
     // Configura el intervalo para actualizar la tabla y el mapa cada 7 segundos
     setInterval(reloadTable, 1000);
     setInterval( drawPolyline, 1000);
-    $('#campo1, #campo2').daterangepicker({
+    $('#campo1').daterangepicker({
         singleDatePicker: true, // Habilita la selección de una sola fecha
         timePicker: true, // Habilita la selección de hora
         timePicker24Hour: true, // Utiliza el formato de 24 horas
         timePickerSeconds: false, // Deshabilita la selección de segundos
+        
         locale: {
             format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
         },
     });
+    var fechaCampo1 = $('#campo1').data('daterangepicker').startDate;
+
+    // Calcula el día siguiente y configura el startDate de campo2
+    var startDateCampo2 = fechaCampo1.clone().add(1, 'days');
+
+   
+    $('#campo2').daterangepicker({
+        singleDatePicker: true, // Habilita la selección de una sola fecha
+        timePicker: true, // Habilita la selección de hora
+        timePicker24Hour: true, // Utiliza el formato de 24 horas
+        timePickerSeconds: false,
+        startDate: startDateCampo2, // Deshabilita la selección de segundos
+        locale: {
+            format: 'YYYY-MM-DD HH:mm:00', // Define el formato deseado
+        },
+    });
+    
+    
+  
 
     $('#campo1, #campo2').prop('readonly', true);
 
@@ -671,6 +706,28 @@ $(document).ready(function () {
         }
 
     }
+
+               
+            var images = document.querySelectorAll(".zoomable-image");
+
+            images.forEach(function(image) {
+            image.addEventListener("click", function() {
+                var modal = document.createElement("div");
+                modal.classList.add("image-modal");
+
+                var modalImage = new Image();
+                modalImage.src = this.src;
+                modalImage.classList.add("modal-content");
+
+                modal.appendChild(modalImage);
+
+                modal.addEventListener("click", function() {
+                modal.remove();
+                });
+
+                document.body.appendChild(modal);
+            });
+});
 
 
 
